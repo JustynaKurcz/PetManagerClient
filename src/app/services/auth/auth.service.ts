@@ -2,7 +2,7 @@ import {Inject, Injectable} from '@angular/core';
 import {HttpClient} from "@angular/common/http";
 import {DOCUMENT} from "@angular/common";
 import {map} from "rxjs";
-import {Token} from "@angular/compiler";
+import {Token} from "../../models/token";
 
 @Injectable({
   providedIn: 'root'
@@ -40,5 +40,6 @@ export class AuthService {
   getDetailsOfTheLoggedUser() {
     return this.http.get(`${this.url}`);
   }
+
 
 }

@@ -1,0 +1,107 @@
+.wrapper {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 70vh;
+  background-color: #f9f9f9;
+}
+
+.sign-in-container {
+  width: 450px;
+  margin: 0 auto;
+  padding: 30px;
+  border: 1px solid #eaeaea;
+  border-radius: 8px;
+  text-align: center;
+  box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
+}
+
+h2 {
+  margin-bottom: 20px;
+  font-weight: 400;
+}
+
+.form-group {
+  position: relative;
+  margin-bottom: 20px;
+  text-align: left;
+}
+
+input {
+  width: 100%;
+  padding: 10px;
+  margin-top: 5px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+.forgot-password {
+  margin-bottom: 20px;
+  text-align: right;
+}
+
+.forgot-password a {
+  color: #000;
+  text-decoration: none;
+  font-size: 0.875em;
+}
+
+.btn {
+  width: 100%;
+  padding: 12px;
+  border: none;
+  border-radius: 25px;
+  font-size: 1em;
+  cursor: pointer;
+}
+
+.btn-primary {
+  background-color: #f8d64e;
+  color: #000;
+  font-weight: bold;
+}
+
+.btn-secondary {
+  background-color: #ffffff;
+  color: #000;
+  font-weight: bold;
+  margin-top: 20px;
+  border: 1px solid #eaeaea;
+}
+
+.new-client {
+  margin-top: 40px;
+  padding: 15px;
+  border: 1px solid #eaeaea;
+  border-radius: 8px;
+  background-color: #f9f9f9;
+}
+.password-group {
+  position: relative;
+}
+
+.password-input-container {
+  display: flex;
+  align-items: center;
+  position: relative;
+}
+
+input[type="password"],
+input[type="text"] {
+  width: 100%;
+  padding: 10px;
+  margin-top: 5px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+.toggle-password {
+  margin-left: -40px; /* Ustawienie ikonki w odpowiedniej pozycji */
+  outline: none; /* Usuń obrys przycisku */
+  cursor: pointer;
+}
+
+.toggle-password mat-icon {
+  font-size: 24px; /* Możesz dostosować rozmiar ikony */
+  color: #666; /* Dostosuj kolor ikony */
+}
