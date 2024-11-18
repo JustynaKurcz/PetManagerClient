@@ -2,9 +2,7 @@ import {Component} from '@angular/core';
 import {FormsModule} from "@angular/forms";
 import {Router, RouterLink} from "@angular/router";
 import {MatIconModule} from '@angular/material/icon';
-import {MatInputModule} from '@angular/material/input';
-import {MatButtonModule} from '@angular/material/button';
-import {AuthService} from "../../../services/auth/auth.service";
+import {UsersService} from "../../../services/users/users.service";
 import {HttpClientModule} from "@angular/common/http";
 
 @Component({
@@ -14,13 +12,11 @@ import {HttpClientModule} from "@angular/common/http";
         FormsModule,
         RouterLink,
         MatIconModule,
-        MatInputModule,
-        MatButtonModule,
         HttpClientModule
     ],
-    providers: [AuthService],
+    providers: [UsersService],
     templateUrl: './sign-in.component.html',
-    styleUrls: ['./sign-in.component.css']
+    styleUrl: './sign-in.component.css'
 })
 export class SignInComponent {
     public credentials = {
@@ -36,11 +32,11 @@ export class SignInComponent {
         this.hidePassword = !this.hidePassword;
     }
 
-    constructor(public authService: AuthService, private router: Router) {
+    constructor(public usersService: UsersService, private router: Router) {
     }
 
     signIn() {
-        return this.authService
+        return this.usersService
             .signIn(this.credentials)
             .subscribe((result) => {
                 if (!result) {

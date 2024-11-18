@@ -5,7 +5,7 @@ import { catchError } from 'rxjs/operators';
 import {HttpClientModule, HttpErrorResponse} from '@angular/common/http';
 import { throwError } from 'rxjs';
 import { NgIf, NgSwitch, NgSwitchCase, NgSwitchDefault } from '@angular/common';
-import {AuthService} from "../../../services/auth/auth.service";
+import {UsersService} from "../../../services/users/users.service";
 import {MatIcon} from "@angular/material/icon";
 import {MatIconButton} from "@angular/material/button";
 
@@ -13,25 +13,25 @@ import {MatIconButton} from "@angular/material/button";
     selector: 'app-sign-up',
     standalone: true,
     imports: [HttpClientModule, FormsModule, NgIf, NgSwitch, NgSwitchCase, NgSwitchDefault, MatIcon, MatIconButton],
-    providers: [AuthService],
+    providers: [UsersService],
     templateUrl: './sign-up.component.html',
     styleUrls: ['./sign-up.component.css']
 })
 export class SignUpComponent {
     public credentials = {
         email: '',
-        password: '',
+        password: ''
     }
     public error: string = '';
     hidePassword: boolean = true;
-    constructor(private authService: AuthService, private router: Router) { }
+    constructor(private usersService: UsersService, private router: Router) { }
 
     togglePasswordVisibility(): void {
         this.hidePassword = !this.hidePassword;
     }
 
     signUp() {
-        this.authService.signUp(this.credentials).pipe(
+        this.usersService.signUp(this.credentials).pipe(
             catchError((error: HttpErrorResponse) => {
                 if (error.error.message) {
                     this.error = this.translateErrorMessage(error.error.message);
