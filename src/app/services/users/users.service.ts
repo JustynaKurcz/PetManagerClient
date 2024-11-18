@@ -7,7 +7,7 @@ import {Token} from "../../models/token";
 @Injectable({
   providedIn: 'root'
 })
-export class AuthService {
+export class UsersService {
 
   private url = 'http://localhost:5062/api/v1/users';
 
@@ -29,6 +29,7 @@ export class AuthService {
     }).pipe(
       map((result: Token | any) => {
         if (result && result.token) {
+          console.log(result.token);
           localStorage?.setItem('token', result.token);
           return true;
         }
