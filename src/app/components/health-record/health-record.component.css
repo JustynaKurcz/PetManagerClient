@@ -1,65 +1,93 @@
-.health-record {
+.container {
+  max-width: 900px;
+  margin: 0 auto;
   padding: 20px;
-  background-color: #f3f4f6; /* Light gray background to make it easier on the eyes */
-  border-radius: 12px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.health-record {
+  padding: 32px;
+  background-color: #ffffff;
+  border-radius: 16px;
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+  margin-bottom: 20px;
+  width: 100%;
 }
 
 .vaccination, .appointment {
   margin-bottom: 20px;
-  padding: 20px;
-  background-color: #ffffff; /* White background to contrast with the light gray */
+  padding: 24px;
+  background-color: #fafafa;
   border: 1px solid #e0e0e0;
-  border-radius: 12px;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+  border-radius: 16px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
   transition: transform 0.2s, box-shadow 0.2s;
 }
 
 .vaccination:hover, .appointment:hover {
-  transform: translateY(-3px);
-  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
+  transform: translateY(-4px);
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.1);
 }
 
 h2, h3 {
-  color: #1f2937; /* Darker color for better contrast */
+  color: #1f2937;
 }
 
 h3 {
-  margin-top: 30px;
+  margin-top: 24px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
 }
 
 p {
-  margin: 5px 0;
-  color: #4b5563; /* Softer text color for readability */
+  margin: 6px 0;
+  color: #374151;
 }
 
 button {
-  background-color: #ef4444; /* Red color for delete button to imply caution */
+  background-color: #fbbf24;
+  color: #ffffff;
+  border: none;
+  padding: 10px 16px;
+  border-radius: 12px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+button:hover {
+  background-color: #f59e0b;
+}
+
+button.delete {
+  background-color: #ef4444;
+}
+
+button.delete:hover {
+  background-color: #dc2626;
+}
+
+.add-button {
+  background-color: #10b981;
   color: white;
   border: none;
   padding: 10px 15px;
   border-radius: 8px;
   cursor: pointer;
   transition: background-color 0.3s;
+  margin-left: 20px;
 }
 
-button:hover {
-  background-color: #dc2626; /* Darker red for hover state */
-}
-
-.delete-icon {
-  color: red;
-  cursor: pointer;
-  margin-left: 10px;
+.add-button:hover {
+  background-color: #059669;
 }
 
 h3 span {
-  color: #2563eb; /* Blue color for expanding/collapsing symbol to make it stand out */
+  color: #2563eb;
 }
 
 h3:hover {
-  color: #1d4ed8; /* Darker blue on hover to indicate interactivity */
-  text-decoration: underline; /* Underline on hover to indicate that it's clickable */
+  color: #1d4ed8;
+  text-decoration: underline;
 }
 
 .information-toggle {
@@ -72,7 +100,16 @@ h3:hover {
   margin-left: 8px;
 }
 
-.container {
-  max-width: 800px; /* Limit the width of the content for better readability */
-  margin: 0 auto; /* Center the content on the page */
+input, textarea {
+  width: 100%;
+  padding: 12px;
+  border-radius: 8px;
+  border: 1px solid #d1d5db;
+  margin-bottom: 16px;
+}
+
+input:focus, textarea:focus {
+  border-color: #2563eb;
+  outline: none;
+  box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.3);
 }

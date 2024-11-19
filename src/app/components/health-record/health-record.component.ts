@@ -3,7 +3,7 @@ import {ActivatedRoute} from "@angular/router";
 import {HttpClientModule} from "@angular/common/http";
 import {HealthRecordsService} from "../../services/health-records/health-records.service";
 import {HealthRecordDto} from "../../models/health-records/get-health-record/health-record-dto";
-import {CommonModule, DOCUMENT} from "@angular/common";
+import {CommonModule, DatePipe, DOCUMENT} from "@angular/common";
 
 @Component({
   selector: 'app-health-record',
@@ -13,7 +13,7 @@ import {CommonModule, DOCUMENT} from "@angular/common";
     HttpClientModule
   ],
   providers: [
-    HealthRecordsService],
+    HealthRecordsService, DatePipe],
   templateUrl: './health-record.component.html',
   styleUrl: './health-record.component.css'
 })
@@ -21,10 +21,13 @@ export class HealthRecordComponent implements OnInit {
   healthRecord?: HealthRecordDto;
   showVaccinations: boolean = true;
   showAppointments: boolean = true;
+  expandedVaccinationDetails: { [key: string]: any } = {};
+  expandedAppointmentDetails: { [key: string]: any } = {};
 
   constructor(
     private healthRecordsService: HealthRecordsService,
     private route: ActivatedRoute,
+    private datePipe: DatePipe,
     @Inject(DOCUMENT) private document: Document) {
   }
 
@@ -85,11 +88,28 @@ export class HealthRecordComponent implements OnInit {
     }
   }
 
-  showMoreVaccination(vaccinationId: string): void {
-    console.log('Showing more information about vaccination with ID:', vaccinationId);
+  showMoreVaccination(vaccinationId: string) {
+    this.healthRecordsService.getVaccinationDetails(this.healthRecord?.healthRecordId!, vaccinationId)
+      .subscribe((vaccinationDetails) => {
+        this.expandedVaccinationDetails[vaccinationId] = vaccinationDetails;
+      });
   }
 
-  showMoreAppointment(appointmentId: string): void {
-    console.log('Showing more information about appointment with ID:', appointmentId);
+  showMoreAppointment(appointmentId: string) {
+    this.healthRecordsService.getAppointmentDetails(this.healthRecord?.healthRecordId!, appointmentId)
+      .subscribe((appointmentDetails) => {
+        this.expandedAppointmentDetails[appointmentId] = appointmentDetails;
+      });
+  }
+  hideMoreVaccination(vaccinationId: string) {
+    delete this.expandedVaccinationDetails[vaccinationId];
+  }
+
+  hideMoreAppointment(appointmentId: string) {
+    delete this.expandedAppointmentDetails[appointmentId];
+  }
+
+  formatDate(dateString: string): string | null {
+    return this.datePipe.transform(dateString, 'dd.MM.yyyy, HH:mm');
   }
 }

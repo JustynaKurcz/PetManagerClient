@@ -28,7 +28,8 @@ export class HealthRecordsService {
   }
 
   addVaccinationToHealthRecord(healthRecordId: string, vaccination: Vaccination) {
-    return this.http.post(`${this.url}/${healthRecordId}/vaccinations`, vaccination);
+    const headers = this.createAuthHeaders();
+    return this.http.post(`${this.url}/${healthRecordId}/vaccinations`, vaccination, {headers});
   }
 
   getVaccinationDetails(healthRecordId: string, vaccinationId: string) {
@@ -42,7 +43,8 @@ export class HealthRecordsService {
   }
 
   addAppointmentToHealthRecord(healthRecordId: string, appointment: Appointment) {
-    return this.http.post(`${this.url}/${healthRecordId}/appointments`, appointment);
+    const headers = this.createAuthHeaders();
+    return this.http.post(`${this.url}/${healthRecordId}/appointments`, appointment, {headers});
   }
 
   getAppointmentDetails(healthRecordId: string, appointmentId: string) {

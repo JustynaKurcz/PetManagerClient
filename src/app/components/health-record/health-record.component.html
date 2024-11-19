@@ -16,8 +16,14 @@
         <div *ngIf="showVaccinations">
           <div *ngFor="let vaccination of healthRecord.vaccinations" class="vaccination">
             <p><strong>Nazwa szczepienia:</strong> {{ vaccination.name }}</p>
-            <button (click)="showMoreVaccination(vaccination.vaccinationId)">Pokaż więcej</button>
-            <button (click)="deleteVaccination(vaccination.vaccinationId)" style="float: right;">Usuń szczepienie</button>
+            <button *ngIf="!expandedVaccinationDetails[vaccination.vaccinationId]" (click)="showMoreVaccination(vaccination.vaccinationId)">Pokaż więcej</button>
+            <button *ngIf="expandedVaccinationDetails[vaccination.vaccinationId]" (click)="hideMoreVaccination(vaccination.vaccinationId)">Pokaż mniej</button>
+            <button (click)="deleteVaccination(vaccination.vaccinationId)" class="delete" style="float: right;">Usuń szczepienie</button>
+
+            <div *ngIf="expandedVaccinationDetails[vaccination.vaccinationId]">
+              <p><strong>Data szczepienia:</strong> {{ formatDate(expandedVaccinationDetails[vaccination.vaccinationId]?.vaccinationDate) }}</p>
+              <p><strong>Data następnego szczepienia:</strong> {{ formatDate(expandedVaccinationDetails[vaccination.vaccinationId]?.nextVaccinationDate) }}</p>
+            </div>
           </div>
         </div>
       </div>
@@ -31,8 +37,15 @@
         <div *ngIf="showAppointments">
           <div *ngFor="let appointment of healthRecord.appointments" class="appointment">
             <p><strong>Tytuł wizyty:</strong> {{ appointment.title }}</p>
-            <button (click)="showMoreAppointment(appointment.appointmentId)">Pokaż więcej</button>
-            <button (click)="deleteAppointment(appointment.appointmentId)" style="float: right;">Usuń wizytę</button>
+            <button *ngIf="!expandedAppointmentDetails[appointment.appointmentId]" (click)="showMoreAppointment(appointment.appointmentId)">Pokaż więcej</button>
+            <button *ngIf="expandedAppointmentDetails[appointment.appointmentId]" (click)="hideMoreAppointment(appointment.appointmentId)">Pokaż mniej</button>
+            <button (click)="deleteAppointment(appointment.appointmentId)" class="delete" style="float: right;">Usuń wizytę</button>
+
+            <div *ngIf="expandedAppointmentDetails[appointment.appointmentId]">
+              <p><strong>Data wizyty:</strong> {{ formatDate(expandedAppointmentDetails[appointment.appointmentId]?.appointmentDate) }}</p>
+              <p><strong>Diagnoza:</strong> {{ expandedAppointmentDetails[appointment.appointmentId]?.diagnosis }}</p>
+              <p><strong>Notatki:</strong> {{ expandedAppointmentDetails[appointment.appointmentId]?.notes }}</p>
+            </div>
           </div>
         </div>
       </div>
