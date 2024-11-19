@@ -4,10 +4,11 @@
     align-items: center;
     height: 70vh;
     background-color: #f9f9f9;
+
 }
 
 .sign-up-container {
-    width: 750px;
+    width: 600px;
     margin: 0 auto;
     padding: 30px;
     border: 1px solid #eaeaea;
@@ -96,12 +97,12 @@ input[type="text"] {
 }
 
 .toggle-password {
-    margin-left: -40px; /* Ustawienie ikonki w odpowiedniej pozycji */
-    outline: none; /* Usuń obrys przycisku */
+    margin-left: -40px;
+    outline: none;
     cursor: pointer;
 }
 
 .toggle-password mat-icon {
-    font-size: 24px; /* Możesz dostosować rozmiar ikony */
-    color: #666; /* Dostosuj kolor ikony */
+    font-size: 24px;
+    color: #666;
 }

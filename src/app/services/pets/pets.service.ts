@@ -1,19 +1,24 @@
-import {Inject, Injectable} from '@angular/core';
-import {HttpClient} from "@angular/common/http";
-import {DOCUMENT} from "@angular/common";
+import {Injectable} from '@angular/core';
+import {HttpClient, HttpParams} from "@angular/common/http";
+import {PetDetails} from "../../models/pet/PetDetails";
+import {PetResponse} from "../../models/pet/petResponse";
 
 @Injectable({
   providedIn: 'root'
 })
 export class PetsService {
 
-  private url = 'http://localhost:5062/api/v1/pets';
+  private apiUrl = 'http://localhost:5062/api/v1/pets';
 
-  constructor(private http: HttpClient, @Inject(DOCUMENT) private document: Document) {
+  constructor(private http: HttpClient) {
+  }
+
+  getPets(pageIndex: number, pageSize: number){
+    return this.http.get<PetResponse>(`${this.apiUrl}?PageNumber=${pageIndex}&PageSize=${pageSize}`);
   }
 
   createPet(pet: any) {
-    return this.http.post(`${this.url}`, {
+    return this.http.post(`${this.apiUrl}`, {
       name: pet.name,
       species: pet.species,
       breed: pet.breed,
@@ -23,19 +28,19 @@ export class PetsService {
   }
 
   getPetDetails(petId: string) {
-    return this.http.get(`${this.url}/${petId}`);
+    return this.http.get<PetDetails>(`${this.apiUrl}/${petId}`);
   }
 
   getSpecies() {
-    return this.http.get(`${this.url}/species`);
+    return this.http.get(`${this.apiUrl}/species`);
   }
 
   getGenders() {
-    return this.http.get(`${this.url}/genders`);
+    return this.http.get(`${this.apiUrl}/genders`);
   }
 
   changePetInformation(pet: any) {
-    return this.http.put(`${this.url}/${pet.id}`, {
+    return this.http.put(`${this.apiUrl}/${pet.id}`, {
       name: pet.name,
       species: pet.species,
       breed: pet.breed,
@@ -45,6 +50,6 @@ export class PetsService {
   }
 
   deletePet(petId: string) {
-    return this.http.delete(`${this.url}/${petId}`);
+    return this.http.delete(`${this.apiUrl}/${petId}`);
   }
 }
