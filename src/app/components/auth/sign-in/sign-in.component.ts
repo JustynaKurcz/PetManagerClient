@@ -4,16 +4,18 @@ import {Router, RouterLink} from "@angular/router";
 import {MatIconModule} from '@angular/material/icon';
 import {UsersService} from "../../../services/users/users.service";
 import {HttpClientModule} from "@angular/common/http";
+import {MatIconButton} from "@angular/material/button";
 
 @Component({
     selector: 'app-sign-in',
     standalone: true,
-    imports: [
-        FormsModule,
-        RouterLink,
-        MatIconModule,
-        HttpClientModule
-    ],
+  imports: [
+    FormsModule,
+    RouterLink,
+    MatIconModule,
+    HttpClientModule,
+    MatIconButton
+  ],
     providers: [UsersService],
     templateUrl: './sign-in.component.html',
     styleUrl: './sign-in.component.css'

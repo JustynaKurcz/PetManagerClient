@@ -34,6 +34,48 @@ input {
   margin-top: 5px;
   border: 1px solid #ccc;
   border-radius: 4px;
+  box-sizing: border-box; /* Upewniamy się, że padding i border są uwzględniane */
+}
+
+.password-group {
+  position: relative;
+}
+
+.password-input-container {
+  position: relative;
+  width: 100%;
+}
+
+input[type="password"],
+input[type="text"] {
+  width: 100%;
+  padding: 10px 40px 10px 10px; /* Zostawiamy miejsce po prawej stronie dla przycisku widoczności hasła */
+  margin-top: 5px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  box-sizing: border-box;
+}
+
+.toggle-password {
+  position: absolute;
+  right: 10px; /* Ustawienie przycisku na prawej krawędzi */
+  top: 50%; /* Ustawienie przycisku na 50% wysokości kontenera */
+  transform: translateY(-50%); /* Wyśrodkowanie przycisku w pionie */
+  outline: none;
+  cursor: pointer;
+  background: none;
+  border: none;
+  padding: 0;
+  height: 24px; /* Dopasowanie rozmiaru przycisku do ikony */
+  width: 24px; /* Dopasowanie rozmiaru przycisku do ikony */
+  display: flex;
+  align-items: center; /* Wyśrodkowanie ikony w pionie */
+  justify-content: center; /* Wyśrodkowanie ikony w poziomie */
+}
+
+.toggle-password mat-icon {
+  font-size: 24px;
+  color: #666;
 }
 
 .forgot-password {
@@ -76,34 +118,4 @@ input {
   border: 1px solid #eaeaea;
   border-radius: 8px;
   background-color: #f9f9f9;
-}
-
-.password-group {
-  position: relative;
-}
-
-.password-input-container {
-  display: flex;
-  align-items: center;
-  position: relative;
-}
-
-input[type="password"],
-input[type="text"] {
-  width: 100%;
-  padding: 10px;
-  margin-top: 5px;
-  border: 1px solid #ccc;
-  border-radius: 4px;
-}
-
-.toggle-password {
-  margin-left: -40px;
-  outline: none;
-  cursor: pointer;
-}
-
-.toggle-password mat-icon {
-  font-size: 24px;
-  color: #666;
 }

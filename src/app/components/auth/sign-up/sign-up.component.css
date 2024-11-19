@@ -1,108 +1,101 @@
 .wrapper {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 70vh;
-    background-color: #f9f9f9;
-
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 70vh;
+  background-color: #f9f9f9;
 }
 
 .sign-up-container {
-    width: 600px;
-    margin: 0 auto;
-    padding: 30px;
-    border: 1px solid #eaeaea;
-    border-radius: 8px;
-    text-align: center;
-    box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
+  width: 600px;
+  margin: 0 auto;
+  padding: 30px;
+  border: 1px solid #eaeaea;
+  border-radius: 8px;
+  text-align: center;
+  box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
 }
 
 h2 {
-    margin-bottom: 20px;
-    font-weight: 400;
+  margin-bottom: 20px;
+  font-weight: 400;
 }
 
 .form-group {
-    position: relative;
-    margin-bottom: 20px;
-    text-align: left;
+  position: relative;
+  margin-bottom: 20px;
+  text-align: left;
 }
 
 input {
-    width: 100%;
-    padding: 10px;
-    margin-top: 5px;
-    border: 1px solid #ccc;
-    border-radius: 4px;
+  width: 100%;
+  padding: 10px;
+  margin-top: 5px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  box-sizing: border-box;
 }
 
-.forgot-password {
-    margin-bottom: 20px;
-    text-align: right;
-}
-
-.forgot-password a {
-    color: #000;
-    text-decoration: none;
-    font-size: 0.875em;
-}
-
-.btn {
-    width: 100%;
-    padding: 12px;
-    border: none;
-    border-radius: 25px;
-    font-size: 1em;
-    cursor: pointer;
-}
-
-.btn-primary {
-    background-color: #f8d64e;
-    color: #000;
-    font-weight: bold;
-}
-
-.btn-secondary {
-    background-color: #ffffff;
-    color: #000;
-    font-weight: bold;
-    margin-top: 20px;
-    border: 1px solid #eaeaea;
-}
-
-.new-client {
-    margin-top: 40px;
-    padding: 15px;
-    border: 1px solid #eaeaea;
-    border-radius: 8px;
-    background-color: #f9f9f9;
-}
 .password-group {
-    position: relative;
+  position: relative;
 }
 
 .password-input-container {
-    display: flex;
-    align-items: center;
-    position: relative;
+  position: relative;
+  width: 100%;
 }
 
 input[type="password"],
 input[type="text"] {
-    width: 100%;
-    padding: 10px;
-    margin-top: 5px;
-    border: 1px solid #ccc;
-    border-radius: 4px;
+  width: 100%;
+  padding: 10px 40px 10px 10px; /* Uwzględnienie miejsca dla przycisku widoczności hasła */
+  margin-top: 5px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  box-sizing: border-box;
 }
 
 .toggle-password {
-    margin-left: -40px;
-    outline: none;
-    cursor: pointer;
+  position: absolute;
+  right: 10px; /* Przyciski ustawione przy prawej krawędzi */
+  top: 50%; /* Wyśrodkowanie przycisku w pionie */
+  transform: translateY(-50%); /* Wyśrodkowanie w osi Y */
+  outline: none;
+  cursor: pointer;
+  background: none;
+  border: none;
+  padding: 0;
+  height: 24px; /* Dopasowanie rozmiaru do ikony */
+  width: 24px; /* Dopasowanie rozmiaru do ikony */
+  display: flex;
+  align-items: center; /* Wyśrodkowanie ikony */
+  justify-content: center; /* Wyśrodkowanie ikony */
 }
 
 .toggle-password mat-icon {
-    font-size: 24px;
-    color: #666;
+  font-size: 24px;
+  color: #666;
+}
+
+.btn {
+  width: 100%;
+  padding: 12px;
+  border: none;
+  border-radius: 25px;
+  font-size: 1em;
+  cursor: pointer;
+}
+
+.btn-primary {
+  background-color: #f8d64e;
+  color: #000;
+  font-weight: bold;
+}
+
+.btn-secondary {
+  background-color: #ffffff;
+  color: #000;
+  font-weight: bold;
+  margin-top: 20px;
+  border: 1px solid #eaeaea;
 }
