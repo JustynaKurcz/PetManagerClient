@@ -3,8 +3,8 @@ import {HttpClient, HttpHeaders} from "@angular/common/http";
 import {PetResponse} from "../../models/pets/petResponse";
 import {API_ENDPOINTS} from "../../constants/api-constants";
 import {PetDetailsDto} from "../../models/pets/pet-details-dto";
-import {GetSpeciesTypesResponse} from "../../models/get-species-types-response";
-import {GetGenderTypesResponse} from "../../models/get-gender-types-response";
+import {GetSpeciesTypesResponse} from "../../models/pets/enums/get-species-types-response";
+import {GetGenderTypesResponse} from "../../models/pets/enums/get-gender-types-response";
 
 @Injectable({
     providedIn: 'root'
