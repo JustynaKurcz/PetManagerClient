@@ -1,5 +1,5 @@
 footer {
-  background-color: #333;
+  background-color: #6c6c40;
   color: #fff;
   text-align: center;
   padding: 1em;
@@ -13,5 +13,5 @@ footer {
 footer p {
   text-decoration: none;
   margin: 0 10px;
-  color: #a4ae92;
+  color: white;
 }

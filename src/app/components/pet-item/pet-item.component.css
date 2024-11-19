@@ -1,10 +1,12 @@
 .example-card {
-  max-width: 350px;
+  max-width: 450px;
   width: 100%;
   border-radius: 16px;
   box-shadow: 0 8px 16px rgba(0, 0, 0, 0.15);
   transition: transform 0.3s ease, box-shadow 0.3s ease;
   overflow: hidden;
+  background-color: #ffffff;
+  padding: 0;
 }
 
 .example-card:hover {
@@ -12,27 +14,50 @@
   box-shadow: 0 16px 32px rgba(0, 0, 0, 0.25);
 }
 
+mat-card-header {
+  padding: 20px;
+}
+
 mat-card-title {
-  font-weight: 600;
+  font-weight: 700;
   color: #333;
-  font-size: 1.4em;
+  font-size: 1.6em;
   text-align: center;
+  margin-bottom: 0;
+}
+
+img[mat-card-image] {
+  height: 250px;
+  object-fit: cover;
+  width: 100%;
+  border-radius: 0;
+  margin-bottom: 8px;
 }
 
 mat-card-content {
   color: #666;
   font-size: 1.1em;
   text-align: center;
-  margin-top: 16px;
+  margin: 20px 0;
 }
 
-mat-card {
-  background-color: #ffffff;
-  padding: 16px;
-}
-
-img[mat-card-image] {
-  height: 200px;
-  object-fit: cover;
+a.btn.btn-primary {
+  display: inline-block;
+  background-color: #FFC107;
+  color: #000000;
+  text-decoration: none;
+  padding: 12px 24px;
   border-radius: 8px;
+  font-weight: 600;
+  transition: background-color 0.3s ease, transform 0.3s ease;
+  margin-bottom: 20px;
+}
+
+a.btn.btn-primary:hover {
+  background-color: #FFB300;
+  transform: translateY(-2px);
+}
+
+a.btn.btn-primary:active {
+  transform: translateY(0);
 }
