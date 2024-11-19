@@ -14,6 +14,10 @@ export const routes: Routes = [
     loadComponent: () => import('./components/auth/sign-up/sign-up.component').then(m => m.SignUpComponent)
   },
   {
+    path: 'pets',
+    loadComponent: () => import('./components/pet-list/pet-list.component').then(m => m.PetListComponent)
+  },
+  {
     path: '**',
     loadComponent: () => import('./components/not-found/not-found.component').then(m => m.NotFoundComponent)
   }

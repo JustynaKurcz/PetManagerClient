@@ -1,0 +1,15 @@
+.pet-list-container {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 32px;
+  padding: 32px;
+  justify-items: center;
+  background-color: #f9f9f9;
+}
+
+h1 {
+  text-align: center;
+  font-size: 2em;
+  color: #333;
+  margin-bottom: 24px;
+}
