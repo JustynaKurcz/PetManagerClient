@@ -4,6 +4,8 @@
     </mat-card-header>
     <img mat-card-image src="https://material.angular.io/assets/img/examples/shiba2.jpg" alt="Zdjęcie produktu" />
     <mat-card-content>
-        <p>Zobacz więcej {{ pet?.petId }}</p>
+      <a class="btn btn-primary" [routerLink]="['/pet/detail/' + pet?.petId]">
+        Zobacz więcej
+      </a>
     </mat-card-content>
 </mat-card>

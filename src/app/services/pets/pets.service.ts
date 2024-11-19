@@ -1,55 +1,58 @@
 import {Injectable} from '@angular/core';
-import {HttpClient, HttpParams} from "@angular/common/http";
-import {PetDetails} from "../../models/pet/PetDetails";
-import {PetResponse} from "../../models/pet/petResponse";
+import {HttpClient, HttpHeaders} from "@angular/common/http";
+import {PetResponse} from "../../models/pets/petResponse";
+import {API_ENDPOINTS} from "../../constants/api-constants";
+import {PetDetailsDto} from "../../models/pets/pet-details-dto";
 
 @Injectable({
-  providedIn: 'root'
+    providedIn: 'root'
 })
 export class PetsService {
 
-  private apiUrl = 'http://localhost:5062/api/v1/pets';
+    private apiUrl = 'http://localhost:5062/api/v1/pets';
 
-  constructor(private http: HttpClient) {
-  }
+    constructor(private http: HttpClient) {
+    }
 
-  getPets(pageIndex: number, pageSize: number){
-    return this.http.get<PetResponse>(`${this.apiUrl}?PageNumber=${pageIndex}&PageSize=${pageSize}`);
-  }
+    private createAuthHeaders(): HttpHeaders {
+        const token = localStorage.getItem('token');
+        return new HttpHeaders({
+            'Authorization': `Bearer ${token}`
+        });
+    }
 
-  createPet(pet: any) {
-    return this.http.post(`${this.apiUrl}`, {
-      name: pet.name,
-      species: pet.species,
-      breed: pet.breed,
-      gender: pet.gender,
-      birthDate: pet.birthDate
-    });
-  }
+    getPets(pageIndex: number, pageSize: number) {
+        const headers = this.createAuthHeaders();
+        return this.http.get<PetResponse>((`${this.apiUrl}?PageNumber=${pageIndex}&PageSize=${pageSize}`), {headers});
+    }
 
-  getPetDetails(petId: string) {
-    return this.http.get<PetDetails>(`${this.apiUrl}/${petId}`);
-  }
+    createPet(pet: any) {
+        return this.http.post(`${this.apiUrl}`, {
+            name: pet.name,
+            species: pet.species,
+            breed: pet.breed,
+            gender: pet.gender,
+            birthDate: pet.birthDate
+        });
+    }
 
-  getSpecies() {
-    return this.http.get(`${this.apiUrl}/species`);
-  }
+    getPetDetails(petId: string) {
+        const headers = this.createAuthHeaders();
+        return this.http.get<PetDetailsDto>((`${API_ENDPOINTS.PETS.BASE}/${petId}`), {headers});
+    }
 
-  getGenders() {
-    return this.http.get(`${this.apiUrl}/genders`);
-  }
+    getSpecies() {
+        const headers = this.createAuthHeaders();
+        return this.http.get(`${this.apiUrl}/species-types`, {headers});
+    }
 
-  changePetInformation(pet: any) {
-    return this.http.put(`${this.apiUrl}/${pet.id}`, {
-      name: pet.name,
-      species: pet.species,
-      breed: pet.breed,
-      gender: pet.gender,
-      birthDate: pet.birthDate
-    });
-  }
+    getGenders() {
+        const headers = this.createAuthHeaders();
+        return this.http.get(`${this.apiUrl}/gender-types`, {headers});
+    }
 
-  deletePet(petId: string) {
-    return this.http.delete(`${this.apiUrl}/${petId}`);
-  }
+    deletePet(petId: string) {
+        const headers = this.createAuthHeaders();
+        return this.http.delete((`${API_ENDPOINTS.PETS.BASE}/${petId}`), {headers});
+    }
 }

@@ -1,7 +1,7 @@
-import {Pet} from "./pet";
+import {PetDto} from "./pet-dto";
 
 export interface PetResponse {
-  items: Pet[];
+  items: PetDto[];
   pageIndex: number;
   totalPages: number;
   totalCount: number;
