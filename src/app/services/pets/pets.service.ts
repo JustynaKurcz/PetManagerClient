@@ -3,6 +3,8 @@ import {HttpClient, HttpHeaders} from "@angular/common/http";
 import {PetResponse} from "../../models/pets/petResponse";
 import {API_ENDPOINTS} from "../../constants/api-constants";
 import {PetDetailsDto} from "../../models/pets/pet-details-dto";
+import {GetSpeciesTypesResponse} from "../../models/get-species-types-response";
+import {GetGenderTypesResponse} from "../../models/get-gender-types-response";
 
 @Injectable({
     providedIn: 'root'
@@ -26,14 +28,9 @@ export class PetsService {
         return this.http.get<PetResponse>((`${this.apiUrl}?PageNumber=${pageIndex}&PageSize=${pageSize}`), {headers});
     }
 
-    createPet(pet: any) {
-        return this.http.post(`${this.apiUrl}`, {
-            name: pet.name,
-            species: pet.species,
-            breed: pet.breed,
-            gender: pet.gender,
-            birthDate: pet.birthDate
-        });
+    createPet(petData: any) {
+        const headers = this.createAuthHeaders();
+        return this.http.post<any>(`${API_ENDPOINTS.PETS.BASE}`, petData, {headers});
     }
 
     getPetDetails(petId: string) {
@@ -41,14 +38,14 @@ export class PetsService {
         return this.http.get<PetDetailsDto>((`${API_ENDPOINTS.PETS.BASE}/${petId}`), {headers});
     }
 
-    getSpecies() {
+    getSpecies(){
         const headers = this.createAuthHeaders();
-        return this.http.get(`${this.apiUrl}/species-types`, {headers});
+        return this.http.get<GetSpeciesTypesResponse>(`${API_ENDPOINTS.PETS.BASE}/species-types`, {headers});
     }
 
     getGenders() {
         const headers = this.createAuthHeaders();
-        return this.http.get(`${this.apiUrl}/gender-types`, {headers});
+        return this.http.get<GetGenderTypesResponse>(`${API_ENDPOINTS.PETS.BASE}/gender-types`, {headers});
     }
 
     deletePet(petId: string) {

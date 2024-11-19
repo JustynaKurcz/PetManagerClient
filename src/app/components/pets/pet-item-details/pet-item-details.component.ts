@@ -11,7 +11,7 @@ import {PetDetailsDto} from "../../../models/pets/pet-details-dto";
   imports: [CommonModule, HttpClientModule],
   providers: [PetsService],
   templateUrl: './pet-item-details.component.html',
-  styleUrls: ['./pet-item-details.component.css'] // Poprawiono literówkę: styleUrls zamiast styleUrl
+  styleUrls: ['./pet-item-details.component.css']
 })
 export class PetItemDetailsComponent implements OnInit {
   pet?: PetDetailsDto;
@@ -45,7 +45,6 @@ export class PetItemDetailsComponent implements OnInit {
   openHealthRecord(): void {
     if (this.pet) {
       console.log('Opening health record for pet with ID:', this.pet.healthRecordId);
-      // Możesz tu dodać logikę otwierającą szczegóły karty leczenia
     }
   }
   deletePet(): void {
@@ -53,7 +52,6 @@ export class PetItemDetailsComponent implements OnInit {
       this.petsService.deletePet(this.pet?.petId!).subscribe({
         next: () => {
           alert('Zwierzę zostało usunięte pomyślnie.');
-          // Możesz przekierować użytkownika np. do listy zwierząt:
           window.location.href = '/pets';
         },
         error: (error) => {
