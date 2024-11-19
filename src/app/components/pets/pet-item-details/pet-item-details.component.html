@@ -33,7 +33,7 @@
   <div class="pet-image">
     <img src="https://material.angular.io/assets/img/examples/shiba2.jpg" alt="Zdjęcie zwierzęcia" />
     <div class="form-group health-record">
-      <button class="button" (click)="openHealthRecord()">Otwórz kartę leczenia</button>
+      <button class="button" [routerLink]="['/pet/health-record/' + pet?.healthRecordId]">Otwórz kartę leczenia</button>
     </div>
   </div>
 

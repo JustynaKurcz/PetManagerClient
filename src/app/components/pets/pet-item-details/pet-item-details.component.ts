@@ -2,13 +2,13 @@ import { Component, OnInit } from '@angular/core';
 import { CommonModule } from "@angular/common";
 import { HttpClientModule } from "@angular/common/http";
 import { PetsService } from "../../../services/pets/pets.service";
-import { ActivatedRoute } from "@angular/router";
+import {ActivatedRoute, RouterLink} from "@angular/router";
 import {PetDetailsDto} from "../../../models/pets/pet-details-dto";
 
 @Component({
   selector: 'app-pet-item-details',
   standalone: true,
-  imports: [CommonModule, HttpClientModule],
+  imports: [CommonModule, HttpClientModule, RouterLink],
   providers: [PetsService],
   templateUrl: './pet-item-details.component.html',
   styleUrls: ['./pet-item-details.component.css']
@@ -42,11 +42,6 @@ export class PetItemDetailsComponent implements OnInit {
     });
   }
 
-  openHealthRecord(): void {
-    if (this.pet) {
-      console.log('Opening health record for pet with ID:', this.pet.healthRecordId);
-    }
-  }
   deletePet(): void {
     if (confirm('Czy na pewno chcesz usunąć to zwierzę?')) {
       this.petsService.deletePet(this.pet?.petId!).subscribe({

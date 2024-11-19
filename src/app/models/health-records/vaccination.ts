@@ -1,5 +1,6 @@
 export interface Vaccination {
-  vaccinationName: string;
+  vaccinationId: string;
+  name: string;
   vaccinationDate: string;
   nextVaccinationDate: string;
 }

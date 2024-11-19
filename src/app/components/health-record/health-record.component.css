@@ -1,0 +1,78 @@
+.health-record {
+  padding: 20px;
+  background-color: #f3f4f6; /* Light gray background to make it easier on the eyes */
+  border-radius: 12px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.vaccination, .appointment {
+  margin-bottom: 20px;
+  padding: 20px;
+  background-color: #ffffff; /* White background to contrast with the light gray */
+  border: 1px solid #e0e0e0;
+  border-radius: 12px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.vaccination:hover, .appointment:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
+}
+
+h2, h3 {
+  color: #1f2937; /* Darker color for better contrast */
+}
+
+h3 {
+  margin-top: 30px;
+}
+
+p {
+  margin: 5px 0;
+  color: #4b5563; /* Softer text color for readability */
+}
+
+button {
+  background-color: #ef4444; /* Red color for delete button to imply caution */
+  color: white;
+  border: none;
+  padding: 10px 15px;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+button:hover {
+  background-color: #dc2626; /* Darker red for hover state */
+}
+
+.delete-icon {
+  color: red;
+  cursor: pointer;
+  margin-left: 10px;
+}
+
+h3 span {
+  color: #2563eb; /* Blue color for expanding/collapsing symbol to make it stand out */
+}
+
+h3:hover {
+  color: #1d4ed8; /* Darker blue on hover to indicate interactivity */
+  text-decoration: underline; /* Underline on hover to indicate that it's clickable */
+}
+
+.information-toggle {
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+}
+
+.information-toggle span {
+  margin-left: 8px;
+}
+
+.container {
+  max-width: 800px; /* Limit the width of the content for better readability */
+  margin: 0 auto; /* Center the content on the page */
+}

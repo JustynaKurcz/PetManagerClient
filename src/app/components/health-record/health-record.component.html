@@ -1,0 +1,41 @@
+<div class="container">
+  <div class="health-record">
+    <h2>Karta Leczenia</h2>
+
+    <div *ngIf="healthRecord">
+      <div *ngIf="healthRecord.appointments.length === 0 && healthRecord.vaccinations.length === 0">
+        <p>Historia jest pusta...</p>
+      </div>
+
+      <div *ngIf="healthRecord.vaccinations.length > 0">
+        <h3 (click)="toggleVaccinations()" class="information-toggle">
+          Informacje o szczepieniach
+          <span *ngIf="showVaccinations">[–]</span>
+          <span *ngIf="!showVaccinations">[+]</span>
+        </h3>
+        <div *ngIf="showVaccinations">
+          <div *ngFor="let vaccination of healthRecord.vaccinations" class="vaccination">
+            <p><strong>Nazwa szczepienia:</strong> {{ vaccination.name }}</p>
+            <button (click)="showMoreVaccination(vaccination.vaccinationId)">Pokaż więcej</button>
+            <button (click)="deleteVaccination(vaccination.vaccinationId)" style="float: right;">Usuń szczepienie</button>
+          </div>
+        </div>
+      </div>
+
+      <div *ngIf="healthRecord.appointments.length > 0">
+        <h3 (click)="toggleAppointments()" class="information-toggle">
+          Informacje o wizytach
+          <span *ngIf="showAppointments">[–]</span>
+          <span *ngIf="!showAppointments">[+]</span>
+        </h3>
+        <div *ngIf="showAppointments">
+          <div *ngFor="let appointment of healthRecord.appointments" class="appointment">
+            <p><strong>Tytuł wizyty:</strong> {{ appointment.title }}</p>
+            <button (click)="showMoreAppointment(appointment.appointmentId)">Pokaż więcej</button>
+            <button (click)="deleteAppointment(appointment.appointmentId)" style="float: right;">Usuń wizytę</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

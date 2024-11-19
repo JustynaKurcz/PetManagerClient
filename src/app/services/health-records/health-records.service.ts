@@ -1,8 +1,10 @@
 import {Inject, Injectable} from '@angular/core';
-import {HttpClient} from "@angular/common/http";
+import {HttpClient, HttpHeaders} from "@angular/common/http";
 import {DOCUMENT} from "@angular/common";
-import {Vaccination} from "../../models/vaccination";
-import {Appointment} from "../../models/appointment";
+import {Vaccination} from "../../models/health-records/vaccination";
+import {Appointment} from "../../models/health-records/appointment";
+import {API_ENDPOINTS} from "../../constants/api-constants";
+import {HealthRecordDto} from "../../models/health-records/get-health-record/health-record-dto";
 
 @Injectable({
   providedIn: 'root'
@@ -13,16 +15,30 @@ export class HealthRecordsService {
   constructor(private http: HttpClient, @Inject(DOCUMENT) private document: Document) {
   }
 
+  private createAuthHeaders(): HttpHeaders {
+    const token = localStorage.getItem('token');
+    return new HttpHeaders({
+      'Authorization': `Bearer ${token}`
+    });
+  }
+
+  getHealthRecordDetails(healthRecordId: string) {
+    const headers = this.createAuthHeaders();
+    return this.http.get<HealthRecordDto>(`${API_ENDPOINTS.HEALTH_RECORDS.BASE}/${healthRecordId}`, {headers});
+  }
+
   addVaccinationToHealthRecord(healthRecordId: string, vaccination: Vaccination) {
     return this.http.post(`${this.url}/${healthRecordId}/vaccinations`, vaccination);
   }
 
   getVaccinationDetails(healthRecordId: string, vaccinationId: string) {
-    return this.http.get(`${this.url}/${healthRecordId}/vaccinations/${vaccinationId}`);
+    const headers = this.createAuthHeaders();
+    return this.http.get(`${this.url}/${healthRecordId}/vaccinations/${vaccinationId}`, {headers});
   }
 
   deleteVaccination(healthRecordId: string, vaccinationId: string) {
-    return this.http.delete(`${this.url}/${healthRecordId}/vaccinations/${vaccinationId}`);
+    const headers = this.createAuthHeaders();
+    return this.http.delete(`${this.url}/${healthRecordId}/vaccinations/${vaccinationId}`, {headers});
   }
 
   addAppointmentToHealthRecord(healthRecordId: string, appointment: Appointment) {
@@ -30,10 +46,12 @@ export class HealthRecordsService {
   }
 
   getAppointmentDetails(healthRecordId: string, appointmentId: string) {
-    return this.http.get(`${this.url}/${healthRecordId}/appointments/${appointmentId}`);
+    const headers = this.createAuthHeaders();
+    return this.http.get(`${this.url}/${healthRecordId}/appointments/${appointmentId}`, {headers});
   }
 
   deleteAppointment(healthRecordId: string, appointmentId: string) {
-    return this.http.delete(`${this.url}/${healthRecordId}/appointments/${appointmentId}`);
+    const headers = this.createAuthHeaders();
+    return this.http.delete(`${this.url}/${healthRecordId}/appointments/${appointmentId}`, {headers});
   }
 }
