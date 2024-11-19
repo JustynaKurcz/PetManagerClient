@@ -19,14 +19,13 @@ import {HttpClientModule} from "@angular/common/http";
     styleUrl: './sign-in.component.css'
 })
 export class SignInComponent {
-    public credentials = {
+    public SignInCommand = {
         email: '',
         password: ''
     };
 
-    public logged?: boolean;
-    public logout?: boolean;
     hidePassword: boolean = true;
+    loginError: boolean = false;
 
     togglePasswordVisibility(): void {
         this.hidePassword = !this.hidePassword;
@@ -37,17 +36,16 @@ export class SignInComponent {
 
     signIn() {
         return this.usersService
-            .signIn(this.credentials)
+            .signIn(this.SignInCommand)
             .subscribe((result) => {
-                if (!result) {
-                    this.logged = false
+                if (result) {
+                    this.router.navigate(['/']);
                 } else {
-                    this.logout = false
-                    this.credentials = {
+                    this.SignInCommand = {
                         email: '',
                         password: ''
-                    }
-                    this.router.navigate(['/'])
+                    };
+                    this.loginError = true;
                 }
             })
     }

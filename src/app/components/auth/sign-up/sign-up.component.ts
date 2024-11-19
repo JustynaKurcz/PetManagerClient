@@ -18,10 +18,10 @@ import {MatIconButton} from "@angular/material/button";
     styleUrls: ['./sign-up.component.css']
 })
 export class SignUpComponent {
-    public credentials = {
-        email: '',
-        password: ''
-    }
+  public SignUpCommand = {
+    email: '',
+    password: ''
+  }
     public error: string = '';
     hidePassword: boolean = true;
     constructor(private usersService: UsersService, private router: Router) { }
@@ -31,7 +31,7 @@ export class SignUpComponent {
     }
 
     signUp() {
-        this.usersService.signUp(this.credentials).pipe(
+        this.usersService.signUp(this.SignUpCommand).pipe(
             catchError((error: HttpErrorResponse) => {
                 if (error.error.message) {
                     this.error = this.translateErrorMessage(error.error.message);

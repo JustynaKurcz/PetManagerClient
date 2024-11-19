@@ -4,13 +4,15 @@
         <form (ngSubmit)="signIn()" autocomplete="off">
             <div class="form-group">
                 <label for="email">E-mail</label>
-                <input [(ngModel)]="credentials.email" name="email" id="email" type="email" placeholder="Wpisz e-mail" required/>
+                <input [(ngModel)]="SignInCommand.email" name="email" id="email" type="email" placeholder="Wpisz e-mail"
+                       required/>
             </div>
 
             <div class="form-group password-group">
                 <label for="password">Hasło</label>
                 <div class="password-input-container">
-                    <input [(ngModel)]="credentials.password" name="password" id="password" [type]="hidePassword ? 'password' : 'text'" placeholder="Wpisz hasło" required />
+                    <input [(ngModel)]="SignInCommand.password" name="password" id="password"
+                           [type]="hidePassword ? 'password' : 'text'" placeholder="Wpisz hasło" required/>
                     <button
                             mat-icon-button
                             type="button"
