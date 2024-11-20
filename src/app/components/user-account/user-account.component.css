@@ -1,5 +1,5 @@
 .user-account-container {
-  max-width: 600px;
+  max-width: 800px;
   margin: 50px auto;
   padding: 20px;
   background: #fafafa;
@@ -70,7 +70,7 @@
   padding: 12px 25px;
   font-size: 1rem;
   font-weight: bold;
-  background-color: #f0ad4e; /* Kolor akcentowy nawiązujący do widoku logowania */
+  background-color: #f0ad4e;
   color: #fff;
   border: none;
   border-radius: 8px;
@@ -110,13 +110,13 @@
 }
 
 .form-group input:focus {
-  border-color: #f0ad4e; /* Podkreślenie w kolorze akcentowym */
+  border-color: #f0ad4e;
   outline: none;
   box-shadow: 0 0 5px rgba(240, 173, 78, 0.5);
 }
 
 .save-button {
-  background-color: #5cb85c; /* Zielony kolor podobny do przycisku logowania */
+  background-color: #5cb85c;
 }
 
 .save-button:hover {

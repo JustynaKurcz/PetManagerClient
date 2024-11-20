@@ -3,6 +3,7 @@ const API_BASE_URL = 'http://localhost:5062/api/v1/';
 export const API_ENDPOINTS = {
   USERS: {
     BASE: `${API_BASE_URL}users`,
+    CURRENT_LOGGED_USER: `${API_BASE_URL}users/user`,
     SIGN_IN: `${API_BASE_URL}users/sign-in`,
     SIGN_UP: `${API_BASE_URL}users/sign-up`,
   },

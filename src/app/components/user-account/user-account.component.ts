@@ -27,21 +27,21 @@ export class UserAccountComponent implements OnInit {
   loadUserDetails(): void {
     this.usersService.getDetailsOfTheLoggedUser().subscribe((data) => {
       this.user = data;
-      this.editableUser = { ...data }; // Tworzymy kopię dla edycji
+      this.editableUser = { ...data };
     });
   }
 
   toggleEditMode(): void {
     this.isEditMode = !this.isEditMode;
     if (!this.isEditMode) {
-      this.editableUser = { ...this.user }; // Resetujemy zmiany przy anulowaniu
+      this.editableUser = { ...this.user };
     }
   }
 
   saveChanges(): void {
     this.usersService.changeUserInformation(this.editableUser).subscribe(() => {
-      this.user = { ...this.editableUser }; // Aktualizujemy dane wyświetlane
-      this.isEditMode = false; // Wyłączamy tryb edycji
+      this.user = { ...this.editableUser };
+      this.isEditMode = false;
     });
   }
 
