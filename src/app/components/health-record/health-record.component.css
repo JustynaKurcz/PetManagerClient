@@ -74,12 +74,13 @@ button.delete:hover {
   border-radius: 8px;
   cursor: pointer;
   transition: background-color 0.3s;
-  margin-left: 20px;
+  margin-left: auto;
 }
 
 .add-button:hover {
   background-color: #059669;
 }
+
 
 h3 span {
   color: #2563eb;
@@ -112,4 +113,11 @@ input:focus, textarea:focus {
   border-color: #2563eb;
   outline: none;
   box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.3);
+}
+
+.header-with-add-button {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
 }
