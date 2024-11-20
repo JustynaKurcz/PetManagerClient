@@ -52,4 +52,9 @@ export class PetsService {
         const headers = this.createAuthHeaders();
         return this.http.delete((`${API_ENDPOINTS.PETS.BASE}/${petId}`), {headers});
     }
+
+    changePetInformation(petId: string, petData: any) {
+        const headers = this.createAuthHeaders();
+        return this.http.put<any>(`${API_ENDPOINTS.PETS.BASE}/${petId}`, petData, {headers});
+    }
 }
