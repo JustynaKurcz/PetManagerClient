@@ -26,6 +26,10 @@ export const routes: Routes = [
     loadComponent: () => import('./components/health-record/health-record.component').then(m => m.HealthRecordComponent)
   },
   {
+    path: 'account',
+    loadComponent: () => import('./components/user-account/user-account.component').then(m => m.UserAccountComponent)
+  },
+  {
     path: '**',
     loadComponent: () => import('./components/not-found/not-found.component').then(m => m.NotFoundComponent)
   }

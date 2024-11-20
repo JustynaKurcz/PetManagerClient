@@ -1,0 +1,56 @@
+<div class="user-account-container">
+  <div class="header">
+    <h1>Moje Konto</h1>
+  </div>
+
+  <div class="user-content">
+    <div class="user-card">
+      <h2>Witaj, {{ user?.firstName }} {{ user?.lastName }}</h2>
+      <p class="user-email">{{ user?.email }}</p>
+      <div class="user-details">
+        <div class="detail-item">
+          <label>ID użytkownika:</label>
+          <span>{{ user?.userId }}</span>
+        </div>
+        <div class="detail-item">
+          <label>Data utworzenia konta:</label>
+          <span>{{ user?.createdAt | date: 'yyyy-MM-dd' }}</span>
+        </div>
+        <div class="detail-item">
+          <label>Rola:</label>
+          <span>{{ user?.role === "1" ? 'Użytkownik' : 'Administrator' }}</span>
+        </div>
+      </div>
+      <button class="button edit-button" (click)="toggleEditMode()">
+        {{ isEditMode ? 'Anuluj edycję' : 'Edytuj dane' }}
+      </button>
+    </div>
+
+    <!-- Sekcja formularza edycji (jeśli w trybie edycji) -->
+    <div *ngIf="isEditMode" class="edit-form">
+      <form (ngSubmit)="saveChanges()">
+        <div class="form-group">
+          <label for="firstName">Imię</label>
+          <input
+            id="firstName"
+            [(ngModel)]="editableUser.firstName"
+            name="firstName"
+            type="text"
+            placeholder="Podaj swoje imię"
+          />
+        </div>
+        <div class="form-group">
+          <label for="lastName">Nazwisko</label>
+          <input
+            id="lastName"
+            [(ngModel)]="editableUser.lastName"
+            name="lastName"
+            type="text"
+            placeholder="Podaj swoje nazwisko"
+          />
+        </div>
+        <button type="submit" class="button save-button">Zapisz zmiany</button>
+      </form>
+    </div>
+  </div>
+</div>
