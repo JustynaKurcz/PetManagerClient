@@ -8,6 +8,9 @@ import {HealthRecordDto} from "../../models/health-records/get-health-record/hea
 import {
   AddVaccinationToHealthRecordCommand
 } from "../../models/health-records/add-vaccination-to-health-record/add-vaccination-to-health-record-command";
+import {
+  AddAppointmentToHealthRecordCommand
+} from "../../models/health-records/add-appointment-to-health-record/add-appointment-to-health-record-command";
 
 @Injectable({
   providedIn: 'root'
@@ -45,7 +48,7 @@ export class HealthRecordsService {
     return this.http.delete(`${this.url}/${healthRecordId}/vaccinations/${vaccinationId}`, {headers});
   }
 
-  addAppointmentToHealthRecord(healthRecordId: string, appointmentData: Appointment) {
+  addAppointmentToHealthRecord(healthRecordId: string, appointmentData: AddAppointmentToHealthRecordCommand) {
     const headers = this.createAuthHeaders();
     return this.http.post(`${this.url}/${healthRecordId}/appointments`, appointmentData, {headers});
   }

@@ -8,6 +8,9 @@ import {
   AddVaccinationToHealthRecordCommand
 } from "../../models/health-records/add-vaccination-to-health-record/add-vaccination-to-health-record-command";
 import {FormsModule} from "@angular/forms";
+import {
+  AddAppointmentToHealthRecordCommand
+} from "../../models/health-records/add-appointment-to-health-record/add-appointment-to-health-record-command";
 
 @Component({
   selector: 'app-health-record',
@@ -29,11 +32,19 @@ export class HealthRecordComponent implements OnInit {
   expandedVaccinationDetails: { [key: string]: any } = {};
   expandedAppointmentDetails: { [key: string]: any } = {};
   showAddVaccinationForm = false;
+  showAddAppointmentForm = false;
   newVaccination: AddVaccinationToHealthRecordCommand = {
     vaccinationName: '',
     vaccinationDate: '',
     nextVaccinationDate: ''
   };
+  newAppointment: AddAppointmentToHealthRecordCommand = {
+    title: '',
+    diagnosis: '',
+    appointmentDate: '',
+    notes: ''
+  };
+
 
   constructor(
     private healthRecordsService: HealthRecordsService,
@@ -129,11 +140,9 @@ export class HealthRecordComponent implements OnInit {
   }
 
   addVaccination(): void {
-    // Konwertowanie dat do formatu ISO 8601 (odpowiednie dla DateTimeOffset)
     const formattedVaccinationDate = new Date(this.newVaccination.vaccinationDate).toISOString();
     const formattedNextVaccinationDate = new Date(this.newVaccination.nextVaccinationDate).toISOString();
 
-    // Przygotowanie obiektu komendy z odpowiednimi formatami dat
     const vaccinationCommand: AddVaccinationToHealthRecordCommand = {
       vaccinationName: this.newVaccination.vaccinationName,
       vaccinationDate: formattedVaccinationDate,
@@ -144,7 +153,7 @@ export class HealthRecordComponent implements OnInit {
 
     if (healthRecordId) {
       this.healthRecordsService.addVaccinationToHealthRecord(healthRecordId, vaccinationCommand).subscribe(() => {
-        this.getHealthRecord(healthRecordId); // Po dodaniu odświeżamy kartę zdrowia
+        this.getHealthRecord(healthRecordId);
         this.newVaccination = {
           vaccinationName: '',
           vaccinationDate: '',
@@ -154,4 +163,35 @@ export class HealthRecordComponent implements OnInit {
       });
     }
   }
+
+  toggleAddAppointmentForm(): void {
+    this.showAddAppointmentForm = !this.showAddAppointmentForm;
+  }
+
+  addAppointment(): void {
+    const formattedAppointmentDate = new Date(this.newAppointment.appointmentDate).toISOString();
+
+    const appointmentCommand: AddAppointmentToHealthRecordCommand = {
+      title: this.newAppointment.title,
+      diagnosis: this.newAppointment.diagnosis,
+      appointmentDate: formattedAppointmentDate,
+      notes: this.newAppointment.notes
+    };
+
+    const healthRecordId = this.healthRecord?.healthRecordId;
+
+    if (healthRecordId) {
+      this.healthRecordsService.addAppointmentToHealthRecord(healthRecordId, appointmentCommand).subscribe(() => {
+        this.getHealthRecord(healthRecordId);
+        this.newAppointment = {
+          title: '',
+          diagnosis: '',
+          appointmentDate: '',
+          notes: ''
+        };
+        this.showAddAppointmentForm = false;
+      });
+    }
+  }
 }
+

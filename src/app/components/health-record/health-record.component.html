@@ -2,9 +2,13 @@
   <div class="health-record">
     <div class="header-with-add-button">
       <h2>Karta Leczenia</h2>
-      <button (click)="toggleAddVaccinationForm()" class="add-button">Dodaj Szczepienie</button>
+      <div class="button-group">
+        <button (click)="toggleAddVaccinationForm()" class="add-button">Dodaj Szczepienie</button>
+        <button (click)="toggleAddAppointmentForm()" class="add-button add-appointment-button">Dodaj Wizytę</button>
+      </div>
     </div>
 
+    <!-- Formularz dodawania nowego szczepienia -->
     <div *ngIf="showAddVaccinationForm" class="add-vaccination-form">
       <form (ngSubmit)="addVaccination()">
         <div class="form-group">
@@ -41,7 +45,56 @@
       </form>
     </div>
 
-    <div *ngIf="healthRecord">
+    <!-- Formularz dodawania nowej wizyty -->
+    <div *ngIf="showAddAppointmentForm" class="add-appointment-form">
+      <form (ngSubmit)="addAppointment()">
+        <div class="form-group">
+          <label for="appointmentTitle">Tytuł wizyty</label>
+          <input
+            id="appointmentTitle"
+            [(ngModel)]="newAppointment.title"
+            name="appointmentTitle"
+            type="text"
+            placeholder="Podaj tytuł wizyty"
+            required
+          />
+        </div>
+        <div class="form-group">
+          <label for="appointmentDate">Data wizyty</label>
+          <input
+            id="appointmentDate"
+            [(ngModel)]="newAppointment.appointmentDate"
+            name="appointmentDate"
+            type="date"
+            required
+          />
+        </div>
+        <div class="form-group">
+          <label for="diagnosis">Diagnoza</label>
+          <input
+            id="diagnosis"
+            [(ngModel)]="newAppointment.diagnosis"
+            name="diagnosis"
+            type="text"
+            placeholder="Podaj diagnozę"
+            required
+          />
+        </div>
+        <div class="form-group">
+          <label for="notes">Notatki</label>
+          <textarea
+            id="notes"
+            [(ngModel)]="newAppointment.notes"
+            name="notes"
+            placeholder="Podaj notatki"
+          ></textarea>
+        </div>
+        <button type="submit" class="button save-button">Zapisz wizytę</button>
+      </form>
+    </div>
+
+
+  <div *ngIf="healthRecord">
       <div *ngIf="healthRecord.appointments.length === 0 && healthRecord.vaccinations.length === 0">
         <p>Historia jest pusta...</p>
       </div>

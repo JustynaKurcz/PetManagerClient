@@ -81,7 +81,6 @@ button.delete:hover {
   background-color: #059669;
 }
 
-
 h3 span {
   color: #2563eb;
 }
@@ -120,4 +119,9 @@ input:focus, textarea:focus {
   justify-content: space-between;
   align-items: center;
   margin-bottom: 20px;
+}
+
+.button-group {
+  display: flex;
+  gap: 10px;
 }
