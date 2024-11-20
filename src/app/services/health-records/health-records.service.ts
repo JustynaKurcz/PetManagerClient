@@ -5,6 +5,9 @@ import {Vaccination} from "../../models/health-records/vaccination";
 import {Appointment} from "../../models/health-records/appointment";
 import {API_ENDPOINTS} from "../../constants/api-constants";
 import {HealthRecordDto} from "../../models/health-records/get-health-record/health-record-dto";
+import {
+  AddVaccinationToHealthRecordCommand
+} from "../../models/health-records/add-vaccination-to-health-record/add-vaccination-to-health-record-command";
 
 @Injectable({
   providedIn: 'root'
@@ -27,9 +30,9 @@ export class HealthRecordsService {
     return this.http.get<HealthRecordDto>(`${API_ENDPOINTS.HEALTH_RECORDS.BASE}/${healthRecordId}`, {headers});
   }
 
-  addVaccinationToHealthRecord(healthRecordId: string, vaccination: Vaccination) {
+  addVaccinationToHealthRecord(healthRecordId: string, vaccinationData: AddVaccinationToHealthRecordCommand) {
     const headers = this.createAuthHeaders();
-    return this.http.post(`${this.url}/${healthRecordId}/vaccinations`, vaccination, {headers});
+    return this.http.post(`${this.url}/${healthRecordId}/vaccinations`, vaccinationData, {headers});
   }
 
   getVaccinationDetails(healthRecordId: string, vaccinationId: string) {
@@ -42,9 +45,9 @@ export class HealthRecordsService {
     return this.http.delete(`${this.url}/${healthRecordId}/vaccinations/${vaccinationId}`, {headers});
   }
 
-  addAppointmentToHealthRecord(healthRecordId: string, appointment: Appointment) {
+  addAppointmentToHealthRecord(healthRecordId: string, appointmentData: Appointment) {
     const headers = this.createAuthHeaders();
-    return this.http.post(`${this.url}/${healthRecordId}/appointments`, appointment, {headers});
+    return this.http.post(`${this.url}/${healthRecordId}/appointments`, appointmentData, {headers});
   }
 
   getAppointmentDetails(healthRecordId: string, appointmentId: string) {

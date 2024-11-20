@@ -1,16 +1,21 @@
-import {Component, Inject, OnInit} from '@angular/core';
-import {ActivatedRoute} from "@angular/router";
-import {HttpClientModule} from "@angular/common/http";
-import {HealthRecordsService} from "../../services/health-records/health-records.service";
-import {HealthRecordDto} from "../../models/health-records/get-health-record/health-record-dto";
-import {CommonModule, DatePipe, DOCUMENT} from "@angular/common";
+import { Component, Inject, OnInit } from '@angular/core';
+import { ActivatedRoute } from "@angular/router";
+import { HttpClientModule } from "@angular/common/http";
+import { HealthRecordsService } from "../../services/health-records/health-records.service";
+import { HealthRecordDto } from "../../models/health-records/get-health-record/health-record-dto";
+import { CommonModule, DatePipe, DOCUMENT } from "@angular/common";
+import {
+  AddVaccinationToHealthRecordCommand
+} from "../../models/health-records/add-vaccination-to-health-record/add-vaccination-to-health-record-command";
+import {FormsModule} from "@angular/forms";
 
 @Component({
   selector: 'app-health-record',
   standalone: true,
   imports: [
     CommonModule,
-    HttpClientModule
+    HttpClientModule,
+    FormsModule
   ],
   providers: [
     HealthRecordsService, DatePipe],
@@ -23,6 +28,12 @@ export class HealthRecordComponent implements OnInit {
   showAppointments: boolean = true;
   expandedVaccinationDetails: { [key: string]: any } = {};
   expandedAppointmentDetails: { [key: string]: any } = {};
+  showAddVaccinationForm = false;
+  newVaccination: AddVaccinationToHealthRecordCommand = {
+    vaccinationName: '',
+    vaccinationDate: '',
+    nextVaccinationDate: ''
+  };
 
   constructor(
     private healthRecordsService: HealthRecordsService,
@@ -111,5 +122,36 @@ export class HealthRecordComponent implements OnInit {
 
   formatDate(dateString: string): string | null {
     return this.datePipe.transform(dateString, 'dd.MM.yyyy, HH:mm');
+  }
+
+  toggleAddVaccinationForm(): void {
+    this.showAddVaccinationForm = !this.showAddVaccinationForm;
+  }
+
+  addVaccination(): void {
+    // Konwertowanie dat do formatu ISO 8601 (odpowiednie dla DateTimeOffset)
+    const formattedVaccinationDate = new Date(this.newVaccination.vaccinationDate).toISOString();
+    const formattedNextVaccinationDate = new Date(this.newVaccination.nextVaccinationDate).toISOString();
+
+    // Przygotowanie obiektu komendy z odpowiednimi formatami dat
+    const vaccinationCommand: AddVaccinationToHealthRecordCommand = {
+      vaccinationName: this.newVaccination.vaccinationName,
+      vaccinationDate: formattedVaccinationDate,
+      nextVaccinationDate: formattedNextVaccinationDate
+    };
+
+    const healthRecordId = this.healthRecord?.healthRecordId;
+
+    if (healthRecordId) {
+      this.healthRecordsService.addVaccinationToHealthRecord(healthRecordId, vaccinationCommand).subscribe(() => {
+        this.getHealthRecord(healthRecordId); // Po dodaniu odświeżamy kartę zdrowia
+        this.newVaccination = {
+          vaccinationName: '',
+          vaccinationDate: '',
+          nextVaccinationDate: ''
+        };
+        this.showAddVaccinationForm = false;
+      });
+    }
   }
 }
