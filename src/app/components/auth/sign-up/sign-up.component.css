@@ -48,7 +48,7 @@ input {
 input[type="password"],
 input[type="text"] {
   width: 100%;
-  padding: 10px 40px 10px 10px; /* Uwzględnienie miejsca dla przycisku widoczności hasła */
+  padding: 10px 40px 10px 10px;
   margin-top: 5px;
   border: 1px solid #ccc;
   border-radius: 4px;
@@ -57,19 +57,19 @@ input[type="text"] {
 
 .toggle-password {
   position: absolute;
-  right: 10px; /* Przyciski ustawione przy prawej krawędzi */
-  top: 50%; /* Wyśrodkowanie przycisku w pionie */
-  transform: translateY(-50%); /* Wyśrodkowanie w osi Y */
+  right: 10px;
+  top: 50%;
+  transform: translateY(-50%);
   outline: none;
   cursor: pointer;
   background: none;
   border: none;
   padding: 0;
-  height: 24px; /* Dopasowanie rozmiaru do ikony */
-  width: 24px; /* Dopasowanie rozmiaru do ikony */
+  height: 24px;
+  width: 24px;
   display: flex;
-  align-items: center; /* Wyśrodkowanie ikony */
-  justify-content: center; /* Wyśrodkowanie ikony */
+  align-items: center;
+  justify-content: center;
 }
 
 .toggle-password mat-icon {

@@ -34,7 +34,7 @@ input {
   margin-top: 5px;
   border: 1px solid #ccc;
   border-radius: 4px;
-  box-sizing: border-box; /* Upewniamy się, że padding i border są uwzględniane */
+  box-sizing: border-box;
 }
 
 .password-group {
@@ -49,7 +49,7 @@ input {
 input[type="password"],
 input[type="text"] {
   width: 100%;
-  padding: 10px 40px 10px 10px; /* Zostawiamy miejsce po prawej stronie dla przycisku widoczności hasła */
+  padding: 10px 40px 10px 10px;
   margin-top: 5px;
   border: 1px solid #ccc;
   border-radius: 4px;
@@ -58,19 +58,19 @@ input[type="text"] {
 
 .toggle-password {
   position: absolute;
-  right: 10px; /* Ustawienie przycisku na prawej krawędzi */
-  top: 50%; /* Ustawienie przycisku na 50% wysokości kontenera */
-  transform: translateY(-50%); /* Wyśrodkowanie przycisku w pionie */
+  right: 10px;
+  top: 50%;
+  transform: translateY(-50%);
   outline: none;
   cursor: pointer;
   background: none;
   border: none;
   padding: 0;
-  height: 24px; /* Dopasowanie rozmiaru przycisku do ikony */
-  width: 24px; /* Dopasowanie rozmiaru przycisku do ikony */
+  height: 24px;
+  width: 24px;
   display: flex;
-  align-items: center; /* Wyśrodkowanie ikony w pionie */
-  justify-content: center; /* Wyśrodkowanie ikony w poziomie */
+  align-items: center;
+  justify-content: center;
 }
 
 .toggle-password mat-icon {
@@ -119,3 +119,10 @@ input[type="text"] {
   border-radius: 8px;
   background-color: #f9f9f9;
 }
+
+::ng-deep .error-snackbar {
+  background-color: #f44336;
+  color: white;
+}
+
+

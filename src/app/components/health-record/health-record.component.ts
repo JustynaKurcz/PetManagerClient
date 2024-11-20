@@ -1,9 +1,9 @@
-import { Component, Inject, OnInit } from '@angular/core';
-import { ActivatedRoute } from "@angular/router";
-import { HttpClientModule } from "@angular/common/http";
-import { HealthRecordsService } from "../../services/health-records/health-records.service";
-import { HealthRecordDto } from "../../models/health-records/get-health-record/health-record-dto";
-import { CommonModule, DatePipe, DOCUMENT } from "@angular/common";
+import {Component, Inject, OnInit} from '@angular/core';
+import {ActivatedRoute} from "@angular/router";
+import {HttpClientModule} from "@angular/common/http";
+import {HealthRecordsService} from "../../services/health-records/health-records.service";
+import {HealthRecordDto} from "../../models/health-records/get-health-record/health-record-dto";
+import {CommonModule, DatePipe, DOCUMENT} from "@angular/common";
 import {
   AddVaccinationToHealthRecordCommand
 } from "../../models/health-records/add-vaccination-to-health-record/add-vaccination-to-health-record-command";
@@ -123,6 +123,7 @@ export class HealthRecordComponent implements OnInit {
         this.expandedAppointmentDetails[appointmentId] = appointmentDetails;
       });
   }
+
   hideMoreVaccination(vaccinationId: string) {
     delete this.expandedVaccinationDetails[vaccinationId];
   }

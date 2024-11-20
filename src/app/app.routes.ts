@@ -1,9 +1,11 @@
 import {Routes} from '@angular/router';
+import {AuthGuard} from "./guards/auth.guard";
 
 export const routes: Routes = [
   {
     path: '',
-    loadComponent: () => import('./components/home/home.component').then(m => m.HomeComponent)
+    loadComponent: () => import('./components/home/home.component').then(m => m.HomeComponent),
+    canActivate: [AuthGuard]
   },
   {
     path: 'sign-in',
@@ -15,19 +17,23 @@ export const routes: Routes = [
   },
   {
     path: 'pet/detail/:petId',
-    loadComponent: () => import('./components/pets/pet-item-details/pet-item-details.component').then(m => m.PetItemDetailsComponent)
+    loadComponent: () => import('./components/pets/pet-item-details/pet-item-details.component').then(m => m.PetItemDetailsComponent),
+    canActivate: [AuthGuard]
   },
   {
     path: 'pet/create',
-    loadComponent: () => import('./components/pets/pet-create/pet-create.component').then(m => m.PetCreateComponent)
+    loadComponent: () => import('./components/pets/pet-create/pet-create.component').then(m => m.PetCreateComponent),
+    canActivate: [AuthGuard]
   },
   {
     path: 'pet/health-record/:healthRecordId',
-    loadComponent: () => import('./components/health-record/health-record.component').then(m => m.HealthRecordComponent)
+    loadComponent: () => import('./components/health-record/health-record.component').then(m => m.HealthRecordComponent),
+    canActivate: [AuthGuard]
   },
   {
     path: 'account',
-    loadComponent: () => import('./components/user-account/user-account.component').then(m => m.UserAccountComponent)
+    loadComponent: () => import('./components/user-account/user-account.component').then(m => m.UserAccountComponent),
+    canActivate: [AuthGuard]
   },
   {
     path: '**',
