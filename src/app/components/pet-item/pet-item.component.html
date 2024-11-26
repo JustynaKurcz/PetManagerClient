@@ -1,11 +1,21 @@
-<mat-card class="example-card">
+<mat-card>
+  <div class="card-container">
     <mat-card-header>
-        <mat-card-title>{{ pet?.name }}</mat-card-title>
+      <mat-card-title>{{ pet?.name }}</mat-card-title>
     </mat-card-header>
-    <img mat-card-image src="https://material.angular.io/assets/img/examples/shiba2.jpg" alt="Zdjęcie produktu" />
-    <mat-card-content>
-      <a class="btn btn-primary" [routerLink]="['/pet/detail/' + pet?.petId]">
-        Zobacz więcej
-      </a>
-    </mat-card-content>
+
+    <img
+      mat-card-image
+      src="https://material.angular.io/assets/img/examples/shiba2.jpg"
+      alt="Zdjęcie produktu"
+      class="pet-image"
+    />
+
+    <p-button
+      label="Zobacz więcej..."
+      [routerLink]="['/pet/detail/' + pet?.petId]"
+      [outlined]="true"
+      class="view-more-button"
+    ></p-button>
+  </div>
 </mat-card>

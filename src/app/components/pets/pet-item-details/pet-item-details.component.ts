@@ -78,7 +78,7 @@ export class PetItemDetailsComponent implements OnInit {
       this.petsService.deletePet(this.pet?.petId!).subscribe({
         next: () => {
           alert('Zwierzę zostało usunięte pomyślnie.');
-          window.location.href = '/pets';
+          window.location.href = '/';
         },
         error: (error) => {
           console.error('Błąd podczas usuwania zwierzęcia:', error);
