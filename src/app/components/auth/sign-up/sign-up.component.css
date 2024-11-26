@@ -1,15 +1,23 @@
+/* Kontener główny */
+.login-container {
+  display: flex;
+  flex-direction: row;
+  height: 100vh;
+  width: 100%;
+  /*background-color: #fff1bf;;*/
+}
 .wrapper {
+  flex: 1.2; /* Powiększenie sekcji logowania */
   display: flex;
   justify-content: center;
   align-items: center;
-  height: 70vh;
-  background-color: #f9f9f9;
+  margin: 0;
 }
 
 .sign-up-container {
-  width: 600px;
+  width: 800px;
   margin: 0 auto;
-  padding: 30px;
+  padding: 50px;
   border: 1px solid #eaeaea;
   border-radius: 8px;
   text-align: center;
@@ -18,7 +26,7 @@
 
 h2 {
   margin-bottom: 20px;
-  font-weight: 400;
+  font-weight: 600;
 }
 
 .form-group {
@@ -29,15 +37,17 @@ h2 {
 
 input {
   width: 100%;
-  padding: 10px;
+  padding: 10px; /* Zwiększenie odstępu wewnętrznego */
   margin-top: 5px;
   border: 1px solid #ccc;
   border-radius: 4px;
+  font-size: 1.2em; /* Zwiększenie rozmiaru czcionki w polu */
   box-sizing: border-box;
 }
 
 .password-group {
   position: relative;
+  margin-bottom: 70px;
 }
 
 .password-input-container {
@@ -79,10 +89,10 @@ input[type="text"] {
 
 .btn {
   width: 100%;
-  padding: 12px;
+  padding: 18px;
   border: none;
   border-radius: 25px;
-  font-size: 1em;
+  font-size: 1.3em;
   cursor: pointer;
 }
 
@@ -98,4 +108,20 @@ input[type="text"] {
   font-weight: bold;
   margin-top: 20px;
   border: 1px solid #eaeaea;
+}
+
+
+/* Sekcja informacyjna */
+.info-section {
+  flex: 1; /* zajmuje drugą połowę przestrzeni */
+  background-color: #f1f1f1; /* Pastelowy odcień dla prawej części */
+  display: flex; /* Umożliwia wyśrodkowanie obrazu */
+  justify-content: center; /* Wyśrodkowanie w poziomie */
+  align-items: center; /* Wyśrodkowanie w pionie */
+}
+
+.image {
+  max-width: 100%; /* Obrazek nie wyjdzie poza szerokość kontenera */
+  height: 100%; /* Zachowanie proporcji obrazu */
+  width: 100%; /* Obrazek zajmie całą szerokość kontenera */
 }

@@ -1,43 +1,5 @@
-.navbar {
-  background-color: #4a4a2c;
-  color: #ffffff;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 15px 30px;
+.card {
+  width: 100%;
+  position: fixed;
 }
 
-.navbar-left {
-  flex: 1;
-}
-
-.navbar-right {
-  display: flex;
-  gap: 20px;
-}
-
-.button-navbar {
-  background-color: #6c6c40;
-  color: #ffffff;
-  text-decoration: none;
-  padding: 10px 20px;
-  border-radius: 5px;
-  border: none;
-  font-weight: bold;
-  cursor: pointer;
-  transition: background-color 0.3s, transform 0.3s;
-}
-
-.button-navbar:hover {
-  background-color: #868656;
-  text-decoration: none;
-  transform: translateY(-2px);
-}
-
-.button-navbar:active {
-  transform: translateY(0);
-}
-
-.navbar-brand {
-  margin-right: 20px;
-}

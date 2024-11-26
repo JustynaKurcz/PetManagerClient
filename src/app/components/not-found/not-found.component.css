@@ -1,16 +1,38 @@
 .not-found-container {
-  text-align: center;
-  margin-top: 50px;
-  font-family: Arial, sans-serif;
-}
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 100vh;
+  padding: 40px;
+  background-color: #f9f9f9;
+  gap: 60px;
 
-.not-found-container h1 {
-  font-size: 72px;
-  color: #ff4040;
-}
+  .text-container {
+    max-width: 1000px;
 
-.not-found-container p {
-  font-size: 24px;
-  color: #333;
-  margin-top: 50px;
+    h1 {
+      font-size: 8rem;
+      color: #333;
+      margin-bottom: 30px;
+    }
+
+    p {
+      font-size: 4rem;
+      color: #666;
+      margin-bottom: 40px;
+    }
+
+    .large-button .p-button {
+      font-size: 8rem !important;
+      padding: 20px 40px !important;
+      border-width: 3px !important;
+      color: black !important;
+    }
+
+    .img {
+        width: 100%;
+        max-width: 1600px;
+        height: auto;
+      }
+  }
 }

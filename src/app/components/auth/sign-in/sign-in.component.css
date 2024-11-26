@@ -1,42 +1,57 @@
+/* Kontener główny */
+.login-container {
+  display: flex;
+  flex-direction: row;
+  height: 100vh;
+  width: 100%;
+  /*background-color: #fff1bf;;*/
+}
+
+/* Wrapper na sekcję logowania */
 .wrapper {
+  flex: 1.2; /* Powiększenie sekcji logowania */
   display: flex;
   justify-content: center;
   align-items: center;
-  height: 70vh;
-  background-color: #f9f9f9;
-  margin-top: 60px;
+  /*background-color: #fef9ed;*/
+  margin: 0;
 }
 
+/* Sekcja logowania */
 .sign-in-container {
-  width: 350px;
-  margin: 0 auto;
-  padding: 30px;
+  width: 600px; /* Zwiększenie szerokości formularza */
+  padding: 40px; /* Zwiększenie paddingu */
   border: 1px solid #eaeaea;
-  border-radius: 8px;
+  border-radius: 10px;
   text-align: center;
-  box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
 }
 
+/* Nagłówki w sekcji logowania */
 h2 {
-  margin-bottom: 20px;
-  font-weight: 400;
+  font-size: 28px; /* Powiększenie nagłówka */
+  margin-bottom: 30px;
+  font-weight: 500;
 }
 
+/* Pola formularza */
 .form-group {
   position: relative;
-  margin-bottom: 20px;
+  margin-bottom: 25px; /* Większy odstęp między polami */
   text-align: left;
 }
 
 input {
   width: 100%;
-  padding: 10px;
+  padding: 12px; /* Większy padding wewnętrzny */
   margin-top: 5px;
   border: 1px solid #ccc;
-  border-radius: 4px;
+  border-radius: 6px;
+  font-size: 16px; /* Powiększenie tekstu w polach */
   box-sizing: border-box;
 }
 
+/* Styl dla kontenera hasła */
 .password-group {
   position: relative;
 }
@@ -49,13 +64,15 @@ input {
 input[type="password"],
 input[type="text"] {
   width: 100%;
-  padding: 10px 40px 10px 10px;
+  padding: 12px 40px 12px 12px; /* Większy padding z lewej i prawej strony */
   margin-top: 5px;
   border: 1px solid #ccc;
-  border-radius: 4px;
+  border-radius: 6px;
+  font-size: 16px; /* Powiększenie tekstu */
   box-sizing: border-box;
 }
 
+/* Przycisk pokazujący/ukrywający hasło */
 .toggle-password {
   position: absolute;
   right: 10px;
@@ -78,23 +95,25 @@ input[type="text"] {
   color: #666;
 }
 
+/* Linki zapomnianego hasła */
 .forgot-password {
-  margin-bottom: 20px;
+  margin-bottom: 25px; /* Większy odstęp nad linkiem */
   text-align: right;
 }
 
 .forgot-password a {
   color: #000;
   text-decoration: none;
-  font-size: 0.875em;
+  font-size: 14px; /* Powiększenie tekstu linku */
 }
 
+/* Przyciski */
 .btn {
   width: 100%;
-  padding: 12px;
+  padding: 14px; /* Większy padding dla przycisku */
   border: none;
   border-radius: 25px;
-  font-size: 1em;
+  font-size: 1.1em; /* Powiększenie tekstu przycisku */
   cursor: pointer;
 }
 
@@ -108,21 +127,29 @@ input[type="text"] {
   background-color: #ffffff;
   color: #000;
   font-weight: bold;
-  margin-top: 20px;
+  margin-top: 25px;
   border: 1px solid #eaeaea;
 }
 
 .new-client {
-  margin-top: 40px;
-  padding: 15px;
+  margin-top: 50px; /* Większy odstęp od formularza */
+  padding: 20px; /* Większy padding */
   border: 1px solid #eaeaea;
   border-radius: 8px;
-  background-color: #f9f9f9;
+  font-size: 16px; /* Powiększenie tekstu */
 }
 
-::ng-deep .error-snackbar {
-  background-color: #f44336;
-  color: white;
+/* Sekcja informacyjna */
+.info-section {
+  flex: 1; /* zajmuje drugą połowę przestrzeni */
+  background-color: #f1f1f1; /* Pastelowy odcień dla prawej części */
+  display: flex; /* Umożliwia wyśrodkowanie obrazu */
+  justify-content: center; /* Wyśrodkowanie w poziomie */
+  align-items: center; /* Wyśrodkowanie w pionie */
 }
 
-
+.image {
+  max-width: 100%; /* Obrazek nie wyjdzie poza szerokość kontenera */
+  height: 100%; /* Zachowanie proporcji obrazu */
+  width: 100%; /* Obrazek zajmie całą szerokość kontenera */
+}

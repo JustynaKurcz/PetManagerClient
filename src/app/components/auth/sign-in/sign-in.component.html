@@ -1,40 +1,49 @@
-<div class="wrapper">
-  <div class="sign-in-container">
-    <h2>Cieszymy się, że tu jesteś! Zaloguj się.</h2>
-    <form (ngSubmit)="signIn()" autocomplete="off">
+<div class="login-container">
+  <!-- Sekcja logowania -->
+  <div class="wrapper">
+    <div class="sign-in-container">
+      <h2>Cieszymy się, że tu jesteś! Zaloguj się.</h2>
+      <form (ngSubmit)="signIn()" autocomplete="off">
 
-      <div class="form-group">
-        <label for="email">E-mail</label>
-        <input [(ngModel)]="SignInCommand.email" name="email" id="email" type="email" placeholder="Wpisz e-mail" required/>
-      </div>
-
-      <div class="form-group password-group">
-        <label for="password">Hasło</label>
-        <div class="password-input-container">
-          <input [(ngModel)]="SignInCommand.password" name="password" id="password"
-                 [type]="hidePassword ? 'password' : 'text'" placeholder="Wpisz hasło" required/>
-          <button
-            mat-icon-button
-            type="button"
-            (click)="togglePasswordVisibility()"
-            class="toggle-password"
-            aria-label="Toggle password visibility"
-          >
-            <mat-icon>{{ hidePassword ? 'visibility_off' : 'visibility' }}</mat-icon>
-          </button>
+        <div class="form-group">
+          <label for="email">E-mail</label>
+          <input [(ngModel)]="SignInCommand.email" name="email" id="email" type="email" placeholder="Wpisz e-mail"
+                 required />
         </div>
+
+        <div class="form-group password-group">
+          <label for="password">Hasło</label>
+          <div class="password-input-container">
+            <input [(ngModel)]="SignInCommand.password" name="password" id="password"
+                   [type]="hidePassword ? 'password' : 'text'" placeholder="Wpisz hasło" required />
+            <button
+              mat-icon-button
+              type="button"
+              (click)="togglePasswordVisibility()"
+              class="toggle-password"
+              aria-label="Toggle password visibility"
+            >
+              <mat-icon>{{ hidePassword ? 'visibility_off' : 'visibility' }}</mat-icon>
+            </button>
+          </div>
+        </div>
+
+        <div class="forgot-password">
+          <a [routerLink]="['/zapomniane-haslo']">Zapomniane hasło? To zdarza się najlepszym!</a>
+        </div>
+
+        <button type="submit" class="btn btn-primary">Zaloguj się</button>
+      </form>
+
+      <div class="new-client">
+        <p>Pierwszy raz? Witamy.</p>
+        <button [routerLink]="['/sign-up']" type="button" class="btn btn-secondary">Utwórz konto</button>
       </div>
-
-      <div class="forgot-password">
-        <a [routerLink]="['/zapomniane-haslo']">Zapomniane hasło? To zdarza się najlepszym!</a>
-      </div>
-
-      <button type="submit" class="btn btn-primary">Zaloguj się</button>
-    </form>
-
-    <div class="new-client">
-      <p>Pierwszy raz? Witamy.</p>
-      <button [routerLink]="['/sign-up']" type="button" class="btn btn-secondary">Utwórz konto</button>
     </div>
+  </div>
+
+  <!-- Sekcja informacyjna -->
+  <div class="info-section">
+    <img src="assets/siatka.png" alt="Siatka" class="image" />
   </div>
 </div>
