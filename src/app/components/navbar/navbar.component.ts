@@ -1,67 +1,93 @@
-import {Component, OnInit} from '@angular/core';
+import {ChangeDetectorRef, Component, inject, OnInit} from '@angular/core';
 import {MenubarModule} from "primeng/menubar";
 import {MenuItem} from "primeng/api";
 import "primeicons/primeicons.css";
 import {MegaMenuModule} from "primeng/megamenu";
 import {UsersService} from "../../services/users/users.service";
+import {MenuModule} from "primeng/menu";
+import {NgForOf} from "@angular/common";
+import {Button} from "primeng/button";
 
 @Component({
   selector: 'app-navbar',
   standalone: true,
   imports: [
     MenubarModule,
-    MegaMenuModule
+    MegaMenuModule,
+    MenuModule,
+    NgForOf,
+    Button,
   ],
-  providers:[UsersService],
+  providers: [UsersService],
   templateUrl: './navbar.component.html',
   styleUrls: ['./navbar.component.css']
 })
 export class NavbarComponent implements OnInit {
+  private readonly usersService = inject(UsersService);
+  private readonly cdr = inject(ChangeDetectorRef);
 
-  items: MenuItem[] | undefined;
-
-  constructor(private usersService: UsersService) {
-  }
-
-  logout(): void {
-    localStorage.removeItem('token');
-    window.location.href = '/';
-  }
+  userMenuItems: MenuItem[] | undefined;
+  menuItems: MenuItem[] | undefined;
 
   ngOnInit() {
-    this.items = [
+    this.updateUserMenuItems(this.usersService.isLoggedIn());
+    this.initializeMenuItem();
+
+    this.usersService.getAuthState().subscribe(
+      (isLoggedIn: boolean) => {
+        this.updateUserMenuItems(isLoggedIn);
+        this.cdr.detectChanges();
+      }
+    );
+  }
+
+  private initializeMenuItem() {
+    this.menuItems = [
       {
         label: 'Strona główna',
         icon: 'pi pi-home',
         routerLink: '/'
       },
       {
-        label: 'Dodaj zwierzaka',
-        icon: 'pi pi-plus',
-        routerLink: '/pet/create',
-        visible: this.usersService.isLoggedIn()
-      },
-      {
         label: 'Kontakt',
         icon: 'pi pi-envelope'
-      },
-      {
-        label: 'Justyna Kurcz',
-        icon: 'pi pi-user',
-        visible: this.usersService.isLoggedIn(),
-        items: [
-          {
-            label: 'Moje konto',
-            icon: 'pi pi-user',
-            routerLink: '/account'
-          },
-          {
-            label: 'Wyloguj',
-            icon: 'pi pi-sign-out',
-            command: () => this.logout(),
-          }
-        ]
       }
     ];
+  }
+
+  private updateUserMenuItems(isLoggedIn: boolean) {
+    if (isLoggedIn) {
+      this.userMenuItems = [
+        {
+          label: 'Moje konto',
+          icon: 'pi pi-user',
+          routerLink: ['/profile']
+        },
+        {
+          separator: true
+        },
+        {
+          label: 'Wyloguj się',
+          icon: 'pi pi-sign-out',
+          command: () => {
+            this.usersService.signOut();
+            window.location.reload()
+          }
+        }
+      ];
+    } else {
+      this.userMenuItems = [
+        {
+          label: 'Zaloguj się',
+          icon: 'pi pi-sign-in',
+          routerLink: ['/sign-in']
+        },
+        {
+          label: 'Zarejestruj się',
+          icon: 'pi pi-user-plus',
+          routerLink: ['/sign-up']
+        }
+      ];
+    }
   }
 }

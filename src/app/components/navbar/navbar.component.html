@@ -1,3 +1,26 @@
-<div class="card">
-  <p-menubar [model]="items"></p-menubar>
+<div class="navbar">
+  <div class="navbar-content">
+    <div class="left-section">
+      <p-button
+        *ngFor="let item of menuItems"
+        [label]="item.label"
+        [icon]="item.icon"
+        [routerLink]="item.routerLink"
+        [text]="true"
+        [plain]="true">
+      </p-button>
+
+    </div>
+
+    <div class="right-section">
+      <i class="pi pi-user"
+         (click)="menu.toggle($event)"
+         style="cursor: pointer">
+      </i>
+      <p-menu #menu
+              [popup]="true"
+              [model]="userMenuItems">
+      </p-menu>
+    </div>
+  </div>
 </div>

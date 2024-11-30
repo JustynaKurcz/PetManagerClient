@@ -1,7 +1,7 @@
-import {Inject, Injectable} from '@angular/core';
+import {inject, Injectable} from '@angular/core';
 import {HttpClient} from "@angular/common/http";
 import {DOCUMENT} from "@angular/common";
-import {map} from "rxjs";
+import {BehaviorSubject, map, Observable, tap} from "rxjs";
 import {SignUpCommand} from "../../models/users/sign-up/sign-up-command";
 import {SignUpResponse} from "../../models/users/sign-up/sign-up-response";
 import {API_ENDPOINTS} from "../../constants/api-constants";
@@ -15,54 +15,70 @@ import {JwtHelperService} from "@auth0/angular-jwt";
   providedIn: 'root'
 })
 export class UsersService {
+  private http = inject(HttpClient);
+  private document = inject(DOCUMENT);
+  private isAuthenticatedSubject = new BehaviorSubject<boolean>(false);
 
-  constructor(
-    private http: HttpClient,
-    @Inject(DOCUMENT) private document: Document) {
+  private localStorage = this.document.defaultView?.localStorage;
+
+  signIn(signInData: SignInCommand) {
+    return this.http
+      .post<SignInResponse>(API_ENDPOINTS.USERS.SIGN_IN, signInData)
+      .pipe(
+        map((result: SignInResponse) => {
+          if (result?.token) {
+            this.localStorage?.setItem('token', result.token);
+            this.isAuthenticatedSubject.next(true);
+            return this.getDetailsOfTheLoggedUser().pipe(
+              map(() => true)
+            );
+          }
+          return false;
+        })
+      )
   }
 
-  signIn(signInData
-         :
-         SignInCommand
-  ) {
-    const localStorage = this.document.defaultView?.localStorage;
-
-    return this.http.post<SignInResponse>(API_ENDPOINTS.USERS.SIGN_IN, signInData).pipe(
-      map((result) => {
-        if (result && result.token) {
-          localStorage?.setItem('token', result.token);
-          return true;
-        }
-        return false;
-      })
-    )
-  }
-
-  signUp(signUpData
-         :
-         SignUpCommand
-  ) {
+  signUp(signUpData: SignUpCommand) {
     return this.http.post<SignUpResponse>(API_ENDPOINTS.USERS.SIGN_UP, signUpData);
   }
 
   getDetailsOfTheLoggedUser() {
-    return this.http.get<CurrentUserDetailsDto>(API_ENDPOINTS.USERS.CURRENT_LOGGED_USER);
+    return this.http.get<CurrentUserDetailsDto>(API_ENDPOINTS.USERS.CURRENT_LOGGED_USER)
+      .pipe(
+        tap((result: any) => {
+          localStorage.setItem('userId', result.id);
+        })
+      );
   }
 
-  changeUserInformation(userData
-                        :
-                        ChangeUserInformationCommand
-  ) {
+  changeUserInformation(userData: ChangeUserInformationCommand) {
     return this.http.put<any>(`${API_ENDPOINTS.USERS.BASE}`, userData);
   }
 
   isLoggedIn(): boolean {
-    const token = localStorage.getItem('token');
+    const jwtHelper = new JwtHelperService();
+    const token = localStorage?.getItem('token');
     if (!token) {
+      this.isAuthenticatedSubject.next(false);
+      localStorage?.removeItem('token');
       return false;
     }
-    const jwtHelper = new JwtHelperService();
-
-    return !jwtHelper.isTokenExpired(token);
+    const isExpired = !jwtHelper.isTokenExpired(token);
+    this.isAuthenticatedSubject.next(isExpired);
+    return isExpired;
   }
+
+  getAuthState(): Observable<boolean> {
+    return this.isAuthenticatedSubject.asObservable();
+  }
+
+  deleteAccount(): Observable<any> {
+    return this.http.delete(API_ENDPOINTS.USERS.BASE);
+  }
+
+  async signOut() {
+    this.localStorage?.removeItem('token');
+    this.isAuthenticatedSubject.next(false);
+  }
+
 }
