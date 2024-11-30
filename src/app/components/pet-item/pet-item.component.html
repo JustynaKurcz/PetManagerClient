@@ -1,27 +1,11 @@
-<mat-card class="pet-card">
-  <div class="pet-card-content">
-    <div class="pet-card-header">
-      <mat-card-header>
-        <mat-card-title>{{ pet.name }}</mat-card-title>
-      </mat-card-header>
-    </div>
-
-    <div class="pet-card-image">
-      <img
-        mat-card-image
-        src="https://picsum.photos/id/1025/800/400"
-        [alt]="pet.name"
-        class="pet-image"
-      />
-    </div>
-
-    <div class="pet-card-actions">
-      <p-button
-        label="Zobacz więcej..."
-        [routerLink]="['/pet/detail/' + pet.petId]"
-        styleClass="p-button-outlined p-button-secondary">
-      </p-button>
-    </div>
+<div class="pet-card">
+  <div class="pet-info">
+    <h3 class="pet-name">{{pet.name}}</h3>
+    <p-button
+      label="Zobacz Więcej"
+      styleClass="p-button-primary view-more-btn"
+      [routerLink]="['/pet/detail/' + pet.petId]"
+    ></p-button>
   </div>
-</mat-card>
-
+  <img [src]="imageUrl" [alt]="pet.name" class="pet-image" />
+</div>

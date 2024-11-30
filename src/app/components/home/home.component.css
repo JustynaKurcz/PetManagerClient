@@ -1,5 +1,5 @@
 .home-wrapper {
-  max-width: 1200px;
+  max-width: 1600px;
   margin: 0 auto;
   padding: 2rem;
 }
@@ -14,8 +14,10 @@
 
 .pet-list-container {
   display: grid;
+  width: 100%;
+  max-width: 1600px;
   grid-template-columns: repeat(2, 1fr);
-  gap: 1.5rem;
+  gap: 2rem;
   margin-bottom: 2rem;
 }
 

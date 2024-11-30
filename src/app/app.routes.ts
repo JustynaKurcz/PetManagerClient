@@ -36,6 +36,11 @@ export const routes: Routes = [
     canActivate: [AuthGuard]
   },
   {
+    path: 'my-pets',
+    loadComponent: () => import('./components/my-pets/my-pets.component').then(m => m.MyPetsComponent),
+    canActivate: [AuthGuard]
+  },
+  {
     path: '**',
     loadComponent: () => import('./components/not-found/not-found.component').then(m => m.NotFoundComponent)
   }
