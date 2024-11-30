@@ -5,10 +5,23 @@
   padding: 32px;
   background-color: #f5f5f5;
   border-radius: 16px;
-  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.15);
   margin-top: 32px;
   align-items: flex-start;
 }
+
+.back-to-home {
+  width: 100%;
+  text-align: left;
+  margin-bottom: 16px;
+}
+
+.back-to-home a {
+  color: #000000;
+  padding: 8px 16px;
+  text-decoration: none;
+  transition: background-color 0.3s ease;
+}
+
 
 .pet-details-form {
   flex: 1;
@@ -77,6 +90,7 @@
 .health-record .button {
   background-color: #FFC107;
   color: #000;
+  margin-top: 20px;
   padding: 12px 20px;
   border: none;
   border-radius: 8px;

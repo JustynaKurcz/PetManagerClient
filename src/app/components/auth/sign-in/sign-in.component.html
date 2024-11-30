@@ -1,21 +1,26 @@
 <div class="login-container">
-  <!-- Sekcja logowania -->
   <div class="wrapper">
     <div class="sign-in-container">
       <h2>Cieszymy się, że tu jesteś! Zaloguj się.</h2>
-      <form (ngSubmit)="signIn()" autocomplete="off">
+      <form [formGroup]="signInForm" (ngSubmit)="signIn()" autocomplete="off">
 
         <div class="form-group">
           <label for="email">E-mail</label>
-          <input [(ngModel)]="SignInCommand.email" name="email" id="email" type="email" placeholder="Wpisz e-mail"
-                 required />
+          <input matInput formControlName="email" id="email" type="email" placeholder="Wpisz e-mail"/>
+          <mat-error *ngIf="signInForm.get('email')?.hasError('required')">Email jest wymagany</mat-error>
+          <mat-error *ngIf="signInForm.get('email')?.hasError('email')">Podaj poprawny adres email</mat-error>
         </div>
 
         <div class="form-group password-group">
           <label for="password">Hasło</label>
           <div class="password-input-container">
-            <input [(ngModel)]="SignInCommand.password" name="password" id="password"
-                   [type]="hidePassword ? 'password' : 'text'" placeholder="Wpisz hasło" required />
+            <input
+              matInput
+              formControlName="password"
+              id="password"
+              [type]="hidePassword ? 'password' : 'text'"
+              placeholder="Wpisz hasło"
+            />
             <button
               mat-icon-button
               type="button"
@@ -26,6 +31,8 @@
               <mat-icon>{{ hidePassword ? 'visibility_off' : 'visibility' }}</mat-icon>
             </button>
           </div>
+          <mat-error *ngIf="signInForm.get('password')?.hasError('required')">Hasło jest wymagane</mat-error>
+          <mat-error *ngIf="signInForm.get('password')?.hasError('minlength')">Hasło musi mieć co najmniej 6 znaków</mat-error>
         </div>
 
         <div class="forgot-password">
@@ -42,7 +49,6 @@
     </div>
   </div>
 
-  <!-- Sekcja informacyjna -->
   <div class="info-section">
     <img src="assets/siatka.png" alt="Siatka" class="image" />
   </div>

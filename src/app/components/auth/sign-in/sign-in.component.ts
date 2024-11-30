@@ -1,69 +1,67 @@
-import {Component} from '@angular/core';
-import {FormsModule} from "@angular/forms";
+import {Component, OnInit} from '@angular/core';
+import {FormBuilder, FormGroup, ReactiveFormsModule, Validators} from "@angular/forms";
 import {Router, RouterLink} from "@angular/router";
-import {MatIconModule} from '@angular/material/icon';
 import {UsersService} from "../../../services/users/users.service";
-import {HttpClientModule} from "@angular/common/http";
-import {MatIconButton} from "@angular/material/button";
-import {MatSnackBar, MatSnackBarModule} from "@angular/material/snack-bar";
+import {SignInCommand} from "../../../models/users/sign-in/sign-in-command";
+import {MaterialImports} from "../../../constants/material-imports";
+import {MatSnackBar} from "@angular/material/snack-bar";
+import {NgIf} from "@angular/common";
+
 
 @Component({
   selector: 'app-sign-in',
   standalone: true,
-  imports: [
-    FormsModule,
-    RouterLink,
-    MatIconModule,
-    HttpClientModule,
-    MatIconButton,
-    MatSnackBarModule
-  ],
+  imports: [...MaterialImports, RouterLink, ReactiveFormsModule, NgIf],
   providers: [UsersService],
   templateUrl: './sign-in.component.html',
-  styleUrls: ['./sign-in.component.css']
+  styleUrl: './sign-in.component.css'
 })
-export class SignInComponent {
-  public SignInCommand = {
-    email: '',
-    password: ''
-  };
-
+export class SignInComponent implements OnInit {
+  signInForm!: FormGroup;
   hidePassword: boolean = true;
 
-  togglePasswordVisibility(): void {
-    this.hidePassword = !this.hidePassword;
+  constructor(
+    private fb: FormBuilder,
+    public usersService: UsersService,
+    private router: Router,
+    private snackBar: MatSnackBar) {
   }
 
-  constructor(public usersService: UsersService, private router: Router, private snackBar: MatSnackBar) {
+  ngOnInit(): void {
+    this.signInForm = this.fb.group({
+      email: ['', [Validators.required, Validators.email]],
+      password: ['', [Validators.required, Validators.minLength(6)]]
+    });
   }
 
-  signIn() {
-    return this.usersService
-      .signIn(this.SignInCommand)
-      .subscribe({
-        next: (result) => {
-          if (result) {
-            this.router.navigate(['/']);
-          } else {
-            this.showError();
-          }
-        },
-        error: () => {
-          this.showError();
-        }
-      });
+  signIn(): void {
+    if (this.signInForm.invalid) {
+      return;
+    }
+
+    const signInData: SignInCommand = this.signInForm.value;
+
+    this.usersService.signIn(signInData).subscribe({
+      next: () => {
+        this.router.navigate(['/']);
+      },
+      error: () => {
+        this.showError();
+      }
+    });
   }
 
   showError(): void {
-    this.SignInCommand = {
-      email: '',
-      password: ''
-    };
+    this.signInForm.reset();
     this.snackBar.open('Wystąpił błąd. Podane dane są nieprawidłowe.', 'Zamknij', {
       duration: 5000,
       panelClass: ['error-snackbar'],
-      verticalPosition: 'top', // Ustawienie komunikatu na górze ekranu
-      horizontalPosition: 'center' // Wyśrodkowanie komunikatu w poziomie
+      verticalPosition: 'top',
+      horizontalPosition: 'center'
     });
+  }
+
+  togglePasswordVisibility(): void {
+    this.hidePassword = !this.hidePassword;
   }
 }

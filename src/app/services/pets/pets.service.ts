@@ -1,5 +1,5 @@
 import {Injectable} from '@angular/core';
-import {HttpClient, HttpHeaders} from "@angular/common/http";
+import {HttpClient} from "@angular/common/http";
 import {PetResponse} from "../../models/pets/petResponse";
 import {API_ENDPOINTS} from "../../constants/api-constants";
 import {PetDetailsDto} from "../../models/pets/pet-details-dto";
@@ -7,54 +7,40 @@ import {GetSpeciesTypesResponse} from "../../models/pets/enums/get-species-types
 import {GetGenderTypesResponse} from "../../models/pets/enums/get-gender-types-response";
 
 @Injectable({
-    providedIn: 'root'
+  providedIn: 'root'
 })
 export class PetsService {
 
-    private apiUrl = 'http://localhost:5062/api/v1/pets';
+  private apiUrl = 'http://localhost:5062/api/v1/pets';
 
-    constructor(private http: HttpClient) {
-    }
+  constructor(private http: HttpClient) {
+  }
 
-    private createAuthHeaders(): HttpHeaders {
-        const token = localStorage.getItem('token');
-        return new HttpHeaders({
-            'Authorization': `Bearer ${token}`
-        });
-    }
+  getPets(pageIndex: number, pageSize: number) {
+    return this.http.get<PetResponse>((`${this.apiUrl}?PageNumber=${pageIndex}&PageSize=${pageSize}`));
+  }
 
-    getPets(pageIndex: number, pageSize: number) {
-        const headers = this.createAuthHeaders();
-        return this.http.get<PetResponse>((`${this.apiUrl}?PageNumber=${pageIndex}&PageSize=${pageSize}`), {headers});
-    }
+  createPet(petData: any) {
+    return this.http.post<any>(`${API_ENDPOINTS.PETS.BASE}`, petData);
+  }
 
-    createPet(petData: any) {
-        const headers = this.createAuthHeaders();
-        return this.http.post<any>(`${API_ENDPOINTS.PETS.BASE}`, petData, {headers});
-    }
+  getPetDetails(petId: string) {
+    return this.http.get<PetDetailsDto>((`${API_ENDPOINTS.PETS.BASE}/${petId}`));
+  }
 
-    getPetDetails(petId: string) {
-        const headers = this.createAuthHeaders();
-        return this.http.get<PetDetailsDto>((`${API_ENDPOINTS.PETS.BASE}/${petId}`), {headers});
-    }
+  getSpecies() {
+    return this.http.get<GetSpeciesTypesResponse>(`${API_ENDPOINTS.PETS.BASE}/species-types`);
+  }
 
-    getSpecies(){
-        const headers = this.createAuthHeaders();
-        return this.http.get<GetSpeciesTypesResponse>(`${API_ENDPOINTS.PETS.BASE}/species-types`, {headers});
-    }
+  getGenders() {
+    return this.http.get<GetGenderTypesResponse>(`${API_ENDPOINTS.PETS.BASE}/gender-types`);
+  }
 
-    getGenders() {
-        const headers = this.createAuthHeaders();
-        return this.http.get<GetGenderTypesResponse>(`${API_ENDPOINTS.PETS.BASE}/gender-types`, {headers});
-    }
+  deletePet(petId: string) {
+    return this.http.delete((`${API_ENDPOINTS.PETS.BASE}/${petId}`));
+  }
 
-    deletePet(petId: string) {
-        const headers = this.createAuthHeaders();
-        return this.http.delete((`${API_ENDPOINTS.PETS.BASE}/${petId}`), {headers});
-    }
-
-    changePetInformation(petId: string, petData: any) {
-        const headers = this.createAuthHeaders();
-        return this.http.put<any>(`${API_ENDPOINTS.PETS.BASE}/${petId}`, petData, {headers});
-    }
+  changePetInformation(petId: string, petData: any) {
+    return this.http.put<any>(`${API_ENDPOINTS.PETS.BASE}/${petId}`, petData);
+  }
 }

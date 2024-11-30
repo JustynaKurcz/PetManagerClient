@@ -1,18 +1,23 @@
-<div class="pet-list-wrapper">
+<div class="home-wrapper">
+  <h1 class="page-title">Nasze Zwierzęta</h1>
+
   <div class="pet-list-container">
-    <app-pet-item *ngFor="let pet of pets" [pet]="pet" class="pet-item"></app-pet-item>
+    <app-pet-item
+      *ngFor="let pet of pets"
+      [pet]="pet"
+      class="pet-item"
+    ></app-pet-item>
   </div>
 
-  <div class="card flex justify-content-center">
+  <div class="pagination-container">
     <p-paginator
       (onPageChange)="onPageChange($event)"
       [first]="pageIndex * pageSize"
       [rows]="pageSize"
       [totalRecords]="totalCount"
-      [rowsPerPageOptions]="[5, 10, 15]"
+      [rowsPerPageOptions]="[4, 6, 12, 18]"
       [showCurrentPageReport]="true"
-      [showPageLinks]="false"
-      [showJumpToPageDropdown]="false"
-      currentPageReportTemplate="Pokazano od {first} do {last} z {totalRecords}" />
+      currentPageReportTemplate="Wyświetlono {first} - {last} z {totalRecords}"
+    ></p-paginator>
   </div>
 </div>

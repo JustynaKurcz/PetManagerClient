@@ -1,16 +1,16 @@
 footer {
+  width: 100%;
   background-color: white;
-  color: #fff;
   text-align: center;
   padding: 1em;
   border-top: 1px solid #e0e0e0;
   font-size: 1.1rem;
   position: fixed;
   bottom: 0;
-  width: 100%;
 }
 
-footer p {
+
+p {
   text-decoration: none;
   margin: 0 10px;
   color: black;

@@ -1,21 +1,27 @@
-<mat-card>
-  <div class="card-container">
-    <mat-card-header>
-      <mat-card-title>{{ pet?.name }}</mat-card-title>
-    </mat-card-header>
+<mat-card class="pet-card">
+  <div class="pet-card-content">
+    <div class="pet-card-header">
+      <mat-card-header>
+        <mat-card-title>{{ pet.name }}</mat-card-title>
+      </mat-card-header>
+    </div>
 
-    <img
-      mat-card-image
-      src="https://material.angular.io/assets/img/examples/shiba2.jpg"
-      alt="Zdjęcie produktu"
-      class="pet-image"
-    />
+    <div class="pet-card-image">
+      <img
+        mat-card-image
+        src="https://picsum.photos/id/1025/800/400"
+        [alt]="pet.name"
+        class="pet-image"
+      />
+    </div>
 
-    <p-button
-      label="Zobacz więcej..."
-      [routerLink]="['/pet/detail/' + pet?.petId]"
-      [outlined]="true"
-      class="view-more-button"
-    ></p-button>
+    <div class="pet-card-actions">
+      <p-button
+        label="Zobacz więcej..."
+        [routerLink]="['/pet/detail/' + pet.petId]"
+        styleClass="p-button-outlined p-button-secondary">
+      </p-button>
+    </div>
   </div>
 </mat-card>
+

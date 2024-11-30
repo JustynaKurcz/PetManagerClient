@@ -2,6 +2,7 @@ import {Component, Input} from '@angular/core';
 import {MatCardModule} from "@angular/material/card";
 import {RouterLink} from "@angular/router";
 import {Button} from "primeng/button";
+import {PetDto} from "../../models/pets/pet-dto";
 
 @Component({
   selector: 'app-pet-item',
@@ -15,5 +16,5 @@ import {Button} from "primeng/button";
   styleUrl: './pet-item.component.css'
 })
 export class PetItemComponent {
-  @Input() pet?: { petId: string, name: string };
+  @Input() pet!: PetDto;
 }

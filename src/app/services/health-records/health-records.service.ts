@@ -1,8 +1,6 @@
 import {Inject, Injectable} from '@angular/core';
-import {HttpClient, HttpHeaders} from "@angular/common/http";
+import {HttpClient} from "@angular/common/http";
 import {DOCUMENT} from "@angular/common";
-import {Vaccination} from "../../models/health-records/vaccination";
-import {Appointment} from "../../models/health-records/appointment";
 import {API_ENDPOINTS} from "../../constants/api-constants";
 import {HealthRecordDto} from "../../models/health-records/get-health-record/health-record-dto";
 import {
@@ -21,45 +19,31 @@ export class HealthRecordsService {
   constructor(private http: HttpClient, @Inject(DOCUMENT) private document: Document) {
   }
 
-  private createAuthHeaders(): HttpHeaders {
-    const token = localStorage.getItem('token');
-    return new HttpHeaders({
-      'Authorization': `Bearer ${token}`
-    });
-  }
-
   getHealthRecordDetails(healthRecordId: string) {
-    const headers = this.createAuthHeaders();
-    return this.http.get<HealthRecordDto>(`${API_ENDPOINTS.HEALTH_RECORDS.BASE}/${healthRecordId}`, {headers});
+    return this.http.get<HealthRecordDto>(`${API_ENDPOINTS.HEALTH_RECORDS.BASE}/${healthRecordId}`);
   }
 
   addVaccinationToHealthRecord(healthRecordId: string, vaccinationData: AddVaccinationToHealthRecordCommand) {
-    const headers = this.createAuthHeaders();
-    return this.http.post(`${this.url}/${healthRecordId}/vaccinations`, vaccinationData, {headers});
+    return this.http.post(`${this.url}/${healthRecordId}/vaccinations`, vaccinationData);
   }
 
   getVaccinationDetails(healthRecordId: string, vaccinationId: string) {
-    const headers = this.createAuthHeaders();
-    return this.http.get(`${this.url}/${healthRecordId}/vaccinations/${vaccinationId}`, {headers});
+    return this.http.get(`${this.url}/${healthRecordId}/vaccinations/${vaccinationId}`);
   }
 
   deleteVaccination(healthRecordId: string, vaccinationId: string) {
-    const headers = this.createAuthHeaders();
-    return this.http.delete(`${this.url}/${healthRecordId}/vaccinations/${vaccinationId}`, {headers});
+    return this.http.delete(`${this.url}/${healthRecordId}/vaccinations/${vaccinationId}`);
   }
 
   addAppointmentToHealthRecord(healthRecordId: string, appointmentData: AddAppointmentToHealthRecordCommand) {
-    const headers = this.createAuthHeaders();
-    return this.http.post(`${this.url}/${healthRecordId}/appointments`, appointmentData, {headers});
+    return this.http.post(`${this.url}/${healthRecordId}/appointments`, appointmentData);
   }
 
   getAppointmentDetails(healthRecordId: string, appointmentId: string) {
-    const headers = this.createAuthHeaders();
-    return this.http.get(`${this.url}/${healthRecordId}/appointments/${appointmentId}`, {headers});
+    return this.http.get(`${this.url}/${healthRecordId}/appointments/${appointmentId}`);
   }
 
   deleteAppointment(healthRecordId: string, appointmentId: string) {
-    const headers = this.createAuthHeaders();
-    return this.http.delete(`${this.url}/${healthRecordId}/appointments/${appointmentId}`, {headers});
+    return this.http.delete(`${this.url}/${healthRecordId}/appointments/${appointmentId}`);
   }
 }
