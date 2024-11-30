@@ -1,0 +1,18 @@
+<div class="pets-container">
+  <div class="pets-grid">
+    <app-pet-item *ngFor="let pet of pets" [pet]="pet"></app-pet-item>
+  </div>
+
+  <div class="pagination-container">
+    <p-paginator
+      (onPageChange)="onPageChange($event)"
+      [first]="pageIndex * pageSize"
+      [rows]="pageSize"
+      [totalRecords]="totalCount"
+      [rowsPerPageOptions]="[4, 6, 12, 18]"
+      [showCurrentPageReport]="true"
+      currentPageReportTemplate="Wyświetlono {first} - {last} z {totalRecords}"
+    ></p-paginator>
+  </div>
+
+</div>
