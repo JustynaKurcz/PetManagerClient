@@ -53,6 +53,7 @@ export class SignInComponent implements OnInit {
 
   showError(): void {
     this.signInForm.reset();
+
     this.snackBar.open('Wystąpił błąd. Podane dane są nieprawidłowe.', 'Zamknij', {
       duration: 5000,
       panelClass: ['error-snackbar'],

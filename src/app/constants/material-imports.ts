@@ -1,11 +1,15 @@
-import {MatIconModule} from "@angular/material/icon";
-import {MatButtonModule} from "@angular/material/button";
-import {MatSnackBarModule} from "@angular/material/snack-bar";
-import {MatInputModule} from "@angular/material/input";
+import {MatIcon, MatIconModule} from "@angular/material/icon";
+import {MatButtonModule, MatIconButton} from "@angular/material/button";
+import {MatSnackBar, MatSnackBarModule} from "@angular/material/snack-bar";
+import {MatInput, MatInputModule} from "@angular/material/input";
 
 export const MaterialImports = [
   MatIconModule,
   MatButtonModule,
   MatSnackBarModule,
-  MatInputModule
+  MatInputModule,
+  MatSnackBar,
+  MatInput,
+  MatIconButton,
+  MatIcon
 ];

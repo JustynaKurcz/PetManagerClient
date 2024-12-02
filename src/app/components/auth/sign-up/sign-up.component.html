@@ -2,18 +2,27 @@
   <div class="wrapper">
     <div class="sign-up-container">
       <h2>Rejestracja konta</h2>
-      <form (ngSubmit)="signUp()" autocomplete="off">
+      <form [formGroup]="signUpForm" (ngSubmit)="signUp()" autocomplete="off">
+
         <div class="form-group">
           <label for="email">E-mail</label>
-          <input [(ngModel)]="SignUpCommand.email" name="email" id="email" type="email" placeholder="Wpisz e-mail"
-                 required/>
+          <input matInput formControlName="email" id="email" type="email" placeholder="Wpisz e-mail"/>
+          <mat-error *ngIf="signUpForm.get('email')?.hasError('required')">Email jest wymagany</mat-error>
+          <mat-error *ngIf="signUpForm.get('email')?.hasError('email')">Podaj poprawny adres email</mat-error>
+<!--          <input [(ngModel)]="SignUpCommand.email" name="email" id="email" type="email" placeholder="Wpisz e-mail"-->
+<!--                 required/>-->
         </div>
 
         <div class="form-group password-group">
           <label for="password">Hasło</label>
           <div class="password-input-container">
-            <input [(ngModel)]="SignUpCommand.password" name="password" id="password"
-                   [type]="hidePassword ? 'password' : 'text'" placeholder="Wpisz hasło" required/>
+            <input
+              matInput
+              formControlName="password"
+              id="password"
+              [type]="hidePassword ? 'password' : 'text'"
+              placeholder="Wpisz hasło"
+            />
             <button
               mat-icon-button
               type="button"
@@ -31,7 +40,6 @@
     </div>
   </div>
 
-  <!-- Sekcja informacyjna -->
   <div class="info-section">
     <img src="assets/siatka.png" alt="Siatka" class="image"/>
   </div>
