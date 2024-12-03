@@ -1,0 +1,29 @@
+<div class="form-group">
+  <label [for]="id">{{ label }}</label>
+  <div class="input-wrapper"
+       [class.password-input]="type === 'password'"
+       [class.error]="control.invalid && control.touched">
+    <input
+      [id]="id"
+      [type]="type === 'password' ? (hidePassword ? 'password' : 'text') : type"
+      [formControl]="control"
+      [placeholder]="placeholder"
+      [class.error]="control.invalid && control.touched"
+    >
+    <mat-icon class="error-icon">error_outline</mat-icon>
+    <button
+      *ngIf="type === 'password'"
+      type="button"
+      class="toggle-password"
+      (click)="togglePasswordVisibility()"
+      [attr.aria-label]="hidePassword ? 'Pokaż hasło' : 'Ukryj hasło'"
+    >
+      <mat-icon>{{ hidePassword ? 'visibility' : 'visibility_off' }}</mat-icon>
+    </button>
+  </div>
+  <div class="validation-error"
+       [class.show]="control.invalid && control.touched">
+    <mat-icon>info</mat-icon>
+    <span>{{ errorMessage }}</span>
+  </div>
+</div>

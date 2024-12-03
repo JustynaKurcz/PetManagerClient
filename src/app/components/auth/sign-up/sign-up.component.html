@@ -1,46 +1,42 @@
-<div class="login-container">
-  <div class="wrapper">
-    <div class="sign-up-container">
-      <h2>Rejestracja konta</h2>
-      <form [formGroup]="signUpForm" (ngSubmit)="signUp()" autocomplete="off">
+<div class="split-container">
+  <div class="form-section">
+    <app-brand-header></app-brand-header>
 
-        <div class="form-group">
-          <label for="email">E-mail</label>
-          <input matInput formControlName="email" id="email" type="email" placeholder="Wpisz e-mail"/>
-          <mat-error *ngIf="signUpForm.get('email')?.hasError('required')">Email jest wymagany</mat-error>
-          <mat-error *ngIf="signUpForm.get('email')?.hasError('email')">Podaj poprawny adres email</mat-error>
-<!--          <input [(ngModel)]="SignUpCommand.email" name="email" id="email" type="email" placeholder="Wpisz e-mail"-->
-<!--                 required/>-->
-        </div>
+    <h1 class="title">Zarejestruj się</h1>
+    <p class="subtitle">Dołącz do naszej społeczności opiekunów zwierząt!</p>
 
-        <div class="form-group password-group">
-          <label for="password">Hasło</label>
-          <div class="password-input-container">
-            <input
-              matInput
-              formControlName="password"
-              id="password"
-              [type]="hidePassword ? 'password' : 'text'"
-              placeholder="Wpisz hasło"
-            />
-            <button
-              mat-icon-button
-              type="button"
-              (click)="togglePasswordVisibility()"
-              class="toggle-password"
-              aria-label="Toggle password visibility"
-            >
-              <mat-icon>{{ hidePassword ? 'visibility_off' : 'visibility' }}</mat-icon>
-            </button>
-          </div>
-        </div>
+    <form [formGroup]="signUpForm" (ngSubmit)="signUp()">
+      <app-form-input
+        id="email"
+        type="email"
+        label="Adres email"
+        placeholder="Wprowadź swój email"
+        [control]="$any(signUpForm.get('email'))"
+        errorMessage="Wprowadź poprawny adres email"
+      ></app-form-input>
 
-        <button type="submit" class="btn btn-primary">Załóż konto</button>
-      </form>
-    </div>
+      <app-form-input
+        id="password"
+        type="password"
+        label="Hasło"
+        placeholder="Wprowadź hasło (min. 6 znaków)"
+        [control]="$any(signUpForm.get('password'))"
+        errorMessage="Hasło musi mieć co najmniej 6 znaków"
+      ></app-form-input>
+
+      <button type="submit" [disabled]="signUpForm.invalid">
+        Załóż konto
+      </button>
+
+      <div class="new-client">
+        <p>Masz już konto? <a [routerLink]="['/zaloguj-sie']">Zaloguj się</a></p>
+      </div>
+    </form>
   </div>
 
-  <div class="info-section">
-    <img src="assets/siatka.png" alt="Siatka" class="image"/>
+  <div class="brand-section">
+    <h2>Witaj w Pet Manager</h2>
+    <p>Dołącz do naszej społeczności i zacznij lepiej dbać o swojego pupila!</p>
+    <app-brand-features></app-brand-features>
   </div>
 </div>

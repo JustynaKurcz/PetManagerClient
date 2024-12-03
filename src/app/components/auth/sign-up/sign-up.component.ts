@@ -1,23 +1,23 @@
 import {Component, OnInit} from '@angular/core';
 import {FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators} from '@angular/forms';
-import {Router} from '@angular/router';
+import {Router, RouterLink} from '@angular/router';
 import {HttpClientModule} from '@angular/common/http';
 import {UsersService} from "../../../services/users/users.service";
-import {MaterialImports} from "../../../constants/material-imports";
 import {MatSnackBar} from "@angular/material/snack-bar";
-import {NgIf} from "@angular/common";
+import {FormInputComponent} from "../shared/form-input/form-input.component";
+import {BrandHeaderComponent} from "../shared/brand-header/brand-header.component";
+import {BrandFeaturesComponent} from "../shared/brand-features/brand-features.component";
 
 @Component({
   selector: 'app-sign-up',
   standalone: true,
-  imports: [...MaterialImports, HttpClientModule, FormsModule, ReactiveFormsModule, NgIf,],
+  imports: [HttpClientModule, FormsModule, ReactiveFormsModule, BrandFeaturesComponent, BrandHeaderComponent, FormInputComponent, RouterLink],
   providers: [UsersService],
   templateUrl: './sign-up.component.html',
   styleUrls: ['./sign-up.component.css']
 })
 export class SignUpComponent implements OnInit {
   signUpForm!: FormGroup;
-  hidePassword: boolean = true;
 
   constructor(
     private fb: FormBuilder,
@@ -33,10 +33,6 @@ export class SignUpComponent implements OnInit {
     });
   }
 
-  togglePasswordVisibility(): void {
-    this.hidePassword = !this.hidePassword;
-  }
-
   signUp() {
     if (this.signUpForm.invalid) {
       return;
@@ -46,7 +42,7 @@ export class SignUpComponent implements OnInit {
 
     this.usersService.signUp(signUpData).subscribe({
       next: () => {
-        this.router.navigate(['/sign-in']);
+        this.router.navigate(['/zaloguj-sie']);
       },
       error: (err) => {
         this.showError();

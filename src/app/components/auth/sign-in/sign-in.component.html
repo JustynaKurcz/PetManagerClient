@@ -1,55 +1,47 @@
-<div class="login-container">
-  <div class="wrapper">
-    <div class="sign-in-container">
-      <h2>Cieszymy się, że tu jesteś! Zaloguj się.</h2>
-      <form [formGroup]="signInForm" (ngSubmit)="signIn()" autocomplete="off">
+<div class="split-container">
 
-        <div class="form-group">
-          <label for="email">E-mail</label>
-          <input matInput formControlName="email" id="email" type="email" placeholder="Wpisz e-mail"/>
-          <mat-error *ngIf="signInForm.get('email')?.hasError('required')">Email jest wymagany</mat-error>
-          <mat-error *ngIf="signInForm.get('email')?.hasError('email')">Podaj poprawny adres email</mat-error>
-        </div>
+  <div class="form-section">
+    <app-brand-header></app-brand-header>
 
-        <div class="form-group password-group">
-          <label for="password">Hasło</label>
-          <div class="password-input-container">
-            <input
-              matInput
-              formControlName="password"
-              id="password"
-              [type]="hidePassword ? 'password' : 'text'"
-              placeholder="Wpisz hasło"
-            />
-            <button
-              mat-icon-button
-              type="button"
-              (click)="togglePasswordVisibility()"
-              class="toggle-password"
-              aria-label="Toggle password visibility"
-            >
-              <mat-icon>{{ hidePassword ? 'visibility_off' : 'visibility' }}</mat-icon>
-            </button>
-          </div>
-          <mat-error *ngIf="signInForm.get('password')?.hasError('required')">Hasło jest wymagane</mat-error>
-          <mat-error *ngIf="signInForm.get('password')?.hasError('minlength')">Hasło musi mieć co najmniej 6 znaków</mat-error>
-        </div>
+    <h1 class="title">Zaloguj się</h1>
+    <p class="subtitle">Witaj z powrotem! Wprowadź swoje dane aby kontynuować.</p>
 
-        <div class="forgot-password">
-          <a [routerLink]="['/zapomniane-haslo']">Zapomniane hasło? To zdarza się najlepszym!</a>
-        </div>
+    <form [formGroup]="signInForm" (ngSubmit)="signIn()">
+      <app-form-input
+        id="email"
+        type="email"
+        label="Adres email"
+        placeholder="Wprowadź swój email"
+        [control]="$any(signInForm.get('email'))"
+        errorMessage="Wprowadź poprawny adres email"
+      ></app-form-input>
 
-        <button type="submit" class="btn btn-primary">Zaloguj się</button>
-      </form>
+      <app-form-input
+        id="password"
+        type="password"
+        label="Hasło"
+        placeholder="Wprowadź swoje hasło"
+        [control]="$any(signInForm.get('password'))"
+        errorMessage="Hasło jest wymagane"
+      ></app-form-input>
+
+      <div class="forgot-password">
+        <a [routerLink]="['/zapomniane-haslo']">Zapomniane hasło? To zdarza się najlepszym!</a>
+      </div>
+
+      <button type="submit" [disabled]="signInForm.invalid">
+        Zaloguj się
+      </button>
 
       <div class="new-client">
-        <p>Pierwszy raz? Witamy.</p>
-        <button [routerLink]="['/sign-up']" type="button" class="btn btn-secondary">Utwórz konto</button>
+        <p>Nie masz jeszcze konta? <a [routerLink]="['/zarejestruj-sie']">Zarejestruj się</a></p>
       </div>
-    </div>
+    </form>
   </div>
 
-  <div class="info-section">
-    <img src="assets/siatka.png" alt="Siatka" class="image" />
+  <div class="brand-section">
+    <h2 class="brand-title">Witaj w Pet Manager</h2>
+    <p style="font-size: 18px; opacity: 0.9;">Twój niezawodny partner w opiece nad zwierzętami.</p>
+    <app-brand-features></app-brand-features>
   </div>
 </div>

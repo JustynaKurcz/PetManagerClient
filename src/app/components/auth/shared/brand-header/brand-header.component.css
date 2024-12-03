@@ -1,0 +1,25 @@
+:host {
+  display: block;
+}
+
+.brand {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  margin-bottom: 48px;
+}
+
+.brand-icon {
+  width: 56px;
+  height: 56px;
+  background: var(--highlight, #dcfce7);
+  border-radius: 12px;
+  display: grid;
+  place-items: center;
+  font-size: 32px;
+}
+
+.brand-text {
+  font-weight: 600;
+  font-size: 32px;
+}

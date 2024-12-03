@@ -80,12 +80,12 @@ export class NavbarComponent implements OnInit {
         {
           label: 'Zaloguj się',
           icon: 'pi pi-sign-in',
-          routerLink: ['/sign-in']
+          routerLink: ['/zaloguj-sie']
         },
         {
           label: 'Zarejestruj się',
           icon: 'pi pi-user-plus',
-          routerLink: ['/sign-up']
+          routerLink: ['/zarejestruj-sie']
         }
       ];
     }

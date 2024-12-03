@@ -1,18 +1,18 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { PetCreateComponent } from './pet-create.component';
+import { FormInputComponent } from './form-input.component';
 
-describe('PetCreateComponent', () => {
-  let component: PetCreateComponent;
-  let fixture: ComponentFixture<PetCreateComponent>;
+describe('FormInputComponent', () => {
+  let component: FormInputComponent;
+  let fixture: ComponentFixture<FormInputComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [PetCreateComponent]
+      imports: [FormInputComponent]
     })
     .compileComponents();
     
-    fixture = TestBed.createComponent(PetCreateComponent);
+    fixture = TestBed.createComponent(FormInputComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });
