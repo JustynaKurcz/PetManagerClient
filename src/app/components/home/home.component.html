@@ -20,4 +20,18 @@
       currentPageReportTemplate="Wyświetlono {first} - {last} z {totalRecords}"
     ></p-paginator>
   </div>
+
+  <div class="add-pet-container">
+    <p-button
+      label="Dodaj zwierzę"
+      icon="pi pi-plus"
+      [rounded]="true"
+      styleClass="custom-blue-button"
+      (onClick)="showAddPetDialog()"
+    ></p-button>
+  </div>
+
+  <app-add-pet-form></app-add-pet-form>
+
+
 </div>

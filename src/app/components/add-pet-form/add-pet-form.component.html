@@ -1,0 +1,169 @@
+<p-dialog
+  [(visible)]="visible"
+  [modal]="true"
+  [draggable]="false"
+  [resizable]="false"
+  [style]="{width: '1000px'}"
+  header="Dodaj nowe zwierzę"
+  styleClass="p-fluid modern-dialog">
+
+  <form [formGroup]="petForm" (ngSubmit)="onSubmit()">
+    <div class="form-container">
+
+      <div class="form-field">
+        <label class="field-label">
+          <i class="pi pi-image"></i>
+          Zdjęcie
+        </label>
+        <div class="image-upload-container">
+          <div class="image-preview" *ngIf="imagePreview">
+            <img [src]="imagePreview" alt="Podgląd zdjęcia">
+            <button type="button" class="remove-image" (click)="removeImage()">
+              <i class="pi pi-times"></i>
+            </button>
+          </div>
+          <div class="upload-box" *ngIf="!imagePreview"
+               (click)="fileInput.click()"
+               (dragover)="onDragOver($event)"
+               (drop)="onDrop($event)">
+            <i class="pi pi-upload"></i>
+            <span>Przeciągnij i upuść lub kliknij, aby dodać zdjęcie</span>
+            <small>Maksymalny rozmiar: 5MB</small>
+          </div>
+          <input
+            #fileInput
+            type="file"
+            accept="image/*"
+            (change)="onFileSelected($event)"
+            style="display: none">
+        </div>
+      </div>
+
+      <div class="form-field">
+        <label for="name" class="field-label">
+          <i class="pi pi-user"></i>
+          Imię zwierzęcia
+        </label>
+        <input
+          id="name"
+          type="text"
+          pInputText
+          formControlName="name"
+          placeholder="Wprowadź imię zwierzęcia">
+        <small *ngIf="petForm.get('name')?.invalid && petForm.get('name')?.touched"
+               class="error-message">Wprowadź imię zwierzęcia</small>
+      </div>
+
+      <div class="form-field">
+        <label for="species" class="field-label">
+          <i class="pi pi-tag"></i>
+          Gatunek
+        </label>
+        <p-dropdown
+          id="species"
+          [options]="species"
+          formControlName="species"
+          optionLabel="name"
+          optionValue="id"
+          placeholder="Wybierz gatunek">
+        </p-dropdown>
+        <small *ngIf="petForm.get('species')?.invalid && petForm.get('species')?.touched"
+               class="error-message">Wybierz gatunek zwierzęcia</small>
+      </div>
+
+      <div class="form-field">
+        <label for="breed" class="field-label">
+          <i class="pi pi-bookmark"></i>
+          Rasa
+        </label>
+        <input
+          id="breed"
+          type="text"
+          pInputText
+          formControlName="breed"
+          placeholder="Wprowadź rasę">
+        <small *ngIf="petForm.get('breed')?.invalid && petForm.get('breed')?.touched"
+               class="error-message">Wprowadź rasę zwierzęcia</small>
+      </div>
+
+      <div class="form-field">
+        <label for="gender" class="field-label">
+          <i class="pi pi-heart"></i>
+          Płeć
+        </label>
+        <p-dropdown
+          id="gender"
+          [options]="genders"
+          formControlName="gender"
+          optionLabel="name"
+          optionValue="id"
+          placeholder="Wybierz płeć">
+        </p-dropdown>
+        <small *ngIf="petForm.get('gender')?.invalid && petForm.get('gender')?.touched"
+               class="error-message">Wybierz płeć zwierzęcia</small>
+      </div>
+
+      <div class="form-field">
+        <label for="birthDate" class="field-label">
+          <i class="pi pi-calendar"></i>
+          Data urodzenia
+        </label>
+        <p-calendar
+          id="birthDate"
+          formControlName="birthDate"
+          [showIcon]="false"
+          dateFormat="dd.mm.yy"
+          placeholder="Wybierz datę"
+          [maxDate]="today">
+        </p-calendar>
+        <small *ngIf="petForm.get('birthDate')?.invalid && petForm.get('birthDate')?.touched"
+               class="error-message">Wprowadź datę urodzenia</small>
+      </div>
+
+      <div class="form-field">
+        <label for="weight" class="field-label">
+          <i class="pi pi-balance-scale"></i>
+          Waga
+        </label>
+        <input
+          id="weight"
+          type="number"
+          pInputText
+          formControlName="weight"
+          placeholder="Wprowadź wagę (kg)">
+      </div>
+
+
+      <div class="form-field">
+        <label for="color" class="field-label">
+          <i class="pi pi-palette"></i>
+          Kolor/umaszczenie
+        </label>
+        <input
+          id="color"
+          type="text"
+          pInputText
+          formControlName="color"
+          placeholder="Wprowadź kolor/umaszczenie">
+      </div>
+    </div>
+  </form>
+
+  <ng-template pTemplate="footer">
+    <div class="dialog-footer">
+      <p-button
+        label="Anuluj"
+        icon="pi pi-times"
+        (onClick)="hideDialog()"
+        styleClass="p-button-text">
+      </p-button>
+      <p-button
+        label="Zapisz"
+        icon="pi pi-check"
+        (onClick)="onSubmit()"
+        [disabled]="!petForm.valid"
+        styleClass="submit-button">
+      </p-button>
+    </div>
+  </ng-template>
+</p-dialog>

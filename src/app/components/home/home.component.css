@@ -26,3 +26,18 @@
   justify-content: center;
   margin-bottom: 3rem;
 }
+
+.add-pet-container {
+  display: flex;
+  justify-content: right;
+  margin-bottom: 3rem;
+}
+:host ::ng-deep .custom-blue-button {
+  background: #0088ff;
+  border-color: #0088ff;
+}
+
+:host ::ng-deep .custom-blue-button:hover {
+  background-color:#1e40af;
+  border-color: #1e40af;
+}
