@@ -15,28 +15,10 @@
           <i class="pi pi-image"></i>
           Zdjęcie
         </label>
-        <div class="image-upload-container">
-          <div class="image-preview" *ngIf="imagePreview">
-            <img [src]="imagePreview" alt="Podgląd zdjęcia">
-            <button type="button" class="remove-image" (click)="removeImage()">
-              <i class="pi pi-times"></i>
-            </button>
-          </div>
-          <div class="upload-box" *ngIf="!imagePreview"
-               (click)="fileInput.click()"
-               (dragover)="onDragOver($event)"
-               (drop)="onDrop($event)">
-            <i class="pi pi-upload"></i>
-            <span>Przeciągnij i upuść lub kliknij, aby dodać zdjęcie</span>
-            <small>Maksymalny rozmiar: 5MB</small>
-          </div>
-          <input
-            #fileInput
-            type="file"
-            accept="image/*"
-            (change)="onFileSelected($event)"
-            style="display: none">
-        </div>
+        <app-image-upload
+          (imageSelected)="onImageSelected($event)"
+          (imageRemoved)="onImageRemoved()">
+        </app-image-upload>
       </div>
 
       <div class="form-field">
@@ -118,33 +100,6 @@
         </p-calendar>
         <small *ngIf="petForm.get('birthDate')?.invalid && petForm.get('birthDate')?.touched"
                class="error-message">Wprowadź datę urodzenia</small>
-      </div>
-
-      <div class="form-field">
-        <label for="weight" class="field-label">
-          <i class="pi pi-balance-scale"></i>
-          Waga
-        </label>
-        <input
-          id="weight"
-          type="number"
-          pInputText
-          formControlName="weight"
-          placeholder="Wprowadź wagę (kg)">
-      </div>
-
-
-      <div class="form-field">
-        <label for="color" class="field-label">
-          <i class="pi pi-palette"></i>
-          Kolor / umaszczenie
-        </label>
-        <input
-          id="color"
-          type="text"
-          pInputText
-          formControlName="color"
-          placeholder="Wprowadź kolor / umaszczenie">
       </div>
     </div>
   </form>

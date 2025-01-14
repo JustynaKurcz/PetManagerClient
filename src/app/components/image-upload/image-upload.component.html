@@ -1,0 +1,22 @@
+<div class="image-upload-container">
+  <div class="image-preview" *ngIf="imagePreview">
+    <img [src]="imagePreview" alt="Podgląd zdjęcia">
+    <button type="button" class="remove-image" (click)="removeImage()">
+      <i class="pi pi-times"></i>
+    </button>
+  </div>
+  <div class="upload-box" *ngIf="!imagePreview"
+       (click)="fileInput.click()"
+       (dragover)="onDragOver($event)"
+       (drop)="onDrop($event)">
+    <i class="pi pi-upload"></i>
+    <span>Przeciągnij i upuść lub kliknij, aby dodać zdjęcie</span>
+    <small>Maksymalny rozmiar: 5MB</small>
+  </div>
+  <input
+    #fileInput
+    type="file"
+    accept="image/*"
+    (change)="onFileSelected($event)"
+    style="display: none">
+</div>

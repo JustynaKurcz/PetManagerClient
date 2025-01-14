@@ -1,4 +1,4 @@
-import {ChangeDetectorRef, Component, inject, OnInit} from '@angular/core';
+import {Component, OnDestroy, OnInit} from '@angular/core';
 import {MenubarModule} from "primeng/menubar";
 import {MenuItem} from "primeng/api";
 import "primeicons/primeicons.css";
@@ -7,6 +7,7 @@ import {UsersService} from "../../services/users/users.service";
 import {MenuModule} from "primeng/menu";
 import {NgForOf} from "@angular/common";
 import {Button} from "primeng/button";
+import {Subscription} from "rxjs";
 
 @Component({
   selector: 'app-navbar',
@@ -22,23 +23,30 @@ import {Button} from "primeng/button";
   templateUrl: './navbar.component.html',
   styleUrls: ['./navbar.component.css']
 })
-export class NavbarComponent implements OnInit {
-  private readonly usersService = inject(UsersService);
-  private readonly cdr = inject(ChangeDetectorRef);
+export class NavbarComponent implements OnInit, OnDestroy {
+  userMenuItems: MenuItem[] = [];
+  menuItems: MenuItem[] = [];
+  activeItem: MenuItem | undefined;
+  private authSubscription?: Subscription;
 
-  userMenuItems: MenuItem[] | undefined;
-  menuItems: MenuItem[] | undefined;
+  constructor(private usersService: UsersService) {
+  }
 
   ngOnInit() {
     this.updateUserMenuItems(this.usersService.isLoggedIn());
     this.initializeMenuItem();
 
-    this.usersService.getAuthState().subscribe(
+    this.authSubscription = this.usersService.getAuthState().subscribe(
       (isLoggedIn: boolean) => {
         this.updateUserMenuItems(isLoggedIn);
-        this.cdr.detectChanges();
       }
     );
+  }
+
+  ngOnDestroy() {
+    if (this.authSubscription) {
+      this.authSubscription.unsubscribe();
+    }
   }
 
   private initializeMenuItem() {
@@ -53,6 +61,8 @@ export class NavbarComponent implements OnInit {
         icon: 'pi pi-envelope'
       }
     ];
+
+    this.activeItem = this.menuItems[0];
   }
 
   private updateUserMenuItems(isLoggedIn: boolean) {
@@ -69,10 +79,7 @@ export class NavbarComponent implements OnInit {
         {
           label: 'Wyloguj się',
           icon: 'pi pi-sign-out',
-          command: () => {
-            this.usersService.signOut();
-            window.location.reload()
-          }
+          command: () => this.logout()
         }
       ];
     } else {
@@ -90,4 +97,9 @@ export class NavbarComponent implements OnInit {
       ];
     }
   }
+
+  async logout() {
+    await this.usersService.signOut().then(() => window.location.reload());
+  }
+
 }

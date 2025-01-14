@@ -5,27 +5,20 @@ import {API_ENDPOINTS} from "../../constants/api-constants";
 import {PetDetailsDto} from "../../models/pets/pet-details-dto";
 import {GetSpeciesTypesResponse} from "../../models/pets/enums/get-species-types-response";
 import {GetGenderTypesResponse} from "../../models/pets/enums/get-gender-types-response";
+import {tap} from "rxjs";
+import {CreatePetDto} from "../../models/pets/create-pet-dto";
+
 
 @Injectable({
   providedIn: 'root'
 })
 export class PetsService {
 
-  private apiUrl = 'http://localhost:5062/api/v1/pets';
-
   constructor(private http: HttpClient) {
   }
 
-  getPets(pageIndex: number, pageSize: number) {
-    return this.http.get<PetResponse>((`${this.apiUrl}?PageNumber=${pageIndex}&PageSize=${pageSize}`));
-  }
-
-  createPet(petData: any) {
+  createPet(petData: CreatePetDto) {
     return this.http.post<any>(`${API_ENDPOINTS.PETS.BASE}`, petData);
-  }
-
-  getPetDetails(petId: string) {
-    return this.http.get<PetDetailsDto>((`${API_ENDPOINTS.PETS.BASE}/${petId}`));
   }
 
   getSpecies() {
@@ -34,6 +27,39 @@ export class PetsService {
 
   getGenders() {
     return this.http.get<GetGenderTypesResponse>(`${API_ENDPOINTS.PETS.BASE}/gender-types`);
+  }
+
+  uploadPetImage(petId: string, imageFile: File) {
+    console.log('Uploading image for pet:', petId);
+    console.log('Image file:', imageFile);
+
+    const formData = new FormData();
+    formData.append('file', imageFile, imageFile.name);
+
+    console.log('FormData entries:');
+    formData.forEach((value, key) => {
+      console.log(key, value);
+    });
+
+    const url = `${API_ENDPOINTS.PETS.BASE}/${petId}/images`;
+    console.log('Upload URL:', url);
+
+    return this.http.post(url, formData)
+      .pipe(
+        tap({
+          next: () => console.log('Image upload successful'),
+          error: error => console.error('Image upload error:', error)
+        })
+      );
+  }
+
+
+  getPets(pageIndex: number, pageSize: number) {
+    return this.http.get<PetResponse>((`${API_ENDPOINTS.PETS.BASE}?PageNumber=${pageIndex}&PageSize=${pageSize}`));
+  }
+
+  getPetDetails(petId: string) {
+    return this.http.get<PetDetailsDto>((`${API_ENDPOINTS.PETS.BASE}/${petId}`));
   }
 
   deletePet(petId: string) {

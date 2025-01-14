@@ -44,100 +44,8 @@
   color: #1e293b;
 
   i {
-    color: #3b82f6;
+    color: #2E7D32;
     font-size: 1.25rem;
-  }
-}
-
-
-.image-upload-container {
-  width: 100%;
-}
-
-.upload-box {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  padding: 2.5rem;
-  border: 2px dashed #d1d5db;
-  border-radius: 1rem;
-  background: linear-gradient(to bottom, #f8fafc, #ffffff);
-  cursor: pointer;
-  transition: all 0.2s ease-in-out;
-  box-shadow: 0 2px 4px rgba(148, 163, 184, 0.05);
-
-  &:hover {
-    border-color: #60a5fa;
-    background: linear-gradient(to bottom, #f0f9ff, #ffffff);
-    box-shadow: 0 4px 6px rgba(148, 163, 184, 0.1);
-    transform: translateY(-1px);
-  }
-
-  i {
-    font-size: 2.5rem;
-    color: #3b82f6;
-    margin-bottom: 1rem;
-  }
-
-  span {
-    color: #334155;
-    font-weight: 500;
-    margin-bottom: 0.5rem;
-  }
-
-  small {
-    color: #64748b;
-    font-size: 0.875rem;
-  }
-}
-
-.image-preview {
-  position: relative;
-  width: 100%;
-  height: 250px;
-  border-radius: 1rem;
-  overflow: hidden;
-  box-shadow: 0 4px 6px rgba(148, 163, 184, 0.1);
-
-  img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    transition: transform 0.3s ease;
-
-    &:hover {
-      transform: scale(1.02);
-    }
-  }
-
-  .remove-image {
-    position: absolute;
-    top: 1rem;
-    right: 1rem;
-    background: rgba(255, 255, 255, 0.95);
-    border: none;
-    border-radius: 0.75rem;
-    padding: 0.5rem;
-    width: 2.5rem;
-    height: 2.5rem;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    cursor: pointer;
-    transition: all 0.2s ease;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-
-    &:hover {
-      background: #ffffff;
-      transform: scale(1.05);
-      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-    }
-
-    i {
-      color: #dc2626;
-      font-size: 1.25rem;
-    }
   }
 }
 
@@ -167,7 +75,7 @@
     }
 
     &:focus {
-      border-color: #3b82f6 !important;
+      border-color: #2E7D32 !important;
       box-shadow: 0 0 0 4px rgba(59, 130, 246, 0.1) !important;
     }
   }
@@ -199,11 +107,11 @@
 
   .submit-button {
     .p-button {
-      background: linear-gradient(135deg, #3b82f6, #2563eb);
+      background: linear-gradient(135deg, #2E7D32,#2E7D32);
       border: none;
 
       &:hover {
-        background: linear-gradient(135deg, #2563eb, #1d4ed8);
+        background: linear-gradient(135deg, #2E7D32, #2E7D32);
       }
 
       &:disabled {
@@ -226,10 +134,3 @@
     color: #dc2626;
   }
 }
-
-.upload-box.dragover {
-  border-color: #3b82f6;
-  background: linear-gradient(to bottom, #eff6ff, #ffffff);
-  transform: scale(1.01);
-}
-

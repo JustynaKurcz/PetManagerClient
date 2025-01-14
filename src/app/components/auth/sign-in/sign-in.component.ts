@@ -42,7 +42,7 @@ export class SignInComponent implements OnInit {
 
       this.usersService.signIn(signInData).subscribe({
         next: () => {
-          this.router.navigate(['/']);
+          window.location.href = '/moje-zwierzaki';
         },
         error: () => {
           this.showError();

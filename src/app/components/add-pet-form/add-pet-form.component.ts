@@ -1,9 +1,11 @@
-import {Component, ElementRef, ViewChild} from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {PrimengImports} from "../../constants/primeng-imports";
 import {CommonModule} from "@angular/common";
 import {FormBuilder, FormGroup, ReactiveFormsModule, Validators} from "@angular/forms";
 import {PetsService} from "../../services/pets/pets.service";
 import {MessageService} from "primeng/api";
+import {ImageUploadComponent} from "../image-upload/image-upload.component";
+import {CreatePetDto} from "../../models/pets/create-pet-dto";
 
 @Component({
   selector: 'app-add-pet-form',
@@ -12,38 +14,46 @@ import {MessageService} from "primeng/api";
     CommonModule,
     ReactiveFormsModule,
     ...PrimengImports,
+    ImageUploadComponent
   ],
   providers: [PetsService],
   templateUrl: './add-pet-form.component.html',
   styleUrl: './add-pet-form.component.css'
 })
-export class AddPetFormComponent {
+export class AddPetFormComponent implements OnInit {
   visible: boolean = false;
   petForm!: FormGroup;
   today: Date = new Date();
   genders: { id: number, name: string }[] = [];
   species: { id: number, name: string }[] = [];
-
-  imagePreview: string | null = null;
-  @ViewChild('fileInput') fileInput!: ElementRef;
+  isLoading: boolean = false;
 
   constructor(
     private fb: FormBuilder,
     private petsService: PetsService,
     private messageService: MessageService
   ) {
+    this.initializeForm();
+  }
+
+  ngOnInit() {
+    this.loadGendersAndSpecies();
+  }
+
+  private initializeForm(): void {
     this.petForm = this.fb.group({
-      name: ['', Validators.required],
+      name: ['', [Validators.required, Validators.minLength(2)]],
       species: [null, Validators.required],
-      breed: ['', Validators.required],
+      breed: ['', [Validators.required, Validators.minLength(2)]],
       gender: [null, Validators.required],
       birthDate: [null, Validators.required],
-      image: [null]
+      image: [null],
     });
   }
 
   showDialog(): void {
     this.visible = true;
+    this.loadGendersAndSpecies();
   }
 
   hideDialog(): void {
@@ -51,119 +61,117 @@ export class AddPetFormComponent {
     this.petForm.reset();
   }
 
+  private async loadGendersAndSpecies(): Promise<void> {
+    try {
+      this.isLoading = true;
+      const [genderResponse, speciesResponse] = await Promise.all([
+        this.petsService.getGenders().toPromise(),
+        this.petsService.getSpecies().toPromise()
+      ]);
+
+      this.genders = genderResponse?.genders ?? [];
+      this.species = speciesResponse?.species ?? [];
+    } catch (error) {
+      this.showErrorMessage('Nie udało się załadować danych formularza');
+    } finally {
+      this.isLoading = false;
+    }
+  }
   onSubmit(): void {
     if (this.petForm.valid) {
-      const formData = this.petForm.value;
-
-      this.petsService.createPet(formData).subscribe({
-        next: () => {
-          this.messageService.add({
-            severity: 'success',
-            summary: 'Sukces',
-            detail: 'Pomyślnie dodano zwierzę'
-          });
-          this.hideDialog();
-        },
-        error: () => {
-          this.messageService.add({
-            severity: 'error',
-            summary: 'Błąd',
-            detail: 'Nie udało się dodać zwierzęcia'
-          });
-        }
-      });
+      const petData = this.preparePetData();
+      this.createPetWithImage(petData);
     } else {
-      Object.keys(this.petForm.controls).forEach(key => {
-        const control = this.petForm.get(key);
-        if (control?.invalid) {
-          control.markAsTouched();
-        }
-      });
+      this.markInvalidFieldsAsTouched();
     }
   }
 
-  loadGendersAndSpecies(): void {
-    this.petsService.getGenders().subscribe({
-      next: (response) => {
-        this.genders = response.genders;
-      },
-      error: (error) => {
-        console.error('Błąd podczas pobierania listy płci:', error);
-      }
-    });
-
-    this.petsService.getSpecies().subscribe({
-      next: (response) => {
-        this.species = response.species;
-      },
-      error: (error) => {
-        console.error('Błąd podczas pobierania listy gatunków:', error);
-      }
-    });
-  }
-
-  onFileSelected(event: any) {
-    const file = event.target.files[0];
-    if (file && this.isValidImage(file)) {
-      this.handleImageUpload(file);
-    }
-  }
-
-  onDragOver(event: DragEvent) {
-    event.preventDefault();
-    event.stopPropagation();
-    const element = event.target as HTMLElement;
-    element.classList.add('dragover');
-  }
-
-  onDragLeave(event: DragEvent) {
-    event.preventDefault();
-    event.stopPropagation();
-    const element = event.target as HTMLElement;
-    element.classList.remove('dragover');
-  }
-
-  onDrop(event: DragEvent) {
-    event.preventDefault();
-    event.stopPropagation();
-    const element = event.target as HTMLElement;
-    element.classList.remove('dragover');
-
-    const file = event.dataTransfer?.files[0];
-    if (file && this.isValidImage(file)) {
-      this.handleImageUpload(file);
-    }
-  }
-
-  removeImage() {
-    this.imagePreview = null;
-    this.petForm.patchValue({image: null});
-    this.fileInput.nativeElement.value = '';
-  }
-
-  private isValidImage(file: File): boolean {
-    const validTypes = ['image/jpeg', 'image/png', 'image/gif'];
-    const maxSize = 5 * 1024 * 1024; // 5MB
-
-    if (!validTypes.includes(file.type)) {
-      // Dodaj obsługę błędu - nieprawidłowy format
-      return false;
-    }
-
-    if (file.size > maxSize) {
-      // Dodaj obsługę błędu - za duży rozmiar
-      return false;
-    }
-
-    return true;
-  }
-
-  private handleImageUpload(file: File) {
-    const reader = new FileReader();
-    reader.onload = () => {
-      this.imagePreview = reader.result as string;
-      this.petForm.patchValue({ image: file });
+  private preparePetData(): CreatePetDto {
+    const formValue = this.petForm.value;
+    return {
+      name: formValue.name,
+      species: formValue.species,
+      breed: formValue.breed,
+      gender: formValue.gender,
+      birthDate: formValue.birthDate instanceof Date
+        ? formValue.birthDate.toISOString()
+        : formValue.birthDate
     };
-    reader.readAsDataURL(file);
+  }
+
+  private createPetWithImage(petData: CreatePetDto): void {
+    this.petsService.createPet(petData).subscribe({
+      next: (response) => this.handlePetCreationSuccess(response),
+      error: (error) => this.handlePetCreationError(error)
+    });
+  }
+
+  private handlePetCreationSuccess(response: any): void {
+    const formValue = this.petForm.value;
+
+    if (response.petId && formValue.image) {
+      this.uploadPetImage(response.petId, formValue.image);
+    } else {
+      this.showSuccessMessage('Pomyślnie dodano zwierzę');
+      this.hideDialog();
+    }
+  }
+
+  private uploadPetImage(petId: string, image: File): void {
+    this.petsService.uploadPetImage(petId, image).subscribe({
+      next: () => {
+        this.showSuccessMessage('Pomyślnie dodano zwierzę wraz ze zdjęciem');
+        this.hideDialog();
+      },
+      error: () => {
+        this.showWarningMessage('Dodano zwierzę, ale nie udało się dodać zdjęcia');
+        this.hideDialog();
+      }
+    });
+  }
+
+  private handlePetCreationError(error: any): void {
+    this.showErrorMessage('Nie udało się dodać zwierzęcia');
+  }
+
+  private showSuccessMessage(detail: string): void {
+    this.messageService.add({
+      severity: 'success',
+      summary: 'Sukces',
+      detail
+    });
+  }
+
+  private showWarningMessage(detail: string): void {
+    this.messageService.add({
+      severity: 'warn',
+      summary: 'Uwaga',
+      detail
+    });
+  }
+
+  private showErrorMessage(detail: string): void {
+    this.messageService.add({
+      severity: 'error',
+      summary: 'Błąd',
+      detail
+    });
+  }
+
+  private markInvalidFieldsAsTouched(): void {
+    Object.keys(this.petForm.controls).forEach(key => {
+      const control = this.petForm.get(key);
+      if (control?.invalid) {
+        control.markAsTouched();
+      }
+    });
+  }
+
+  onImageSelected(file: File) {
+    this.petForm.patchValue({image: file});
+  }
+
+  onImageRemoved() {
+    this.petForm.patchValue({image: null});
   }
 }

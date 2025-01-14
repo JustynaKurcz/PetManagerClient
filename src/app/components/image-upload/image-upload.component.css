@@ -1,0 +1,96 @@
+.image-upload-container {
+  width: 100%;
+}
+
+.upload-box {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 2.5rem;
+  border: 2px dashed #d1d5db;
+  border-radius: 1rem;
+  background: linear-gradient(to bottom, #f8fafc, #ffffff);
+  cursor: pointer;
+  transition: all 0.2s ease-in-out;
+  box-shadow: 0 2px 4px rgba(148, 163, 184, 0.05);
+}
+
+.upload-box:hover {
+  border-color: #2E7D32;
+  background: linear-gradient(to bottom, #f0f9ff, #ffffff);
+  box-shadow: 0 4px 6px rgba(148, 163, 184, 0.1);
+  transform: translateY(-1px);
+}
+
+.upload-box i {
+  font-size: 2.5rem;
+  color: #2E7D32;
+  margin-bottom: 1rem;
+}
+
+.upload-box span {
+  color: #334155;
+  font-weight: 500;
+  margin-bottom: 0.5rem;
+}
+
+.upload-box small {
+  color: #64748b;
+  font-size: 0.875rem;
+}
+
+.image-preview {
+  position: relative;
+  width: 100%;
+  height: 250px;
+  border-radius: 1rem;
+  overflow: hidden;
+  box-shadow: 0 4px 6px rgba(148, 163, 184, 0.1);
+}
+
+.image-preview img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.3s ease;
+}
+
+.image-preview img:hover {
+  transform: scale(1.02);
+}
+
+.remove-image {
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
+  background: rgba(255, 255, 255, 0.95);
+  border: none;
+  border-radius: 0.75rem;
+  padding: 0.5rem;
+  width: 2.5rem;
+  height: 2.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.remove-image:hover {
+  background: #ffffff;
+  transform: scale(1.05);
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.remove-image i {
+  color: #dc2626;
+  font-size: 1.25rem;
+}
+
+.upload-box.dragover {
+  border-color: #2E7D32;
+  background: linear-gradient(to bottom, #eff6ff, #ffffff);
+  transform: scale(1.01);
+}

@@ -25,28 +25,24 @@ export class UsersService {
     return this.http
       .post<SignInResponse>(API_ENDPOINTS.USERS.SIGN_IN, signInData)
       .pipe(
-        map((result: SignInResponse) => {
-          if (result?.token) {
-            this.localStorage?.setItem('token', result.token);
-            this.isAuthenticatedSubject.next(true);
-            return this.getDetailsOfTheLoggedUser().pipe(
-              map(() => true)
-            );
-          }
+        map((response: SignInResponse) => {
+          if (response?.token) {
+              this.localStorage?.setItem('token', String(response.token));
+              this.isAuthenticatedSubject.next(true);
+              return true;
+            }
           return false;
+        }),
+        catchError((error) => {
+          console.error('Sign in error:', error);
+          this.isAuthenticatedSubject.next(false);
+          return of(false);
         })
-      )
+      );
   }
 
   signUp(signUpData: SignUpCommand) {
     return this.http.post<SignUpResponse>(API_ENDPOINTS.USERS.SIGN_UP, signUpData);
-  }
-
-  private createAuthHeaders(): HttpHeaders {
-    const token = this.localStorage?.getItem('token');
-    return new HttpHeaders({
-      'Authorization': `Bearer ${token}`
-    });
   }
 
   getDetailsOfTheLoggedUser() {
@@ -64,11 +60,11 @@ export class UsersService {
 
   isLoggedIn(): boolean {
     const jwtHelper = new JwtHelperService();
-    const token = this.localStorage?.getItem('token');
+    const localStorage = this.document.defaultView?.localStorage;
+    const token = localStorage?.getItem('token');
 
     if (!token) {
       this.isAuthenticatedSubject.next(false);
-      this.localStorage?.removeItem('token');
       return false;
     }
     const isExpired = !jwtHelper.isTokenExpired(token);

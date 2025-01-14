@@ -6,4 +6,5 @@ export interface CurrentUserDetailsDto {
   lastChangePasswordDate: string;
   createdAt: string;
   role: string;
+  petsCount: number;
 }
