@@ -1,14 +1,14 @@
 import {Component, OnInit} from '@angular/core';
-import {PrimengImports} from "../../constants/primeng-imports";
+import {PrimengImports} from "../../../constants/primeng-imports";
 import {CommonModule} from "@angular/common";
 import {FormBuilder, FormGroup, ReactiveFormsModule, Validators} from "@angular/forms";
-import {PetsService} from "../../services/pets/pets.service";
+import {PetsService} from "../../../services/pets/pets.service";
 import {MessageService} from "primeng/api";
 import {ImageUploadComponent} from "../image-upload/image-upload.component";
-import {CreatePetDto} from "../../models/pets/create-pet-dto";
+import {CreatePetDto} from "../../../models/pets/create-pet-dto";
 
 @Component({
-  selector: 'app-add-pet-form',
+  selector: 'app-pet-form',
   standalone: true,
   imports: [
     CommonModule,
@@ -17,10 +17,10 @@ import {CreatePetDto} from "../../models/pets/create-pet-dto";
     ImageUploadComponent
   ],
   providers: [PetsService],
-  templateUrl: './add-pet-form.component.html',
-  styleUrl: './add-pet-form.component.css'
+  templateUrl: './pet-form.component.html',
+  styleUrl: './pet-form.component.css'
 })
-export class AddPetFormComponent implements OnInit {
+export class PetFormComponent implements OnInit {
   visible: boolean = false;
   petForm!: FormGroup;
   today: Date = new Date();

@@ -1,8 +1,19 @@
-<div class="pets-container">
-  <div class="pets-grid">
-    <app-pet-item *ngFor="let pet of pets" [pet]="pet"></app-pet-item>
+<!-- my-pets.component.html -->
+<div class="container">
+  <div class="header">
+    <h1>Moje Zwierzęta</h1>
   </div>
 
+  <div class="pets-grid" [class.is-loading]="loading">
+    <app-pet-item
+      *ngFor="let pet of pets"
+      [pet]="pet">
+    </app-pet-item>
+
+    <div *ngIf="loading" class="loader">
+      <p-progressSpinner strokeWidth="4"></p-progressSpinner>
+    </div>
+  </div>
   <div class="pagination-container">
     <p-paginator
       (onPageChange)="onPageChange($event)"
@@ -15,4 +26,15 @@
     ></p-paginator>
   </div>
 
+  <div class="add-pet-container">
+    <p-button
+      label="Dodaj zwierzę"
+      icon="pi pi-plus"
+      [rounded]="true"
+      styleClass="custom-blue-button"
+      (onClick)="showAddPetDialog()"
+    ></p-button>
+  </div>
+
+  <app-pet-form></app-pet-form>
 </div>
