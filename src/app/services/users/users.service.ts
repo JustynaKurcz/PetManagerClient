@@ -1,7 +1,6 @@
 import {inject, Injectable} from '@angular/core';
-import {HttpClient} from "@angular/common/http";
-import {DOCUMENT} from "@angular/common";
-import {BehaviorSubject, map, Observable, tap} from "rxjs";
+import {HttpClient, HttpHeaders} from "@angular/common/http";
+import {BehaviorSubject, catchError, map, Observable, of, tap} from "rxjs";
 import {SignUpCommand} from "../../models/users/sign-up/sign-up-command";
 import {SignUpResponse} from "../../models/users/sign-up/sign-up-response";
 import {API_ENDPOINTS} from "../../constants/api-constants";
@@ -10,6 +9,7 @@ import {SignInResponse} from "../../models/users/sign-in/sign-in-response";
 import {ChangeUserInformationCommand} from "../../models/users/change-user-information/change-user-information-command";
 import {CurrentUserDetailsDto} from "../../models/users/get-current-user-details/current-user-details-dto";
 import {JwtHelperService} from "@auth0/angular-jwt";
+import {DOCUMENT} from "@angular/common";
 
 @Injectable({
   providedIn: 'root'
@@ -19,7 +19,7 @@ export class UsersService {
   private document = inject(DOCUMENT);
   private isAuthenticatedSubject = new BehaviorSubject<boolean>(false);
 
-  private localStorage = this.document.defaultView?.localStorage;
+  localStorage = this.document.defaultView?.localStorage;
 
   signIn(signInData: SignInCommand) {
     return this.http
@@ -42,11 +42,18 @@ export class UsersService {
     return this.http.post<SignUpResponse>(API_ENDPOINTS.USERS.SIGN_UP, signUpData);
   }
 
+  private createAuthHeaders(): HttpHeaders {
+    const token = this.localStorage?.getItem('token');
+    return new HttpHeaders({
+      'Authorization': `Bearer ${token}`
+    });
+  }
+
   getDetailsOfTheLoggedUser() {
     return this.http.get<CurrentUserDetailsDto>(API_ENDPOINTS.USERS.CURRENT_LOGGED_USER)
       .pipe(
         tap((result: any) => {
-          localStorage.setItem('userId', result.id);
+          this.localStorage?.setItem('userId', result.userId);
         })
       );
   }
@@ -57,10 +64,11 @@ export class UsersService {
 
   isLoggedIn(): boolean {
     const jwtHelper = new JwtHelperService();
-    const token = localStorage?.getItem('token');
+    const token = this.localStorage?.getItem('token');
+
     if (!token) {
       this.isAuthenticatedSubject.next(false);
-      localStorage?.removeItem('token');
+      this.localStorage?.removeItem('token');
       return false;
     }
     const isExpired = !jwtHelper.isTokenExpired(token);
@@ -80,5 +88,4 @@ export class UsersService {
     this.localStorage?.removeItem('token');
     this.isAuthenticatedSubject.next(false);
   }
-
 }

@@ -26,7 +26,7 @@
       ></app-form-input>
 
       <div class="forgot-password">
-        <a [routerLink]="['/zapomniane-haslo']">Zapomniane hasło? To zdarza się najlepszym!</a>
+        <a (click)="onForgotPassword()">Zapomniane hasło? To zdarza się najlepszym!</a>
       </div>
 
       <button type="submit" [disabled]="signInForm.invalid">

@@ -66,4 +66,7 @@ export class SignInComponent implements OnInit {
       }
     );
   }
+
+  onForgotPassword() {
+  }
 }
