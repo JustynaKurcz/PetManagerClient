@@ -32,27 +32,28 @@ export class UsersService {
           if (response?.token) {
             queueMicrotask(() => {
               this.localStorage?.setItem('token', String(response.token));
-              this.updateAuthState(response.token);
+              this.setAuthenticatedState(response.token);
             });
             return true;
           }
           return false;
         }),
         catchError((error) => {
-          this.resetAuthState();
+          this.clearAuthenticatedState();
           return of(false);
         })
       );
   }
 
-  private updateAuthState(token: string): void {
+  private setAuthenticatedState(token: string): void {
     try {
+      this.isAuthenticatedSubject.next(true);
     } catch (error) {
-      this.resetAuthState();
+      this.clearAuthenticatedState();
     }
   }
 
-  private resetAuthState(): void {
+  private clearAuthenticatedState(): void {
     this.isAuthenticatedSubject.next(false);
   }
 
@@ -72,15 +73,15 @@ export class UsersService {
     const token = this.localStorage?.getItem('token');
 
     if (!token) {
-      this.resetAuthState();
+      this.clearAuthenticatedState();
       return false;
     }
 
     const isNotExpired = !this.jwtHelper.isTokenExpired(token);
     if (isNotExpired) {
-      this.updateAuthState(token);
+      this.setAuthenticatedState(token);
     } else {
-      this.resetAuthState();
+      this.clearAuthenticatedState();
     }
 
     return isNotExpired;

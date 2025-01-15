@@ -1,4 +1,4 @@
-import {Component, OnDestroy, OnInit} from '@angular/core';
+import {ChangeDetectorRef, Component, inject, OnDestroy, OnInit} from '@angular/core';
 import {MenubarModule} from "primeng/menubar";
 import {MenuItem} from "primeng/api";
 import "primeicons/primeicons.css";
@@ -7,7 +7,6 @@ import {UsersService} from "../../services/users/users.service";
 import {MenuModule} from "primeng/menu";
 import {NgForOf} from "@angular/common";
 import {Button} from "primeng/button";
-import {Subscription} from "rxjs";
 
 @Component({
   selector: 'app-navbar',
@@ -23,32 +22,24 @@ import {Subscription} from "rxjs";
   templateUrl: './navbar.component.html',
   styleUrls: ['./navbar.component.css']
 })
-export class NavbarComponent implements OnInit, OnDestroy {
-  userMenuItems: MenuItem[] = [];
-  menuItems: MenuItem[] = [];
-  private authSubscription?: Subscription;
 
-  constructor(private usersService: UsersService) {
-  }
+export class NavbarComponent implements OnInit {
+  private readonly usersService = inject(UsersService);
+  private readonly cdr = inject(ChangeDetectorRef);
+
+  userMenuItems: MenuItem[] | undefined;
+  menuItems: MenuItem[] | undefined;
 
   ngOnInit() {
     this.updateUserMenuItems(this.usersService.isLoggedIn());
     this.initializeMenuItem();
 
-    this.authSubscription = this.usersService
-      .getAuthState()
-      .subscribe(
+    this.usersService.getAuthState().subscribe(
       (isLoggedIn: boolean) => {
         this.updateUserMenuItems(isLoggedIn);
+        this.cdr.detectChanges();
       }
     );
-  }
-
-  ngOnDestroy() {
-    if (this.authSubscription) {
-      this.authSubscription
-        .unsubscribe();
-    }
   }
 
   private initializeMenuItem() {
@@ -65,7 +56,40 @@ export class NavbarComponent implements OnInit, OnDestroy {
     ];
   }
 
+// export class NavbarComponent implements OnInit, OnDestroy {
+//   userMenuItems: MenuItem[] = [];
+//   menuItems: MenuItem[] = [];
+//   private subscriptions = new Subscription();
+//
+//   constructor(private usersService: UsersService) {
+//   }
+//
+//   ngOnInit() {
+//     this.setupAuthSubscription();
+//     this.initializeMenuItem();
+//   }
+//
+//   ngOnDestroy() {
+//     this.subscriptions.unsubscribe();
+//   }
+//
+//   private initializeMenuItem() {
+//     this.menuItems = [
+//       {
+//         label: 'Moje zwierzaki',
+//         icon: 'pi pi-id-card',
+//         routerLink: ['/moje-zwierzaki']
+//       },
+//       {
+//         label: 'Kontakt',
+//         icon: 'pi pi-envelope'
+//       }
+//     ];
+//   }
+
+
   private updateUserMenuItems(isLoggedIn: boolean) {
+    console.log(isLoggedIn);
     if (isLoggedIn) {
       this.userMenuItems = [
         {
@@ -101,5 +125,16 @@ export class NavbarComponent implements OnInit, OnDestroy {
   async logout() {
     await this.usersService.signOut().then(() => window.location.reload());
   }
-
 }
+
+//
+//   private setupAuthSubscription() {
+//     this.subscriptions.add(
+//       combineLatest([
+//         this.usersService.getAuthState(),
+//       ]).subscribe(([isLoggedIn]) => {
+//         this.updateUserMenuItems(isLoggedIn);
+//       })
+//     );
+//   }
+//
