@@ -6,6 +6,7 @@ export const API_ENDPOINTS = {
     CURRENT_LOGGED_USER: `${API_BASE_URL}users/user`,
     SIGN_IN: `${API_BASE_URL}users/sign-in`,
     SIGN_UP: `${API_BASE_URL}users/sign-up`,
+    RESET_PASSWORD: `${API_BASE_URL}users/forgot-password`,
   },
   PETS: {
     BASE: `${API_BASE_URL}pets`,

@@ -11,6 +11,7 @@ import {CurrentUserDetailsDto} from "../../models/users/get-current-user-details
 import {JwtHelperService} from "@auth0/angular-jwt";
 import {DOCUMENT} from "@angular/common";
 import { throwError as observableThrowError } from 'rxjs';
+import {ResetPassword} from "../../models/users/resetpassword/ResetPassword";
 
 @Injectable({
   providedIn: 'root'
@@ -98,7 +99,7 @@ export class UsersService {
     this.isAuthenticatedSubject.next(false);
   }
 
-  async getAuthToken() {
-    return this.localStorage?.getItem('token');
+  resetPassword(resetPasswordData: ResetPassword): Observable<void> {
+    return this.http.post<void>(API_ENDPOINTS.USERS.RESET_PASSWORD, resetPasswordData);
   }
 }

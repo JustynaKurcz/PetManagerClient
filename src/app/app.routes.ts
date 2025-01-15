@@ -16,6 +16,10 @@ export const routes: Routes = [
     loadComponent: () => import('./components/auth/sign-up/sign-up.component').then(m => m.SignUpComponent)
   },
   {
+    path: 'resetuj-haslo',
+    loadComponent: () => import('./components/auth/reset-password/reset-password.component').then(m => m.ResetPasswordComponent)
+  },
+  {
     path: 'pet/detail/:petId',
     loadComponent: () => import('./components/pet-details/pet-details.component').then(m => m.PetDetailsComponent),
     canActivate: [authGuard]

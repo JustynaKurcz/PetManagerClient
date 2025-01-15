@@ -8,7 +8,7 @@ import {BrandHeaderComponent} from "../shared/brand-header/brand-header.componen
 import {BrandFeaturesComponent} from "../shared/brand-features/brand-features.component";
 
 @Component({
-  selector: 'app-sign-up',
+  selector: 'app-reset-password',
   standalone: true,
   imports: [
     BrandFeaturesComponent,
@@ -18,11 +18,11 @@ import {BrandFeaturesComponent} from "../shared/brand-features/brand-features.co
     FormInputComponent
   ],
   providers: [UsersService],
-  templateUrl: './sign-up.component.html',
-  styleUrls: ['./sign-up.component.css']
+  templateUrl: './reset-password.component.html',
+  styleUrls: ['./reset-password.component.css']
 })
-export class SignUpComponent implements OnInit {
-  signUpForm!: FormGroup;
+export class ResetPasswordComponent implements OnInit {
+  resetPasswordForm!: FormGroup;
 
   constructor(
     private fb: FormBuilder,
@@ -32,20 +32,19 @@ export class SignUpComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.signUpForm = this.fb.group({
+    this.resetPasswordForm = this.fb.group({
       email: ['', [Validators.required, Validators.email]],
-      password: ['', [Validators.required, Validators.minLength(6)]]
     });
   }
 
-  signUp() {
-    if (this.signUpForm.invalid) {
+  resetPassword() {
+    if (this.resetPasswordForm.invalid) {
       return;
     }
 
-    const signUpData = this.signUpForm.value;
+    const resetPasswordData = this.resetPasswordForm.value;
 
-    this.usersService.signUp(signUpData).subscribe({
+    this.usersService.resetPassword(resetPasswordData).subscribe({
       next: () => {
         this.router.navigate(['/zaloguj-sie']);
       },
@@ -56,7 +55,7 @@ export class SignUpComponent implements OnInit {
   }
 
   showError(): void {
-    this.signUpForm.reset();
+    this.resetPasswordForm.reset();
 
     this.snackBar.open('Wystąpił błąd. Podane dane są nieprawidłowe.', 'Zamknij', {
       duration: 5000,
@@ -66,8 +65,5 @@ export class SignUpComponent implements OnInit {
     });
   }
 
-  navigateToSignIn() {
-    this.router.navigate(['/zaloguj-sie']);
-  }
 }
 

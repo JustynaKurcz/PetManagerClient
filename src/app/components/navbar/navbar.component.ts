@@ -26,7 +26,6 @@ import {Subscription} from "rxjs";
 export class NavbarComponent implements OnInit, OnDestroy {
   userMenuItems: MenuItem[] = [];
   menuItems: MenuItem[] = [];
-  activeItem: MenuItem | undefined;
   private authSubscription?: Subscription;
 
   constructor(private usersService: UsersService) {
@@ -36,7 +35,9 @@ export class NavbarComponent implements OnInit, OnDestroy {
     this.updateUserMenuItems(this.usersService.isLoggedIn());
     this.initializeMenuItem();
 
-    this.authSubscription = this.usersService.getAuthState().subscribe(
+    this.authSubscription = this.usersService
+      .getAuthState()
+      .subscribe(
       (isLoggedIn: boolean) => {
         this.updateUserMenuItems(isLoggedIn);
       }
@@ -45,7 +46,8 @@ export class NavbarComponent implements OnInit, OnDestroy {
 
   ngOnDestroy() {
     if (this.authSubscription) {
-      this.authSubscription.unsubscribe();
+      this.authSubscription
+        .unsubscribe();
     }
   }
 
@@ -61,8 +63,6 @@ export class NavbarComponent implements OnInit, OnDestroy {
         icon: 'pi pi-envelope'
       }
     ];
-
-    this.activeItem = this.menuItems[0];
   }
 
   private updateUserMenuItems(isLoggedIn: boolean) {

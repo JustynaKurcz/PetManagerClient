@@ -1,9 +1,9 @@
-import { Component, OnInit, inject } from '@angular/core';
-import {FormBuilder, FormGroup, ReactiveFormsModule, Validators} from '@angular/forms';
-import {Router, RouterLink} from '@angular/router';
-import { MatSnackBar } from '@angular/material/snack-bar';
-import { UsersService } from '../../../services/users/users.service';
-import { SignInCommand } from '../../../models/users/sign-in/sign-in-command';
+import {Component, inject, OnInit} from '@angular/core';
+import {FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators} from '@angular/forms';
+import {Router} from '@angular/router';
+import {MatSnackBar} from '@angular/material/snack-bar';
+import {UsersService} from '../../../services/users/users.service';
+import {SignInCommand} from '../../../models/users/sign-in/sign-in-command';
 import {BrandFeaturesComponent} from "../shared/brand-features/brand-features.component";
 import {BrandHeaderComponent} from "../shared/brand-header/brand-header.component";
 import {FormInputComponent} from "../shared/form-input/form-input.component";
@@ -11,7 +11,13 @@ import {FormInputComponent} from "../shared/form-input/form-input.component";
 @Component({
   selector: 'app-sign-in',
   standalone: true,
-  imports: [RouterLink, ReactiveFormsModule, BrandFeaturesComponent, BrandHeaderComponent, FormInputComponent],
+  imports: [
+    BrandFeaturesComponent,
+    ReactiveFormsModule,
+    FormsModule,
+    BrandHeaderComponent,
+    FormInputComponent
+  ],
   providers: [UsersService],
   templateUrl: './sign-in.component.html',
   styleUrl: './sign-in.component.css'
@@ -68,5 +74,10 @@ export class SignInComponent implements OnInit {
   }
 
   onForgotPassword() {
+    this.router.navigate(['/resetuj-haslo']);
+  }
+
+  navigateToSignUp() {
+    this.router.navigate(['/zarejestruj-sie']);
   }
 }
