@@ -10,7 +10,6 @@ import {ChangeUserInformationCommand} from "../../models/users/change-user-infor
 import {CurrentUserDetailsDto} from "../../models/users/get-current-user-details/current-user-details-dto";
 import {JwtHelperService} from "@auth0/angular-jwt";
 import {DOCUMENT} from "@angular/common";
-import { throwError as observableThrowError } from 'rxjs';
 import {ResetPassword} from "../../models/users/resetpassword/ResetPassword";
 
 @Injectable({

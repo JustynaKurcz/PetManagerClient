@@ -1,4 +1,3 @@
-/* my-pets.component.css */
 .container {
   max-width: 1200px;
   margin: 0 auto;
@@ -19,13 +18,21 @@
   margin: 0;
 }
 
-:host ::ng-deep .add-pet-button {
-  background: #4CAF50;
-  border: none;
+.add-pet-container {
+  display: flex;
+  justify-content: flex-end;
+  margin-bottom: 3rem;
+  margin-top: 30px;
 }
 
-:host ::ng-deep .add-pet-button:hover {
-  background: #388E3C;
+:host ::ng-deep .custom-blue-button {
+  background-color: #4CAF50 !important;
+  border-color: #4CAF50 !important;
+}
+
+:host ::ng-deep .custom-blue-button:hover {
+  background-color: #388E3C !important;
+  border-color: #388E3C !important;
 }
 
 .pets-grid {

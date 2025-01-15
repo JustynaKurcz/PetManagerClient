@@ -18,7 +18,7 @@ import {CardModule} from "primeng/card";
 })
 export class PetItemComponent {
   @Input() pet!: PetDto;
-  @Input() index: number = 0;
+  @Input() index = 0;
 
   constructor(private router: Router) {}
 
