@@ -37,7 +37,6 @@ export class MyPetsComponent implements OnInit {
   loadPets(): void {
     this.petsService.getPets(this.pageIndex + 1, this.pageSize).subscribe({
       next: (response) => {
-        console.log('GetPets success:', response);
         this.pets = response.items;
         this.totalCount = response.totalCount;
         this.loading = false;

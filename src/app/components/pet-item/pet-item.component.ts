@@ -1,6 +1,6 @@
 import {Component, Input} from '@angular/core';
 import {MatCardModule} from "@angular/material/card";
-import {Router, RouterLink} from "@angular/router";
+import {Router} from "@angular/router";
 import {Button} from "primeng/button";
 import {PetDto} from "../../models/pets/pet-dto";
 import {CardModule} from "primeng/card";
@@ -10,7 +10,6 @@ import {CardModule} from "primeng/card";
   standalone: true,
   imports: [
     MatCardModule,
-    RouterLink,
     Button,
     CardModule
   ],
@@ -20,8 +19,6 @@ import {CardModule} from "primeng/card";
 export class PetItemComponent {
   @Input() pet!: PetDto;
   @Input() index: number = 0;
-
-  // protected readonly name = name;
 
   constructor(private router: Router) {}
 

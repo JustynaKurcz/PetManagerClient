@@ -29,19 +29,9 @@ export class PetsService {
   }
 
   uploadPetImage(petId: string, imageFile: File) {
-    console.log('Uploading image for pet:', petId);
-    console.log('Image file:', imageFile);
-
     const formData = new FormData();
     formData.append('file', imageFile, imageFile.name);
-
-    console.log('FormData entries:');
-    formData.forEach((value, key) => {
-      console.log(key, value);
-    });
-
     const url = `${API_ENDPOINTS.PETS.BASE}/${petId}/images`;
-    console.log('Upload URL:', url);
 
     return this.http.post(url, formData)
       .pipe(
@@ -51,7 +41,6 @@ export class PetsService {
         })
       );
   }
-
 
   getPets(pageIndex: number, pageSize: number) {
     return this.http.get<PetResponse>((`${API_ENDPOINTS.PETS.BASE}?PageNumber=${pageIndex}&PageSize=${pageSize}`));
