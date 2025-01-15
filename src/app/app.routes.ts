@@ -4,8 +4,8 @@ import {authGuard} from "./guards/auth.guard";
 export const routes: Routes = [
   {
     path: '',
-    loadComponent: () => import('./components/home/home.component').then(m => m.HomeComponent),
-    canActivate: [authGuard]
+    redirectTo: 'moje-zwierzaki',
+    pathMatch: 'full'
   },
   {
     path: 'zaloguj-sie',
@@ -27,7 +27,7 @@ export const routes: Routes = [
   },
   {
     path: 'profile',
-    loadComponent: () => import('./components/user-account/user-account.component').then(m => m.UserAccountComponent),
+    loadComponent: () => import('./components/my-account/my-account.component').then(m => m.MyAccountComponent),
     canActivate: [authGuard]
   },
   {

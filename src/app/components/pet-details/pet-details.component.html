@@ -1,0 +1,140 @@
+<div class="main-container p-4">
+  <div class="surface-card p-4 shadow-2 border-round mb-4">
+    <div class="profile-header mb-5">
+      <div class="gradient-background"></div>
+      <div class="profile-info text-center">
+        <p-avatar
+          [image]="'assets/pies.png'"
+          styleClass="profile-avatar"
+          size="xlarge"
+          [style]="{ 'width': '180px', 'height': '180px' }"
+          shape="circle">
+        </p-avatar>
+        <h2 class="profile-name mt-3 mb-2">{{ pet.name || 'Reksio' }}</h2>
+        <div class="pet-type-breed-container">
+              <span class="pet-type-badge">
+                <i class="pi pi-shield"></i>
+                Pies
+              </span>
+          <span class="breed-tag">
+                <i class="pi pi-star"></i>
+            {{ pet.breed || 'Owczarek' }}
+              </span>
+        </div>
+      </div>
+    </div>
+
+    <div class="info-grid">
+      <div class="info-item">
+        <i class="pi pi-calendar info-icon"></i>
+        <div class="info-content">
+          <span class="info-label">Data urodzenia</span>
+          <span class="info-value">{{ (pet.dateOfBirth | date) || '12-01-2022' }}</span>
+        </div>
+      </div>
+
+      <div class="info-item">
+        <i class="pi pi-user info-icon"></i>
+        <div class="info-content">
+          <span class="info-label">Płeć</span>
+          <span class="info-value">Samiec</span>
+        </div>
+      </div>
+
+      <div class="info-item">
+        <i class="pi pi-heart info-icon"></i>
+        <div class="info-content">
+          <span class="info-label">Waga</span>
+          <span class="info-value">15kg</span>
+        </div>
+      </div>
+
+      <div class="info-item">
+        <i class="pi pi-palette info-icon"></i>
+        <div class="info-content">
+          <span class="info-label">Umaszczenie</span>
+          <span class="info-value">brązowy</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="main-container p-4">
+    <!-- Sekcja z historią zdrowotną -->
+    <div class="surface-card p-4 shadow-2 border-round">
+      <p-tabView>
+        <!-- Sekcja z historią szczepień -->
+        <p-tabPanel header="Historia szczepień" leftIcon="pi pi-calendar">
+          <div class="card">
+            <p-table [value]="healthRecord.vaccinations" [tableStyle]="{'min-width': '50rem'}"
+                     styleClass="p-datatable-sm p-datatable-striped p-datatable-gridlines" [paginator]="true" [rows]="5">
+              <ng-template pTemplate="header">
+                <tr>
+                  <th pSortableColumn="name">Nazwa szczepienia <p-sortIcon field="name"></p-sortIcon></th>
+                  <th pSortableColumn="vaccinationDate">Data szczepienia <p-sortIcon field="vaccinationDate"></p-sortIcon></th>
+                  <th pSortableColumn="nextVaccinationDate">Następne szczepienie <p-sortIcon field="nextVaccinationDate"></p-sortIcon></th>
+                  <th>Status</th>
+                </tr>
+              </ng-template>
+              <ng-template pTemplate="body" let-vaccination>
+                <tr>
+                  <td>
+                    <div class="flex align-items-center gap-2">
+                      <i class="pi pi-shield" style="color: var(--primary-color); margin-right: 1rem;"></i>
+                      <span>{{vaccination.name}}</span>
+                    </div>
+                  </td>
+                  <td>{{vaccination.vaccinationDate | date:'dd.MM.yyyy'}}</td>
+                  <td>{{vaccination.nextVaccinationDate | date:'dd.MM.yyyy'}}</td>
+                  <td>
+                    <p-tag [severity]="getVaccinationStatus(vaccination.nextVaccinationDate)"
+                           [value]="getVaccinationStatusLabel(vaccination.nextVaccinationDate)">
+                    </p-tag>
+                  </td>
+                </tr>
+              </ng-template>
+            </p-table>
+          </div>
+        </p-tabPanel>
+
+
+        <!-- Sekcja z historią wizyt -->
+        <p-tabPanel header="Historia wizyt" leftIcon="pi pi-file">
+          <div class="card">
+            <p-table [value]="healthRecord.appointments" [tableStyle]="{'min-width': '50rem'}"
+                     styleClass="p-datatable-sm p-datatable-striped p-datatable-gridlines visits-table" [paginator]="true" [rows]="5">
+              <ng-template pTemplate="header">
+                <tr>
+                  <th pSortableColumn="title" class="text-2xl">Tytuł wizyty <p-sortIcon field="title"></p-sortIcon></th>
+                  <th pSortableColumn="appointmentDate" class="text-2xl">Data wizyty <p-sortIcon field="appointmentDate"></p-sortIcon></th>
+                  <th pSortableColumn="diagnosis" class="text-2xl">Diagnoza <p-sortIcon field="diagnosis"></p-sortIcon></th>
+                  <th class="text-2xl">Notatki</th>
+                </tr>
+              </ng-template>
+              <ng-template pTemplate="body" let-appointment>
+                <tr>
+                  <td>
+                    <div class="flex align-items-center gap-6">
+                      <i class="pi pi-bookmark text-2xl" style="color: var(--primary-color); margin-right: 1rem;"></i>
+                      <span class="text-xl">{{appointment.title}}</span>
+                    </div>
+                  </td>
+                  <td class="text-xl">{{appointment.appointmentDate | date:'dd.MM.yyyy'}}</td>
+                  <td class="text-xl">{{appointment.diagnosis}}</td>
+                  <td>
+                    <div class="flex align-items-center gap-4">
+                      <i class="pi pi-info-circle text-2xl" style="color: var(--text-color-secondary); margin-right: 1rem;"></i>
+                      <span class="text-xl">{{appointment.notes}}</span>
+                    </div>
+                  </td>
+                </tr>
+              </ng-template>
+            </p-table>
+          </div>
+        </p-tabPanel>
+
+      </p-tabView>
+    </div>
+  </div>
+
+</div>

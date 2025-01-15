@@ -1,9 +1,9 @@
 export interface CurrentUserDetailsDto {
   userId: string;
-  firstName: string;
-  lastName: string;
+  firstName?: string;
+  lastName?: string;
   email: string;
-  lastChangePasswordDate: string;
+  lastChangePasswordDate?: string;
   createdAt: string;
   role: string;
   petsCount: number;

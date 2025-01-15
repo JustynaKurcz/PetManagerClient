@@ -52,9 +52,9 @@ export class NavbarComponent implements OnInit, OnDestroy {
   private initializeMenuItem() {
     this.menuItems = [
       {
-        label: 'Strona główna',
-        icon: 'pi pi-home',
-        routerLink: '/'
+        label: 'Moje zwierzaki',
+        icon: 'pi pi-id-card',
+        routerLink: ['/moje-zwierzaki']
       },
       {
         label: 'Kontakt',

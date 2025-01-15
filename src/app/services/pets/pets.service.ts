@@ -1,4 +1,4 @@
-import {Injectable} from '@angular/core';
+import {inject, Injectable} from '@angular/core';
 import {HttpClient} from "@angular/common/http";
 import {PetResponse} from "../../models/pets/petResponse";
 import {API_ENDPOINTS} from "../../constants/api-constants";
@@ -13,9 +13,8 @@ import {CreatePetDto} from "../../models/pets/create-pet-dto";
   providedIn: 'root'
 })
 export class PetsService {
+  private http = inject(HttpClient);
 
-  constructor(private http: HttpClient) {
-  }
 
   createPet(petData: CreatePetDto) {
     return this.http.post<any>(`${API_ENDPOINTS.PETS.BASE}`, petData);

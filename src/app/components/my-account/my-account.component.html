@@ -1,0 +1,179 @@
+<div class="profile-container">
+  <div class="profile-header">
+    <div class="header-content">
+      <div class="avatar-section">
+        <div class="avatar">{{ userInitials || 'P' }}</div>
+        <div class="user-info">
+          <h1>
+            {{ (userData.firstName?.trim() && userData.lastName?.trim())
+            ? 'Witaj, ' + userData.firstName + ' ' + userData.lastName + '!'
+            : 'Witaj w Pet Manager!' }}
+          </h1>
+          <p class="subtitle">Zarządzaj swoim profilem i ustawieniami konta</p>
+        </div>
+      </div>
+      <div class="header-actions">
+        <button pButton
+                label="Edytuj profil"
+                icon="pi pi-user-edit"
+                (click)="showEditDialog()"
+                class="p-button-outlined edit-profile-button">
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <div class="section-card">
+    <h2>Dane konta</h2>
+    <div class="data-grid">
+      <div class="data-item">
+        <div class="data-icon">
+          <i class="pi pi-user"></i>
+        </div>
+        <div class="data-content">
+          <span class="data-label">Imię</span>
+          <span class="data-value">{{ userData.firstName?.trim() || 'Nie ustawiono' }}</span>
+        </div>
+      </div>
+      <div class="data-item">
+        <div class="data-icon">
+          <i class="pi pi-user"></i>
+        </div>
+        <div class="data-content">
+          <span class="data-label">Nazwisko</span>
+          <span class="data-value">{{ userData.lastName?.trim() || 'Nie ustawiono' }}</span>
+        </div>
+      </div>
+      <div class="data-item">
+        <div class="data-icon">
+          <i class="pi pi-envelope"></i>
+        </div>
+        <div class="data-content">
+          <span class="data-label">Email</span>
+          <span class="data-value">{{ userData.email }}</span>
+        </div>
+      </div>
+      <div class="data-item">
+        <div class="data-icon">
+          <i class="pi pi-calendar"></i>
+        </div>
+        <div class="data-content">
+          <span class="data-label">Data utworzenia konta</span>
+          <span class="data-value">{{ formatDate(userData.createdAt) }}</span>
+        </div>
+      </div>
+      <div class="data-item">
+        <div class="data-icon">
+          <i class="pi pi-lock"></i>
+        </div>
+        <div class="data-content">
+          <span class="data-label">Ostatnia zmiana hasła</span>
+          <span class="data-value">{{ formatDate(userData.lastChangePasswordDate) }}</span>
+        </div>
+      </div>
+      <div class="data-item">
+        <div class="data-icon">
+          <i class="pi pi-heart"></i>
+        </div>
+        <div class="data-content">
+          <span class="data-label">Liczba zwierząt</span>
+          <span class="data-value">{{ userData.petsCount }}</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Sekcja usuwania konta -->
+  <div class="section-card account-management">
+    <h2>Zarządzanie kontem</h2>
+    <div class="management-items">
+      <div class="management-item">
+        <div class="management-info">
+          <i class="pi pi-user-minus"></i>
+          <div>
+            <h3>Usunięcie konta</h3>
+            <p>Spowoduje to trwałe usunięcie wszystkich Twoich danych z systemu.</p>
+          </div>
+        </div>
+        <button pButton
+                label="Usuń konto"
+                icon="pi pi-trash"
+                class="p-button-outlined p-button-danger"
+                (click)="confirmDeleteAccount()">
+        </button>
+      </div>
+    </div>
+  </div>
+
+
+  <p-dialog
+    [(visible)]="editDialogVisible"
+    [modal]="true"
+    [draggable]="false"
+    [resizable]="false"
+    [style]="{width: '700px'}"
+    header="Edytuj dane profilu"
+    styleClass="p-fluid modern-dialog">
+
+    <form [formGroup]="editForm" class="form-container">
+      <div class="form-field">
+        <label for="firstName" class="field-label">
+          <i class="pi pi-user"></i>
+          Imię
+        </label>
+        <input
+          id="firstName"
+          type="text"
+          pInputText
+          formControlName="firstName"
+          placeholder="Wprowadź imię">
+        <small *ngIf="editForm.get('firstName')?.invalid && editForm.get('firstName')?.touched"
+               class="error-message">Wprowadź poprawne imię (minimum 2 znaki)</small>
+      </div>
+
+      <div class="form-field">
+        <label for="lastName" class="field-label">
+          <i class="pi pi-user"></i>
+          Nazwisko
+        </label>
+        <input
+          id="lastName"
+          type="text"
+          pInputText
+          formControlName="lastName"
+          placeholder="Wprowadź nazwisko">
+        <small *ngIf="editForm.get('lastName')?.invalid && editForm.get('lastName')?.touched"
+               class="error-message">Wprowadź poprawne nazwisko (minimum 2 znaki)</small>
+      </div>
+    </form>
+
+    <ng-template pTemplate="footer">
+      <div class="dialog-footer">
+        <p-button
+          label="Anuluj"
+          icon="pi pi-times"
+          (onClick)="editDialogVisible = false"
+          styleClass="p-button-text">
+        </p-button>
+        <p-button
+          label="Zapisz"
+          icon="pi pi-check"
+          (onClick)="saveProfileChanges()"
+          [disabled]="!editForm.valid || !editForm.dirty"
+          styleClass="submit-button">
+        </p-button>
+      </div>
+    </ng-template>
+  </p-dialog>
+
+  <p-confirmDialog
+    header="Potwierdzenie usunięcia konta"
+    icon="pi pi-exclamation-triangle"
+    acceptLabel="Tak, usuń konto"
+    rejectLabel="Anuluj"
+    acceptButtonStyleClass="p-button-danger"
+    [style]="{width: '450px'}">
+  </p-confirmDialog>
+
+  <p-toast></p-toast>
+</div>

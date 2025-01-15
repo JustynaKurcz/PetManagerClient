@@ -3,7 +3,6 @@ import {CommonModule} from "@angular/common";
 import {PetItemComponent} from "../pet-item/pet-item.component";
 import {PetDto} from "../../models/pets/pet-dto";
 import {PetsService} from "../../services/pets/pets.service";
-import {HttpClientModule} from "@angular/common/http";
 import {PaginatorModule, PaginatorState} from 'primeng/paginator';
 import {MessageService} from "primeng/api";
 import {PrimengImports} from "../../constants/primeng-imports";
@@ -13,7 +12,7 @@ import {PetFormComponent} from "../create-pet/pet-form/pet-form.component";
 @Component({
   selector: 'app-my-pets',
   standalone: true,
-  imports: [HttpClientModule, CommonModule, PetItemComponent, PaginatorModule, ...PrimengImports, ProgressSpinnerModule, PetFormComponent],
+  imports: [CommonModule, PetItemComponent, PaginatorModule, ...PrimengImports, ProgressSpinnerModule, PetFormComponent],
   providers: [PetsService, MessageService],
   templateUrl: './my-pets.component.html',
   styleUrls: ['./my-pets.component.css']
@@ -28,8 +27,8 @@ export class MyPetsComponent implements OnInit {
 
   constructor(
     private petsService: PetsService,
-    private messageService: MessageService) {
-  }
+    private messageService: MessageService
+  ) {}
 
   ngOnInit(): void {
     this.loadPets();

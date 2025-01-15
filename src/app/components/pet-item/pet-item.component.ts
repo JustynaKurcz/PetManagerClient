@@ -1,6 +1,6 @@
 import {Component, Input} from '@angular/core';
 import {MatCardModule} from "@angular/material/card";
-import {RouterLink} from "@angular/router";
+import {Router, RouterLink} from "@angular/router";
 import {Button} from "primeng/button";
 import {PetDto} from "../../models/pets/pet-dto";
 import {CardModule} from "primeng/card";
@@ -19,6 +19,13 @@ import {CardModule} from "primeng/card";
 })
 export class PetItemComponent {
   @Input() pet!: PetDto;
-  imageUrl: string = 'https://picsum.photos/id/1025/800/400';
-  protected readonly name = name;
+  @Input() index: number = 0;
+
+  // protected readonly name = name;
+
+  constructor(private router: Router) {}
+
+  navigateToPetDetails() {
+    this.router.navigate(['/pet/detail', this.pet.petId]);
+  }
 }
