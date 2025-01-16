@@ -1,6 +1,6 @@
-export interface Vaccination {
-  id: string;
-  name: string;
+export interface VaccinationDto {
+  vaccinationId: string;
+  vaccinationName: string;
   vaccinationDate: string;
   nextVaccinationDate: string;
   isNotificationSent: boolean;

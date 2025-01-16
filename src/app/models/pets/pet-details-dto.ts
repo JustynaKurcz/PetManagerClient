@@ -6,5 +6,6 @@ export interface PetDetailsDto {
   gender: string;
   dateOfBirth: string;
   userId: string;
-  healthRecordId?: string;
+  healthRecordId: string;
+  photoUrl: string;
 }

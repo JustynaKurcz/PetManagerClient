@@ -1,26 +1,41 @@
 <div class="main-container p-4">
-  <div class="surface-card p-4 shadow-2 border-round mb-4">
+  <div class="surface-card p-4 shadow-2 border-round mb-4" *ngIf="pet">
     <div class="profile-header mb-5">
       <div class="gradient-background"></div>
+
+      <div class="actions-container">
+        <div class="flex gap-2">
+          <p-button
+            icon="pi pi-pencil"
+            severity="primary"
+            (onClick)="editPet()"
+            [rounded]="true"
+            [text]="true"
+            tooltip="Edytuj"
+            tooltipPosition="bottom">
+          </p-button>
+          <p-button
+            icon="pi pi-trash"
+            severity="danger"
+            (onClick)="confirmDeletePet()"
+            [rounded]="true"
+            [text]="true"
+            tooltip="Usuń"
+            tooltipPosition="bottom">
+          </p-button>
+        </div>
+      </div>
+
       <div class="profile-info text-center">
         <p-avatar
-          [image]="'assets/pies.png'"
+          [image]="pet.photoUrl || ''"
+          [label]="!pet.photoUrl ? pet.name.charAt(0) : ''"
           styleClass="profile-avatar"
           size="xlarge"
           [style]="{ 'width': '180px', 'height': '180px' }"
           shape="circle">
         </p-avatar>
-        <h2 class="profile-name mt-3 mb-2">{{ pet.name || 'Reksio' }}</h2>
-        <div class="pet-type-breed-container">
-              <span class="pet-type-badge">
-                <i class="pi pi-shield"></i>
-                Pies
-              </span>
-          <span class="breed-tag">
-                <i class="pi pi-star"></i>
-            {{ pet.breed || 'Owczarek' }}
-              </span>
-        </div>
+        <h2 class="profile-name mt-3 mb-2">{{ pet.name }}</h2>
       </div>
     </div>
 
@@ -29,7 +44,7 @@
         <i class="pi pi-calendar info-icon"></i>
         <div class="info-content">
           <span class="info-label">Data urodzenia</span>
-          <span class="info-value">{{ (pet.dateOfBirth | date) || '12-01-2022' }}</span>
+          <span class="info-value">{{ pet.dateOfBirth | date:'dd.MM.yyyy' }}</span>
         </div>
       </div>
 
@@ -37,43 +52,45 @@
         <i class="pi pi-user info-icon"></i>
         <div class="info-content">
           <span class="info-label">Płeć</span>
-          <span class="info-value">Samiec</span>
+          <span class="info-value">{{ pet.gender }}</span>
         </div>
       </div>
 
       <div class="info-item">
         <i class="pi pi-heart info-icon"></i>
         <div class="info-content">
-          <span class="info-label">Waga</span>
-          <span class="info-value">15kg</span>
+          <span class="info-label">Gatunek</span>
+          <span class="info-value">{{ pet.species }}</span>
         </div>
       </div>
 
       <div class="info-item">
-        <i class="pi pi-palette info-icon"></i>
+        <i class="pi pi-star info-icon"></i>
         <div class="info-content">
-          <span class="info-label">Umaszczenie</span>
-          <span class="info-value">brązowy</span>
+          <span class="info-label">Rasa</span>
+          <span class="info-value">{{ pet.breed }}</span>
         </div>
       </div>
     </div>
   </div>
 
   <div class="main-container p-4">
-    <!-- Sekcja z historią zdrowotną -->
     <div class="surface-card p-4 shadow-2 border-round">
       <p-tabView>
         <!-- Sekcja z historią szczepień -->
         <p-tabPanel header="Historia szczepień" leftIcon="pi pi-calendar">
           <div class="card">
-            <p-table [value]="healthRecord.vaccinations" [tableStyle]="{'min-width': '50rem'}"
-                     styleClass="p-datatable-sm p-datatable-striped p-datatable-gridlines" [paginator]="true" [rows]="5">
+            <p-table [value]="vaccinations" [tableStyle]="{'min-width': '50rem'}"
+                     styleClass="p-datatable-sm p-datatable-striped p-datatable-gridlines" [paginator]="true"
+                     [rows]="5">
               <ng-template pTemplate="header">
                 <tr>
-                  <th pSortableColumn="name">Nazwa szczepienia <p-sortIcon field="name"></p-sortIcon></th>
-                  <th pSortableColumn="vaccinationDate">Data szczepienia <p-sortIcon field="vaccinationDate"></p-sortIcon></th>
-                  <th pSortableColumn="nextVaccinationDate">Następne szczepienie <p-sortIcon field="nextVaccinationDate"></p-sortIcon></th>
-                  <th>Status</th>
+                  <th pSortableColumn="name">Nazwa szczepienia
+                    <p-sortIcon field="name"></p-sortIcon>
+                  </th>
+                  <th>Status szczepienia</th>
+                  <th>Status powiadomienia</th>
+                  <th style="width: 100px">Akcje</th>
                 </tr>
               </ng-template>
               <ng-template pTemplate="body" let-vaccination>
@@ -81,15 +98,37 @@
                   <td>
                     <div class="flex align-items-center gap-2">
                       <i class="pi pi-shield" style="color: var(--primary-color); margin-right: 1rem;"></i>
-                      <span>{{vaccination.name}}</span>
+                      <span class="cursor-pointer hover:text-primary"
+                            (click)="showVaccinationDialog(vaccination.id)">
+      {{vaccination.vaccinationName}}
+    </span>
                     </div>
                   </td>
-                  <td>{{vaccination.vaccinationDate | date:'dd.MM.yyyy'}}</td>
-                  <td>{{vaccination.nextVaccinationDate | date:'dd.MM.yyyy'}}</td>
                   <td>
                     <p-tag [severity]="getVaccinationStatus(vaccination.nextVaccinationDate)"
                            [value]="getVaccinationStatusLabel(vaccination.nextVaccinationDate)">
                     </p-tag>
+                  </td>
+                  <td>
+                    <div class="notification-status"
+                         [ngClass]="{'sent': vaccination.isNotificationSent, 'pending': !vaccination.isNotificationSent}">
+                      <i class="pi"
+                         [ngClass]="{'pi-bell': vaccination.isNotificationSent, 'pi-bell-slash': !vaccination.isNotificationSent}"></i>
+                      <span>{{ vaccination.isNotificationSent ? 'Wysłane' : 'Oczekuje' }}</span>
+                    </div>
+                  </td>
+                  <td>
+                    <div class="flex justify-content-center">
+                      <p-button
+                        icon="pi pi-trash"
+                        severity="danger"
+                        (onClick)="confirmDeleteVaccination(vaccination.vaccinationId)"
+                        [rounded]="true"
+                        [text]="true"
+                        tooltip="Usuń"
+                        tooltipPosition="bottom">
+                      </p-button>
+                    </div>
                   </td>
                 </tr>
               </ng-template>
@@ -97,18 +136,22 @@
           </div>
         </p-tabPanel>
 
-
         <!-- Sekcja z historią wizyt -->
         <p-tabPanel header="Historia wizyt" leftIcon="pi pi-file">
           <div class="card">
-            <p-table [value]="healthRecord.appointments" [tableStyle]="{'min-width': '50rem'}"
-                     styleClass="p-datatable-sm p-datatable-striped p-datatable-gridlines visits-table" [paginator]="true" [rows]="5">
+            <p-table [value]="appointments" [tableStyle]="{'min-width': '50rem'}"
+                     styleClass="p-datatable-sm p-datatable-striped p-datatable-gridlines visits-table"
+                     [paginator]="true" [rows]="5">
               <ng-template pTemplate="header">
                 <tr>
-                  <th pSortableColumn="title" class="text-2xl">Tytuł wizyty <p-sortIcon field="title"></p-sortIcon></th>
-                  <th pSortableColumn="appointmentDate" class="text-2xl">Data wizyty <p-sortIcon field="appointmentDate"></p-sortIcon></th>
-                  <th pSortableColumn="diagnosis" class="text-2xl">Diagnoza <p-sortIcon field="diagnosis"></p-sortIcon></th>
-                  <th class="text-2xl">Notatki</th>
+                  <th pSortableColumn="title" class="text-2xl">Tytuł wizyty
+                    <p-sortIcon field="title"></p-sortIcon>
+                  </th>
+                  <th pSortableColumn="appointmentDate" class="text-2xl">Data wizyty
+                    <p-sortIcon field="appointmentDate"></p-sortIcon>
+                  </th>
+                  <th class="text-2xl">Status powiadomienia</th>
+                  <th style="width: 100px">Akcje</th>
                 </tr>
               </ng-template>
               <ng-template pTemplate="body" let-appointment>
@@ -116,15 +159,35 @@
                   <td>
                     <div class="flex align-items-center gap-6">
                       <i class="pi pi-bookmark text-2xl" style="color: var(--primary-color); margin-right: 1rem;"></i>
-                      <span class="text-xl">{{appointment.title}}</span>
+                      <span class="text-xl cursor-pointer hover:text-primary"
+                            (click)="showAppointmentDialog(appointment.id)">
+      {{ appointment.title }}
+    </span>
                     </div>
                   </td>
-                  <td class="text-xl">{{appointment.appointmentDate | date:'dd.MM.yyyy'}}</td>
-                  <td class="text-xl">{{appointment.diagnosis}}</td>
+                  <td class="text-xl">{{ appointment.appointmentDate | date:'dd.MM.yyyy' }}</td>
                   <td>
-                    <div class="flex align-items-center gap-4">
-                      <i class="pi pi-info-circle text-2xl" style="color: var(--text-color-secondary); margin-right: 1rem;"></i>
-                      <span class="text-xl">{{appointment.notes}}</span>
+                    <div class="notification-status"
+                         [ngClass]="{'sent': appointment.isNotificationSent, 'pending': !appointment.isNotificationSent}">
+                      <i class="pi"
+                         [ngClass]="{'pi-bell': appointment.isNotificationSent, 'pi-bell-slash': !appointment.isNotificationSent}"></i>
+                      <span>{{ appointment.isNotificationSent ? 'Wysłane' : 'Oczekuje' }}</span>
+                    </div>
+                  </td>
+                  <td>
+                    <div class="flex justify-content-center">
+                      <p-button
+                        icon="pi pi-trash"
+                        severity="danger"
+                        (onClick)="confirmDeleteAppointment(appointment.id)"
+                        [rounded]="true"
+                        [text]="true"
+                        tooltip="Usuń"
+                        tooltipPosition="bottom">
+                      </p-button>
+
+                      <p-confirmDialog></p-confirmDialog>
+                      <p-toast></p-toast>
                     </div>
                   </td>
                 </tr>
@@ -132,9 +195,86 @@
             </p-table>
           </div>
         </p-tabPanel>
-
       </p-tabView>
     </div>
   </div>
 
 </div>
+
+<p-confirmDialog></p-confirmDialog>
+<p-toast></p-toast>
+
+
+<p-dialog
+  [(visible)]="showAppointmentDetails"
+  [header]="selectedAppointment?.title || 'Szczegóły wizyty'"
+  [modal]="true"
+  [style]="{width: '50vw'}"
+  [breakpoints]="{'960px': '75vw', '641px': '100vw'}"
+>
+  <div class="appointment-details p-4" *ngIf="selectedAppointment">
+    <div class="mb-4">
+      <h3 class="font-semibold mb-2">Data wizyty</h3>
+      <p>{{selectedAppointment.appointmentDate | date:'dd.MM.yyyy HH:mm'}}</p>
+    </div>
+
+    <div class="mb-4">
+      <h3 class="font-semibold mb-2">Diagnoza</h3>
+      <p>{{selectedAppointment.diagnosis}}</p>
+    </div>
+
+    <div class="mb-4">
+      <h3 class="font-semibold mb-2">Notatki</h3>
+      <p>{{selectedAppointment.notes}}</p>
+    </div>
+
+    <div class="notification-status mt-4"
+         [ngClass]="{'sent': selectedAppointment.isNotificationSent, 'pending': !selectedAppointment.isNotificationSent}">
+      <i class="pi" [ngClass]="{'pi-bell': selectedAppointment.isNotificationSent, 'pi-bell-slash': !selectedAppointment.isNotificationSent}"></i>
+      <span>Status powiadomienia: {{selectedAppointment.isNotificationSent ? 'Wysłane' : 'Oczekuje'}}</span>
+    </div>
+  </div>
+</p-dialog>
+
+<p-dialog
+  [(visible)]="showVaccinationDetails"
+  [header]="selectedVaccination?.vaccinationName || 'Szczegóły szczepienia'"
+  [modal]="true"
+  [style]="{width: '50vw'}"
+  [breakpoints]="{'960px': '75vw', '641px': '100vw'}"
+>
+  <div class="vaccination-details p-4" *ngIf="selectedVaccination">
+    <div class="mb-4">
+      <h3 class="font-semibold mb-2">Nazwa szczepienia</h3>
+      <p>{{selectedVaccination.name}}</p>
+    </div>
+
+    <div class="mb-4">
+      <h3 class="font-semibold mb-2">Data szczepienia</h3>
+      <p>{{selectedVaccination.vaccinationDate | date:'dd.MM.yyyy HH:mm'}}</p>
+    </div>
+
+    <div class="mb-4">
+      <h3 class="font-semibold mb-2">Data następnego szczepienia</h3>
+      <p>{{selectedVaccination.nextVaccinationDate | date:'dd.MM.yyyy HH:mm'}}</p>
+    </div>
+
+    <div class="mb-4">
+      <h3 class="font-semibold mb-2">Status szczepienia</h3>
+      <p-tag [severity]="getVaccinationStatus(selectedVaccination.nextVaccinationDate)"
+             [value]="getVaccinationStatusLabel(selectedVaccination.nextVaccinationDate)">
+      </p-tag>
+    </div>
+
+    <div class="mb-4">
+      <h3 class="font-semibold mb-2">Notatki</h3>
+      <p>{{selectedVaccination.notes}}</p>
+    </div>
+
+    <div class="notification-status mt-4"
+         [ngClass]="{'sent': selectedVaccination.isNotificationSent, 'pending': !selectedVaccination.isNotificationSent}">
+      <i class="pi" [ngClass]="{'pi-bell': selectedVaccination.isNotificationSent, 'pi-bell-slash': !selectedVaccination.isNotificationSent}"></i>
+      <span>Status powiadomienia: {{selectedVaccination.isNotificationSent ? 'Wysłane' : 'Oczekuje'}}</span>
+    </div>
+  </div>
+</p-dialog>

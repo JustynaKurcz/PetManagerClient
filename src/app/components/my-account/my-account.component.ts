@@ -58,6 +58,7 @@ export class MyAccountComponent implements OnInit {
   }
 
 
+
   ngOnInit() {
     this.loadUserData();
   }

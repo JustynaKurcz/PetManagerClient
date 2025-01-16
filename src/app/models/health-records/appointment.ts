@@ -1,7 +1,6 @@
 export interface Appointment {
-  appointmentId: string;
+  id: string;
   title: string;
-  diagnosis : string;
   appointmentDate: string;
-  notes: string;
+  isNotificationSent: boolean;
 }

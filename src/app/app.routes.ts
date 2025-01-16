@@ -25,11 +25,6 @@ export const routes: Routes = [
     canActivate: [authGuard]
   },
   {
-    path: 'pet/health-record/:healthRecordId',
-    loadComponent: () => import('./components/health-record/health-record.component').then(m => m.HealthRecordComponent),
-    canActivate: [authGuard]
-  },
-  {
     path: 'profile',
     loadComponent: () => import('./components/my-account/my-account.component').then(m => m.MyAccountComponent),
     canActivate: [authGuard]

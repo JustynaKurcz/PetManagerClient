@@ -4,9 +4,9 @@ import {AccordionModule} from "primeng/accordion";
 import {TableModule} from "primeng/table";
 import {PetDetailsDto} from "../../models/pets/pet-details-dto";
 import {PetsService} from "../../services/pets/pets.service";
-import {ActivatedRoute} from "@angular/router";
+import {ActivatedRoute, Router} from "@angular/router";
 import {HealthRecordsService} from "../../services/health-records/health-records.service";
-import {DatePipe} from "@angular/common";
+import {DatePipe, NgClass, NgIf} from "@angular/common";
 import {TabViewModule} from "primeng/tabview";
 import {BadgeModule} from "primeng/badge";
 import {DividerModule} from "primeng/divider";
@@ -15,6 +15,11 @@ import {TimelineModule} from "primeng/timeline";
 import {TagModule} from "primeng/tag";
 import {AvatarModule} from "primeng/avatar";
 import {PrimengImports} from "../../constants/primeng-imports";
+import {Vaccination} from "../../models/health-records/vaccination";
+import {Appointment} from "../../models/health-records/appointment";
+import {ConfirmationService, MessageService} from "primeng/api";
+import {ConfirmDialogModule} from "primeng/confirmdialog";
+import {ToastModule} from "primeng/toast";
 
 @Component({
   selector: 'app-pet-details',
@@ -31,98 +36,34 @@ import {PrimengImports} from "../../constants/primeng-imports";
     TimelineModule,
     TagModule,
     AvatarModule,
-    PrimengImports
+    PrimengImports,
+    NgClass,
+    NgIf,
+    ConfirmDialogModule,
+    ToastModule
   ],
-  providers: [PetsService, HealthRecordsService],
+  providers: [PetsService, ConfirmationService, MessageService, HealthRecordsService],
   templateUrl: './pet-details.component.html',
   styleUrl: './pet-details.component.css'
 })
 export class PetDetailsComponent implements OnInit {
   pet!: PetDetailsDto;
+  vaccinations: Vaccination[] = [];
+  appointments: Appointment[] = [];
+  pageIndex: number = 1;
+  pageSize: number = 5;
 
-  healthRecord = {
-    appointments: [
-      {
-        title: 'Badanie kontrolne',
-        appointmentDate: '2024-03-01',
-        diagnosis: 'Stan ogólny dobry. Zalecana suplementacja witamin.',
-        notes: 'Pacjent aktywny, dobry apetyt. Kontynuacja obecnej diety.'
-      },
-      {
-        title: 'Kontrola stomatologiczna',
-        appointmentDate: '2024-01-20',
-        diagnosis: 'Kamień nazębny, zalecane czyszczenie.',
-        notes: 'Umówiono termin zabiegu czyszczenia na następny miesiąc.'
-      },
-      {
-        title: 'Problemy skórne',
-        appointmentDate: '2023-12-10',
-        diagnosis: 'Łagodne podrażnienie skóry w okolicy łap.',
-        notes: 'Przepisano maść przeciwzapalną. Stosować 2 razy dziennie przez 7 dni.'
-      },
-      {
-        title: 'Badanie krwi',
-        appointmentDate: '2023-11-25',
-        diagnosis: 'Wszystkie parametry w normie.',
-        notes: 'Zalecana kontrola za 6 miesięcy.'
-      },
-      {
-        title: 'Szczepienie przypominające',
-        appointmentDate: '2023-10-15',
-        diagnosis: 'Wykonano szczepienie przeciwko wściekliźnie. Brak reakcji alergicznych.',
-        notes: 'Następne szczepienie za rok. Pacjent dobrze zniósł zabieg.'
-      },
-      {
-        title: 'Profilaktyka przeciwpasożytnicza',
-        appointmentDate: '2023-09-01',
-        diagnosis: 'Podano preparat przeciwko pasożytom wewnętrznym.',
-        notes: 'Kolejne odrobaczanie za 3 miesiące. Zalecono regularne stosowanie preparatu przeciwkleszczowego.'
-      },
-      {
-        title: 'USG jamy brzusznej',
-        appointmentDate: '2023-08-10',
-        diagnosis: 'Badanie USG bez zmian patologicznych. Narządy wewnętrzne prawidłowe.',
-        notes: 'Badanie kontrolne wykonane ze względu na okresowe wymioty. Zalecono dietę lekkostrawną.'
-      },
-      {
-        title: 'Kontrola ortopedyczna',
-        appointmentDate: '2023-07-15',
-        diagnosis: 'Łagodne objawy dysplazji stawu biodrowego. Stan stabilny.',
-        notes: 'Zalecono suplementację glukozaminy i kwasów omega-3. Umiarkowana aktywność fizyczna.'
-      },
-      {
-        title: 'Zabieg chirurgiczny',
-        appointmentDate: '2023-06-20',
-        diagnosis: 'Usunięcie niewielkiego guza skórnego z okolicy karku. Wynik histopatologiczny łagodny.',
-        notes: 'Kontrola pooperacyjna za tydzień. Zmiana opatrunku co 2 dni.'
-      }
-    ],
-    "vaccinations": [
-      {
-        "name": "Szczepienie przeciw wściekliźnie",
-        "vaccinationDate": "2023-12-15",
-        "nextVaccinationDate": "2024-12-15"
-      },
-      {
-        "name": "Szczepionka wieloskładnikowa DHPPI (nosówka, parwowiroza, zapalenie wątroby, parainfluenza)",
-        "vaccinationDate": "2024-01-20",
-        "nextVaccinationDate": "2025-01-20"
-      },
-      {
-        "name": "Szczepienie przeciw boreliozie",
-        "vaccinationDate": "2024-03-15",
-        "nextVaccinationDate": "2025-03-15"
-      },
-      {
-        "name": "Szczepienie przeciw leptospirozie",
-        "vaccinationDate": "2024-04-20",
-        "nextVaccinationDate": "2025-04-20"
-      }
-    ]
-  };
+  selectedAppointment: any = null;
+  showAppointmentDetails: boolean = false;
+  selectedVaccination: any = null;
+  showVaccinationDetails: boolean = false;
 
   constructor(
     private petsService: PetsService,
+    private healthRecordsService: HealthRecordsService,
+    private confirmationService: ConfirmationService,
+    private messageService: MessageService,
+    private router: Router,
     private route: ActivatedRoute) {
   }
 
@@ -131,21 +72,70 @@ export class PetDetailsComponent implements OnInit {
     if (petId) {
       this.loadPetDetails(petId);
     } else {
-      console.error('PetId not found in URL parameters.');
+      this.messageService.add({
+        severity: 'error',
+        summary: 'Błąd',
+        detail: 'Nie znaleziono zwierzaka.'
+      });
+      this.router.navigate(['/moje-zwierzaki']);
     }
   }
-
 
   loadPetDetails(petId: string): void {
     this.petsService.getPetDetails(petId).subscribe({
       next: (response) => {
         this.pet = response;
+        if (response.healthRecordId) {
+          this.loadHealthRecords(response.healthRecordId);
+        } else {
+          this.messageService.add({
+            severity: 'error',
+            summary: 'Błąd',
+            detail: 'Brak karty zdrowia dla zwierzęcia.'
+          });
+        }
       },
       error: (error) => {
         console.error('Błąd podczas pobierania szczegółów zwierzęcia:', error);
+        this.messageService.add({
+          severity: 'error',
+          summary: 'Błąd',
+          detail: 'Nie udało się pobrać szczegółów zwierzęcia.'
+        });
       }
     });
   }
+
+  loadHealthRecords(healthRecordId: string): void {
+    this.healthRecordsService.getVaccinations(healthRecordId, this.pageIndex, this.pageSize).subscribe({
+      next: (response) => {
+        this.vaccinations = response.items;
+      },
+      error: (error) => {
+        console.error('Błąd podczas pobierania szczepień:', error);
+        this.messageService.add({
+          severity: 'error',
+          summary: 'Błąd',
+          detail: 'Nie udało się pobrać listy szczepień.'
+        });
+      }
+    });
+
+    this.healthRecordsService.getAppointments(healthRecordId, this.pageIndex, this.pageSize).subscribe({
+      next: (response) => {
+        this.appointments = response.items;
+      },
+      error: (error) => {
+        console.error('Błąd podczas pobierania wizyt:', error);
+        this.messageService.add({
+          severity: 'error',
+          summary: 'Błąd',
+          detail: 'Nie udało się pobrać listy wizyt.'
+        });
+      }
+    });
+  }
+
 
   getVaccinationStatus(nextDate: string): 'success' | 'warning' | 'danger' {
     const today = new Date();
@@ -175,9 +165,187 @@ export class PetDetailsComponent implements OnInit {
     }
   }
 
-  showDiagnosis(appointment: any) {
-    // Implement dialog or tooltip logic here
-    console.log('Show diagnosis:', appointment.diagnosis);
+  deleteVaccination(vaccinationId: string): void {
+    if (!this.pet?.healthRecordId) {
+      this.messageService.add({
+        severity: 'error',
+        summary: 'Błąd',
+        detail: 'Brak identyfikatora karty zdrowia.'
+      });
+      return;
+    }
+
+    if (!vaccinationId) {
+      this.messageService.add({
+        severity: 'error',
+        summary: 'Błąd',
+        detail: 'Brak identyfikatora szczepienia.'
+      });
+      return;
+    }
+
+    this.healthRecordsService.deleteVaccination(this.pet.healthRecordId, vaccinationId).subscribe({
+      next: () => {
+        this.messageService.add({
+          severity: 'success',
+          summary: 'Sukces',
+          detail: 'Szczepienie zostało usunięte.'
+        });
+        this.loadHealthRecords(this.pet.healthRecordId);
+      },
+      error: (error) => {
+        console.error('Błąd podczas usuwania szczepienia:', error);
+        this.messageService.add({
+          severity: 'error',
+          summary: 'Błąd',
+          detail: 'Nie udało się usunąć szczepienia.'
+        });
+      }
+    });
   }
+
+  deleteAppointment(appointmentId: string): void {
+    if (!this.pet?.healthRecordId) {
+      this.messageService.add({
+        severity: 'error',
+        summary: 'Błąd',
+        detail: 'Brak identyfikatora karty zdrowia.'
+      });
+      return;
+    }
+
+    if (!appointmentId) {
+      this.messageService.add({
+        severity: 'error',
+        summary: 'Błąd',
+        detail: 'Brak identyfikatora wizyty.'
+      });
+      return;
+    }
+
+    this.healthRecordsService.deleteAppointment(this.pet.healthRecordId, appointmentId).subscribe({
+      next: () => {
+        this.messageService.add({
+          severity: 'success',
+          summary: 'Sukces',
+          detail: 'Wizyta została usunięta.'
+        });
+        this.loadHealthRecords(this.pet.healthRecordId);
+      },
+      error: (error) => {
+        console.error('Błąd podczas usuwania wizyty:', error);
+        this.messageService.add({
+          severity: 'error',
+          summary: 'Błąd',
+          detail: 'Nie udało się usunąć wizyty.'
+        });
+      }
+    });
+  }
+
+  editPet(): void {
+  }
+
+  confirmDeletePet(): void {
+    this.confirmationService.confirm({
+      message: 'Czy na pewno chcesz usunąć to zwierzę?',
+      accept: () => {
+        this.petsService.deletePet(this.pet.petId).subscribe({
+          next: () => {
+            this.messageService.add({
+              severity: 'success',
+              summary: 'Sukces',
+              detail: 'Zwierzę zostało pomyślnie usunięte'
+            });
+            this.router.navigate(['/moje-zwierzaki']);
+          },
+          error: (err) => {
+            console.error('Error deleting pet:', err);
+            this.messageService.add({
+              severity: 'error',
+              summary: 'Błąd',
+              detail: 'Nie udało się usunąć zwierzęcia.'
+            });
+          }
+        });
+      }
+    });
+  }
+
+
+  confirmDeleteVaccination(vaccinationId: string): void {
+    this.confirmationService.confirm({
+      message: 'Czy na pewno chcesz usunąć to szczepienie?',
+      header: 'Potwierdź usunięcie',
+      icon: 'pi pi-exclamation-triangle',
+      accept: () => {
+        this.deleteVaccination(vaccinationId);
+      }
+    });
+  }
+
+  confirmDeleteAppointment(appointmentId: string): void {
+    this.confirmationService.confirm({
+      message: 'Czy na pewno chcesz usunąć tę wizytę?',
+      header: 'Potwierdź usunięcie',
+      icon: 'pi pi-exclamation-triangle',
+      accept: () => {
+        this.deleteAppointment(appointmentId);
+      }
+    });
+  }
+
+  showAppointmentDialog(appointmentId: string): void {
+    if (!this.pet?.healthRecordId) {
+      this.messageService.add({
+        severity: 'error',
+        summary: 'Błąd',
+        detail: 'Brak identyfikatora karty zdrowia.'
+      });
+      return;
+    }
+
+    this.healthRecordsService.getAppointmentDetails(this.pet.healthRecordId, appointmentId).subscribe({
+      next: (appointment) => {
+        this.selectedAppointment = appointment;
+        this.showAppointmentDetails = true;
+      },
+      error: (error) => {
+        console.error('Błąd podczas pobierania szczegółów wizyty:', error);
+        this.messageService.add({
+          severity: 'error',
+          summary: 'Błąd',
+          detail: 'Nie udało się pobrać szczegółów wizyty.'
+        });
+      }
+    });
+  }
+
+  showVaccinationDialog(vaccinationId: string): void {
+    if (!this.pet?.healthRecordId) {
+      this.messageService.add({
+        severity: 'error',
+        summary: 'Błąd',
+        detail: 'Brak identyfikatora karty zdrowia.'
+      });
+      return;
+    }
+
+    this.healthRecordsService.getVaccinationDetails(this.pet.healthRecordId, vaccinationId).subscribe({
+      next: (vaccination) => {
+        this.selectedVaccination = vaccination;
+        this.showVaccinationDetails = true;
+      },
+      error: (error) => {
+        console.error('Błąd podczas pobierania szczegółów szczepienia:', error);
+        this.messageService.add({
+          severity: 'error',
+          summary: 'Błąd',
+          detail: 'Nie udało się pobrać szczegółów szczepienia.'
+        });
+      }
+    });
+  }
+
 
 }
