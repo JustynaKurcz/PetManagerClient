@@ -12,7 +12,7 @@ import {NgForOf} from "@angular/common";
 })
 export class AboutComponent {
   projectInfo = {
-    title: 'PetManager',
+    title: 'Menedżer Zwierząt Domowych',
     author: 'Justyna Kurcz',
     university: 'Akademia Tarnowska',
     faculty: 'Wydział Politechniczny',

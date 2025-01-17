@@ -14,7 +14,7 @@ export class ContactComponent {
     linkedin: 'https://www.linkedin.com/in/justynakurcz/',
     location: 'Tarnów, Polska',
     availableHours: '8:00 - 16:00',
-    companyName: 'PetManager',
+    companyName: 'Menedżer Zwierząt Domowych ',
     description: 'Projekt powstał z połączenia pasji do programowania oraz miłości do zwierząt. Skontaktuj się ze mną, aby dowiedzieć się więcej o aplikacji.'
   };
 
