@@ -1,0 +1,71 @@
+<div class="contact-wrapper">
+  <div class="contact-hero">
+    <div class="hero-content">
+      <h1>{{contactInfo.companyName}}</h1>
+      <p class="subtitle">Zostańmy w kontakcie</p>
+      <p class="description">{{contactInfo.description}}</p>
+    </div>
+  </div>
+
+  <div class="contact-container">
+    <div class="contact-cards">
+      <div class="contact-card">
+        <div class="card-icon">
+          <i class="fas fa-phone-alt"></i>
+        </div>
+        <div class="card-content">
+          <h3>Zadzwoń do nas</h3>
+          <p>{{contactInfo.phone}}</p>
+          <span class="availability">Dostępni: {{contactInfo.availableHours}}</span>
+        </div>
+      </div>
+
+      <div class="contact-card">
+        <div class="card-icon">
+          <i class="fas fa-envelope"></i>
+        </div>
+        <div class="card-content">
+          <h3>Napisz do nas</h3>
+          <p>{{contactInfo.email}}</p>
+          <span class="availability">Odpowiadamy w ciągu 24h</span>
+        </div>
+      </div>
+
+      <div class="contact-card">
+        <div class="card-icon">
+          <i class="fas fa-map-marker-alt"></i>
+        </div>
+        <div class="card-content">
+          <h3>Znajdź nas</h3>
+          <p>{{contactInfo.location}}</p>
+          <span class="availability">Biuro główne</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="social-section">
+      <div class="social-content">
+        <div class="social-text">
+          <h2>Poznaj autorkę projektu</h2>
+          <p>Sprawdź mój profil zawodowy i dowiedz się więcej o&nbsp;moim doświadczeniu w&nbsp;tworzeniu aplikacji</p>
+        </div>
+        <div class="social-card">
+          <div class="card-background"></div>
+          <div class="card-content">
+            <div class="profile-icon">
+              <i class="fab fa-linkedin"></i>
+            </div>
+            <div class="social-info">
+              <h3>Justyna Kurcz</h3>
+              <p>Software Developer | Autorka PetManager</p>
+            </div>
+            <button class="connect-button" (click)="openLinkedIn()">
+              <span>Sprawdź profil</span>
+              <i class="fas fa-arrow-right"></i>
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

@@ -50,43 +50,17 @@ export class NavbarComponent implements OnInit {
         routerLink: ['/moje-zwierzaki']
       },
       {
+        label: 'O projekcie',
+        icon: 'pi pi-info-circle',
+        routerLink: ['/o-projekcie']
+      },
+      {
         label: 'Kontakt',
-        icon: 'pi pi-envelope'
+        icon: 'pi pi-envelope',
+        routerLink: ['/kontakt']
       }
     ];
   }
-
-// export class NavbarComponent implements OnInit, OnDestroy {
-//   userMenuItems: MenuItem[] = [];
-//   menuItems: MenuItem[] = [];
-//   private subscriptions = new Subscription();
-//
-//   constructor(private usersService: UsersService) {
-//   }
-//
-//   ngOnInit() {
-//     this.setupAuthSubscription();
-//     this.initializeMenuItem();
-//   }
-//
-//   ngOnDestroy() {
-//     this.subscriptions.unsubscribe();
-//   }
-//
-//   private initializeMenuItem() {
-//     this.menuItems = [
-//       {
-//         label: 'Moje zwierzaki',
-//         icon: 'pi pi-id-card',
-//         routerLink: ['/moje-zwierzaki']
-//       },
-//       {
-//         label: 'Kontakt',
-//         icon: 'pi pi-envelope'
-//       }
-//     ];
-//   }
-
 
   private updateUserMenuItems(isLoggedIn: boolean) {
     console.log(isLoggedIn);
@@ -126,15 +100,3 @@ export class NavbarComponent implements OnInit {
     await this.usersService.signOut().then(() => window.location.reload());
   }
 }
-
-//
-//   private setupAuthSubscription() {
-//     this.subscriptions.add(
-//       combineLatest([
-//         this.usersService.getAuthState(),
-//       ]).subscribe(([isLoggedIn]) => {
-//         this.updateUserMenuItems(isLoggedIn);
-//       })
-//     );
-//   }
-//
