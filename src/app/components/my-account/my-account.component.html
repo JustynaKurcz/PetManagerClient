@@ -1,4 +1,7 @@
 <div class="profile-container">
+
+  <app-breadcrumb-item [items]="breadcrumbItems"></app-breadcrumb-item>
+
   <div class="profile-header">
     <div class="header-content">
       <div class="avatar-section">
@@ -32,7 +35,7 @@
         </div>
         <div class="data-content">
           <span class="data-label">Imię</span>
-          <span class="data-value">{{ userData.firstName?.trim() || 'ustaw swoje imię' }}</span>
+          <span class="data-value">{{ userData.firstName?.trim() || '-' }}</span>
         </div>
       </div>
       <div class="data-item">
@@ -41,7 +44,7 @@
         </div>
         <div class="data-content">
           <span class="data-label">Nazwisko</span>
-          <span class="data-value">{{ userData.lastName?.trim() || 'Dodaj swoje nazwisko' }}</span>
+          <span class="data-value">{{ userData.lastName?.trim() || '-' }}</span>
         </div>
       </div>
       <div class="data-item">

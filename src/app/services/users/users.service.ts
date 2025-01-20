@@ -11,15 +11,17 @@ import {CurrentUserDetailsDto} from "../../models/users/get-current-user-details
 import {JwtHelperService} from "@auth0/angular-jwt";
 import {DOCUMENT} from "@angular/common";
 import {ResetPassword} from "../../models/users/resetpassword/ResetPassword";
+import {UserRole} from "../../models/users/user-role/user-role";
 
 @Injectable({
   providedIn: 'root'
 })
 export class UsersService {
+  private readonly ROLE_CLAIM = 'http://schemas.microsoft.com/ws/2008/06/identity/claims/role';
   private http = inject(HttpClient);
   private document = inject(DOCUMENT);
   private isAuthenticatedSubject = new BehaviorSubject<boolean>(false);
-
+  private userRoleSubject = new BehaviorSubject<UserRole | null>(null);
   private jwtHelper = new JwtHelperService();
 
   localStorage = this.document.defaultView?.localStorage;
@@ -46,6 +48,11 @@ export class UsersService {
 
   private setAuthenticatedState(token: string): void {
     try {
+      const decodedToken = this.jwtHelper.decodeToken(token);
+      const userRole = decodedToken[this.ROLE_CLAIM] as UserRole;
+
+      this.userRoleSubject.next(userRole);
+
       this.isAuthenticatedSubject.next(true);
     } catch (error) {
       this.clearAuthenticatedState();
@@ -54,6 +61,7 @@ export class UsersService {
 
   private clearAuthenticatedState(): void {
     this.isAuthenticatedSubject.next(false);
+    this.userRoleSubject.next(null);
   }
 
   signUp(signUpData: SignUpCommand) {
@@ -84,6 +92,17 @@ export class UsersService {
     }
 
     return isNotExpired;
+  }
+
+  isAdmin(): Observable<boolean> {
+    return this.userRoleSubject.pipe(
+      map(role => role === UserRole.ADMIN),
+      catchError(() => of(false))
+    );
+  }
+
+  getCurrentRole(): Observable<UserRole | null> {
+    return this.userRoleSubject.asObservable();
   }
 
   getAuthState(): Observable<boolean> {

@@ -1,4 +1,4 @@
-import {ChangeDetectorRef, Component, HostListener, inject, OnDestroy, OnInit} from '@angular/core';
+import {ChangeDetectorRef, Component, HostListener, inject, OnInit} from '@angular/core';
 import {MenubarModule} from "primeng/menubar";
 import {MenuItem} from "primeng/api";
 import "primeicons/primeicons.css";
@@ -27,6 +27,7 @@ import {Button} from "primeng/button";
 export class NavbarComponent implements OnInit {
   private readonly usersService = inject(UsersService);
   private readonly cdr = inject(ChangeDetectorRef);
+  private isAdmin = this.usersService.isAdmin();
 
   userMenuItems: MenuItem[] | undefined;
   menuItems: MenuItem[] | undefined;
@@ -76,6 +77,20 @@ export class NavbarComponent implements OnInit {
         routerLink: ['/kontakt']
       }
     ];
+
+    this.isAdmin.subscribe(isAdmin => {
+      if (isAdmin) {
+        this.menuItems = [
+          ...this.menuItems!,
+          {
+            label: 'Panel administratora',
+            icon: 'pi pi-cog',
+            routerLink: ['/panel-administratora']
+          }
+        ];
+        this.cdr.detectChanges();
+      }
+    });
   }
 
   private updateUserMenuItems(isLoggedIn: boolean) {
@@ -85,7 +100,7 @@ export class NavbarComponent implements OnInit {
         {
           label: 'Moje konto',
           icon: 'pi pi-user',
-          routerLink: ['/profile']
+          routerLink: ['/moje-konto']
         },
         {
           separator: true
@@ -114,7 +129,7 @@ export class NavbarComponent implements OnInit {
 
   handleItemClick(item: MenuItem, event: MouseEvent) {
     if (item.command) {
-      item.command({ originalEvent: event, item });
+      item.command({originalEvent: event, item});
     }
   }
 

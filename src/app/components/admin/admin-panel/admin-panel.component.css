@@ -1,0 +1,237 @@
+:host ::ng-deep {
+  background-color: #f5f7fa;
+  color: #333;
+}
+
+.dashboard {
+  max-width: 1400px;
+  margin: 40px auto;
+  padding: 0 40px;
+}
+
+.dashboard-header {
+  text-align: center;
+  margin-bottom: 40px;
+  padding: 30px;
+  background: linear-gradient(135deg, #1a472a 0%, #2e8b57 100%);
+  border-radius: 15px;
+  color: white;
+  position: relative;
+  overflow: hidden;
+}
+
+.dashboard-header h1 {
+  font-size: 2.5em;
+  margin-bottom: 10px;
+  position: relative;
+  z-index: 1;
+}
+
+.dashboard-header p {
+  opacity: 0.9;
+  position: relative;
+  z-index: 1;
+}
+
+.search-container {
+  margin-bottom: 40px;
+  padding: 0 20px;
+  display: flex;
+  justify-content: center;
+}
+
+.search-input {
+  width: 600px;
+  max-width:100%;
+  padding: 12px 15px 12px 40px;
+  border: 2px solid #2e8b57;
+  border-radius: 25px;
+  font-size: 16px;
+  transition: all 0.3s ease;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+}
+
+.search-input:focus {
+  outline: none;
+  border-color: #1a472a;
+  box-shadow: 0 2px 10px rgba(26, 71, 42, 0.2);
+}
+
+.p-input-icon-left .p-input-icon {
+  left: 12px;
+  color: #2e8b57;
+}
+
+.users-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 30px;
+  margin: 40px 0;
+}
+
+.user-card {
+  background: #ffffff;
+  border-radius: 20px;
+  overflow: hidden;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  border: 1px solid rgba(46, 139, 87, 0.1);
+}
+
+.user-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 15px 40px rgba(0, 0, 0, 0.15);
+  border: 2px solid #2e8b57;
+}
+
+.user-card-header {
+  padding: 15px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 1px solid rgba(46, 139, 87, 0.1);
+  background: linear-gradient(to right, rgba(46, 139, 87, 0.15), rgba(46, 139, 87, 0.05));
+}
+
+.user-info {
+  padding: 20px;
+  background-color: #f5f5f5;
+}
+
+.detail-item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  color: #333;
+  background-color: #e8e8e8;
+  padding: 8px;
+  border-radius: 8px;
+  border: 1px solid rgba(46, 139, 87, 0.1);
+}
+
+.header-content {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 1.3em;
+  font-weight: bold;
+  color: #0a3517;
+}
+
+.delete-btn {
+  width: 2rem;
+  height: 2rem;
+  margin-left: auto;
+}
+
+.delete-btn:hover {
+  background-color: rgba(255, 0, 0, 0.1) !important;
+  border-radius: 50%;
+}
+
+.user-info {
+  padding: 20px;
+  background-color: #f9f9f9;
+}
+
+.user-details {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.detail-item i {
+  color: #2e8b57;
+}
+
+:host ::ng-deep .p-paginator {
+  background: transparent !important;
+  border: none !important;
+}
+
+:host ::ng-deep .p-paginator .p-paginator-pages .p-paginator-page,
+:host ::ng-deep .p-paginator .p-paginator-first,
+:host ::ng-deep .p-paginator .p-paginator-prev,
+:host ::ng-deep .p-paginator .p-paginator-next,
+:host ::ng-deep .p-paginator .p-paginator-last {
+  background-color: #2e8b57;
+  color: white;
+  border: none !important;
+  border-radius: 8px;
+  margin: 0 2px;
+  min-width: 2.5rem;
+  height: 2.5rem;
+}
+
+:host ::ng-deep .p-paginator .p-paginator-pages .p-paginator-page.p-highlight {
+  background-color: #1a472a;
+  color: white;
+  border: none !important;
+}
+
+
+@media (min-width: 2000px) {
+  .dashboard {
+    max-width: 1800px;
+  }
+
+  .users-grid {
+    grid-template-columns: repeat(4, 1fr);
+  }
+}
+
+@media (max-width: 1400px) {
+  .users-grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+@media (max-width: 1200px) {
+  .users-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .search-input {
+    width: 500px;
+  }
+}
+
+@media (max-width: 768px) {
+  .dashboard {
+    padding: 0 20px;
+    margin: 20px auto;
+  }
+
+  .users-grid {
+    grid-template-columns: 1fr;
+    gap: 20px;
+  }
+
+  .search-input {
+    width: 100%;
+  }
+
+  .dashboard-header {
+    padding: 20px;
+  }
+
+  .dashboard-header h1 {
+    font-size: 1.8em;
+  }
+}
+
+.user-card.loading {
+  animation: pulse 1.5s infinite;
+}
+
+@keyframes pulse {
+  0% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.7;
+  }
+  100% {
+    opacity: 1;
+  }
+}

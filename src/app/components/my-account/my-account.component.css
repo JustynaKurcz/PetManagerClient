@@ -8,7 +8,7 @@
 .profile-container {
   margin: auto 3rem auto;
   max-width: 1200px;
-  padding: 0 1.5rem;
+  padding: 0 32px;
 }
 
 .edit-profile-button {
@@ -104,6 +104,7 @@
   display: grid;
   grid-template-columns: repeat(2, 1fr);
   gap: 1.5rem;
+  padding-left: 0;
 }
 
 .data-item {
@@ -255,7 +256,7 @@
 
   .submit-button {
     .p-button {
-      background: linear-gradient(135deg, #2E7D32,#2E7D32);
+      background: linear-gradient(135deg, #2E7D32, #2E7D32);
       border: none;
 
       &:disabled {

@@ -1,5 +1,6 @@
 import {Routes} from '@angular/router';
-import {authGuard} from "./guards/auth.guard";
+import {authGuard} from "./guards/auth/auth.guard";
+import {adminGuard} from "./guards/admin/admin.guard";
 
 export const routes: Routes = [
   {
@@ -25,7 +26,7 @@ export const routes: Routes = [
     canActivate: [authGuard]
   },
   {
-    path: 'profile',
+    path: 'moje-konto',
     loadComponent: () => import('./components/my-account/my-account.component').then(m => m.MyAccountComponent),
     canActivate: [authGuard]
   },
@@ -42,6 +43,11 @@ export const routes: Routes = [
   {
     path: 'o-projekcie',
     loadComponent: () => import('./components/about/about.component').then(m => m.AboutComponent)
+  },
+  {
+    path: 'panel-administratora',
+    loadComponent: () => import('./components/admin/admin-panel/admin-panel.component').then(m => m.AdminPanelComponent),
+    canActivate: [authGuard, adminGuard]
   },
   {
     path: '**',

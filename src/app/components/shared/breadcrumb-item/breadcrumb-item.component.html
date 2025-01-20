@@ -1,0 +1,9 @@
+<div class="breadcrumb">
+  <ng-container *ngFor="let item of items; let last = last">
+    <a [routerLink]="item.link">
+      <i *ngIf="item.icon" class="fas {{item.icon}}"></i>
+      {{item.label}}
+    </a>
+    <span class="separator" *ngIf="!last">&gt;</span>
+  </ng-container>
+</div>

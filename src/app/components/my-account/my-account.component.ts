@@ -8,6 +8,7 @@ import {PrimengImports} from "../../constants/primeng-imports";
 import {NgIf} from "@angular/common";
 import {UsersService} from "../../services/users/users.service";
 import {CurrentUserDetailsDto} from "../../models/users/get-current-user-details/current-user-details-dto";
+import {BreadcrumbItemComponent} from "../shared/breadcrumb-item/breadcrumb-item.component";
 
 @Component({
   selector: 'app-my-account',
@@ -18,7 +19,8 @@ import {CurrentUserDetailsDto} from "../../models/users/get-current-user-details
     ToastModule,
     ReactiveFormsModule,
     ...PrimengImports,
-    NgIf
+    NgIf,
+    BreadcrumbItemComponent
   ],
   providers: [ConfirmationService, MessageService, UsersService],
   templateUrl: './my-account.component.html',
@@ -38,6 +40,11 @@ export class MyAccountComponent implements OnInit {
   editDialogVisible = false;
   editForm: FormGroup;
 
+  breadcrumbItems = [
+    { label: 'Strona główna', link: '/', icon: 'pi pi-home' },
+    { label: 'Moje konto', link: '/moje-konto' }
+  ];
+
   constructor(
     private fb: FormBuilder,
     private messageService: MessageService,
@@ -56,8 +63,6 @@ export class MyAccountComponent implements OnInit {
     }
     return 'PM';
   }
-
-
 
   ngOnInit() {
     this.loadUserData();
@@ -85,7 +90,7 @@ export class MyAccountComponent implements OnInit {
   }
 
   formatDate(date: string | undefined): string {
-    return date ? new Date(date).toLocaleDateString() : 'Hasło nigdy nie było zmieniane';
+    return date ? new Date(date).toLocaleDateString() : '-';
   }
 
   showEditDialog() {
@@ -133,10 +138,11 @@ export class MyAccountComponent implements OnInit {
         this.usersService.deleteAccount().subscribe({
           next: () => {
             this.messageService.add({
-              severity: 'info',
+              severity: 'success',
               summary: 'Konto usunięte',
               detail: 'Twoje konto zostało pomyślnie usunięte'
             });
+            setTimeout(() => this.logout(), 1500);
           },
           error: (err) => {
             console.error('Error deleting account:', err);
@@ -149,5 +155,9 @@ export class MyAccountComponent implements OnInit {
         });
       }
     });
+  }
+
+  async logout() {
+    await this.usersService.signOut().then(() => window.location.reload());
   }
 }

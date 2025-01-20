@@ -1,0 +1,72 @@
+<div class="dashboard">
+  <header class="dashboard-header">
+    <h1>Panel Administratora</h1>
+    <p>Zarządzanie użytkownikami</p>
+  </header>
+
+  <div class="search-container">
+    <span class="p-input-icon-left">
+      <i class="pi pi-search"></i>
+      <input
+        type="text"
+        pInputText
+        (input)="onSearchInput($event)"
+        placeholder="Wyszukaj po imieniu, nazwisku lub email..."
+        class="search-input"
+      />
+    </span>
+  </div>
+
+  <div class="users-grid">
+    <div class="user-card" *ngFor="let user of response.items">
+      <div class="user-card-header">
+        <div class="header-content">
+          {{ user.firstName }} {{ user.lastName }}
+        </div>
+        <button pButton
+                class="delete-btn p-button-text p-button-danger"
+                icon="pi pi-trash"
+                aria-label="Usuń użytkownika"
+                (click)="deleteUser(user.userId)">
+        </button>
+      </div>
+
+      <div class="user-info">
+        <div class="user-details">
+          <span class="detail-item">
+            <i class="pi pi-envelope"></i>
+            <span>{{ user.email }}</span>
+          </span>
+          <span class="detail-item">
+              <i class="pi pi-heart"></i>
+              <span>Liczba zwierząt: {{ user.petsCount }}</span>
+          </span>
+          <span class="detail-item">
+              <i class="pi pi-calendar"></i>
+              <span>Data dołączenia: {{ user.createdAt | date:'dd.MM.yyyy' }}</span>
+          </span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <p-paginator
+    (onPageChange)="onPageChange($event)"
+    [first]="pageIndex * pageSize"
+    [rows]="6"
+    [totalRecords]="response?.totalCount"
+    [rowsPerPageOptions]="[6, 9, 12, 15]"
+    [showCurrentPageReport]="true"
+    currentPageReportTemplate="Wyświetlono {first} - {last} z {totalRecords}"
+  ></p-paginator>
+
+  <p-confirmDialog
+    header='Potwierdzenie usunięcia'
+    message='Czy na pewno chcesz usunąć tego użytkownika?'
+    icon="pi pi-exclamation-triangle"
+    acceptLabel="Tak"
+    rejectLabel="Nie"
+    [style]="{width: '450px'}"
+  ></p-confirmDialog>
+  <p-toast></p-toast>
+</div>
