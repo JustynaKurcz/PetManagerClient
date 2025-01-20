@@ -1,8 +1,7 @@
 <div class="split-container">
   <div class="form-section">
-    <app-brand-header></app-brand-header>
+    <app-brand-header brandName="Zarejestruj się">></app-brand-header>
 
-    <h1 class="title">Zarejestruj się</h1>
     <p class="subtitle">Dołącz do naszej społeczności opiekunów zwierząt!</p>
 
     <form [formGroup]="signUpForm" (ngSubmit)="signUp()">
@@ -37,6 +36,7 @@
   <div class="brand-section">
     <h2>Witaj w Pet Manager</h2>
     <p>Dołącz do naszej społeczności i zacznij lepiej dbać o swojego pupila!</p>
+
     <app-brand-features></app-brand-features>
   </div>
 </div>

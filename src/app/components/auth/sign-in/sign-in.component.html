@@ -1,9 +1,8 @@
 <div class="split-container">
 
   <div class="form-section">
-    <app-brand-header></app-brand-header>
+    <app-brand-header brandName="Zaloguj się">></app-brand-header>
 
-    <h1 class="title">Zaloguj się</h1>
     <p class="subtitle">Witaj z powrotem! Wprowadź swoje dane aby kontynuować.</p>
 
     <form [formGroup]="signInForm" (ngSubmit)="signIn()">
@@ -41,7 +40,7 @@
 
   <div class="brand-section">
     <h2 class="brand-title">Witaj w Pet Manager</h2>
-    <p style="font-size: 18px; opacity: 0.9;">Twój niezawodny partner w opiece nad zwierzętami.</p>
+    <p>Twój niezawodny partner w opiece nad zwierzętami.</p>
     <app-brand-features></app-brand-features>
   </div>
 </div>

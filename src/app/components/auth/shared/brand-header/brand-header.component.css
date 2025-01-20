@@ -6,7 +6,7 @@
   display: flex;
   align-items: center;
   gap: 16px;
-  margin-bottom: 48px;
+  margin-bottom: 40px;
 }
 
 .brand-icon {
@@ -21,5 +21,5 @@
 
 .brand-text {
   font-weight: 600;
-  font-size: 32px;
+  font-size: 30px;
 }
