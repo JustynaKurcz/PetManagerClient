@@ -1,11 +1,11 @@
-import {ChangeDetectorRef, Component, inject, OnDestroy, OnInit} from '@angular/core';
+import {ChangeDetectorRef, Component, HostListener, inject, OnDestroy, OnInit} from '@angular/core';
 import {MenubarModule} from "primeng/menubar";
 import {MenuItem} from "primeng/api";
 import "primeicons/primeicons.css";
 import {MegaMenuModule} from "primeng/megamenu";
 import {UsersService} from "../../services/users/users.service";
 import {MenuModule} from "primeng/menu";
-import {NgForOf} from "@angular/common";
+import {NgForOf, NgIf} from "@angular/common";
 import {Button} from "primeng/button";
 
 @Component({
@@ -17,6 +17,7 @@ import {Button} from "primeng/button";
     MenuModule,
     NgForOf,
     Button,
+    NgIf,
   ],
   providers: [UsersService],
   templateUrl: './navbar.component.html',
@@ -29,6 +30,21 @@ export class NavbarComponent implements OnInit {
 
   userMenuItems: MenuItem[] | undefined;
   menuItems: MenuItem[] | undefined;
+
+  isDropdownOpen = false;
+
+  @HostListener('document:click', ['$event'])
+  onDocumentClick(event: MouseEvent) {
+    const dropdown = (event.target as HTMLElement).closest('.dropdown');
+    if (!dropdown) {
+      this.isDropdownOpen = false;
+    }
+  }
+
+  toggleDropdown() {
+    this.isDropdownOpen = !this.isDropdownOpen;
+  }
+
 
   ngOnInit() {
     this.updateUserMenuItems(this.usersService.isLoggedIn());
@@ -93,6 +109,12 @@ export class NavbarComponent implements OnInit {
           routerLink: ['/zarejestruj-sie']
         }
       ];
+    }
+  }
+
+  handleItemClick(item: MenuItem, event: MouseEvent) {
+    if (item.command) {
+      item.command({ originalEvent: event, item });
     }
   }
 

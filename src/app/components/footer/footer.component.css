@@ -1,11 +1,10 @@
 footer {
   width: 100%;
-  background: #F5F7F8;
+  background: linear-gradient(45deg, #2e8b57, #1a472a);
   border-bottom: 1px solid #E8EBED;
   text-align: center;
-  padding: 1em;
+  padding: 1.2em;
   font-size: 1rem;
-  position: fixed;
   bottom: 0;
 }
 
@@ -13,5 +12,5 @@ footer {
 p {
   text-decoration: none;
   margin: 0 10px;
-  color: black;
+  color: white;
 }

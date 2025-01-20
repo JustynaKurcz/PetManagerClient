@@ -85,7 +85,7 @@ export class MyAccountComponent implements OnInit {
   }
 
   formatDate(date: string | undefined): string {
-    return date ? new Date(date).toLocaleDateString() : 'Nie ustawiono';
+    return date ? new Date(date).toLocaleDateString() : 'Hasło nigdy nie było zmieniane';
   }
 
   showEditDialog() {
