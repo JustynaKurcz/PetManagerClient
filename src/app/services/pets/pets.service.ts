@@ -1,6 +1,6 @@
 import {inject, Injectable} from '@angular/core';
 import {HttpClient} from "@angular/common/http";
-import {PetResponse} from "../../models/pets/petResponse";
+import {PetResponse} from "../../models/pets/pet-response";
 import {API_ENDPOINTS} from "../../constants/api-constants";
 import {PetDetailsDto} from "../../models/pets/pet-details-dto";
 import {GetSpeciesTypesResponse} from "../../models/pets/enums/get-species-types-response";

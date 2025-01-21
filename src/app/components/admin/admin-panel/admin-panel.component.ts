@@ -9,6 +9,7 @@ import { UsersResponse } from "../../../models/admin/users-response";
 import {InputTextModule} from "primeng/inputtext";
 import {debounceTime, distinctUntilChanged, Subject} from "rxjs";
 import {PaginatorModule, PaginatorState} from "primeng/paginator";
+import {PaginatorComponent} from "../../shared/paginator/paginator.component";
 
 @Component({
   selector: 'app-admin-panel',
@@ -19,7 +20,8 @@ import {PaginatorModule, PaginatorState} from "primeng/paginator";
     ConfirmDialogModule,
     ToastModule,
     InputTextModule,
-    PaginatorModule
+    PaginatorModule,
+    PaginatorComponent
   ],
   providers: [ConfirmationService, MessageService],
   templateUrl: './admin-panel.component.html',
@@ -32,7 +34,7 @@ export class AdminPanelComponent implements OnInit {
 
   response!: UsersResponse;
   pageIndex: number = 0;
-  pageSize: number = 10;
+  pageSize: number = 6;
   private searchSubject = new Subject<string>();
 
   ngOnInit(): void {
@@ -67,17 +69,6 @@ export class AdminPanelComponent implements OnInit {
     });
   }
 
-  changePage(newPage: number): void {
-    this.pageIndex = newPage;
-    this.loadUsers();
-  }
-
-  getPageNumbers(): number[] {
-    if (!this.response) return [];
-    const totalPages = this.response.totalPages;
-    return Array.from({ length: totalPages }, (_, i) => i + 1);
-  }
-
   deleteUser(userId: string): void {
     this.confirmationService.confirm({
       message: 'Czy na pewno chcesz usunąć tego użytkownika?',
@@ -103,9 +94,9 @@ export class AdminPanelComponent implements OnInit {
     });
   }
 
-  onPageChange(event: PaginatorState) {
-    this.pageIndex = event.page || 0;
-    this.pageSize = event.rows || 10;
+  onPageChange(event: {pageIndex: number, pageSize: number}): void {
+    this.pageIndex = event.pageIndex;
+    this.pageSize = event.pageSize;
     this.loadUsers();
   }
 }

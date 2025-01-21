@@ -1,0 +1,9 @@
+<p-paginator
+  (onPageChange)="handlePageChange($event)"
+  [first]="pageIndex * pageSize"
+  [rows]="pageSize"
+  [totalRecords]="totalRecords"
+  [rowsPerPageOptions]="rowsPerPageOptions"
+  [showCurrentPageReport]="true"
+  currentPageReportTemplate="Wyświetlono {first} - {last} z {totalRecords}"
+></p-paginator>

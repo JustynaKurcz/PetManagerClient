@@ -3,9 +3,10 @@
     <h1>Moje Zwierzęta</h1>
   </div>
 
+  <ng-container *ngIf="response.items.length > 0; else emptyCollection">
   <div class="pets-grid" [class.is-loading]="loading">
     <app-pet-item
-      *ngFor="let pet of pets; let i = index"
+      *ngFor="let pet of response.items; let i = index"
       [pet]="pet"
       [index]="i">
     </app-pet-item>
@@ -14,17 +15,23 @@
       <p-progressSpinner strokeWidth="4"></p-progressSpinner>
     </div>
   </div>
-  <div class="pagination-container">
-    <p-paginator
-      (onPageChange)="onPageChange($event)"
-      [first]="pageIndex * pageSize"
-      [rows]="pageSize"
-      [totalRecords]="totalCount"
-      [rowsPerPageOptions]="[4, 6, 12, 18]"
-      [showCurrentPageReport]="true"
-      currentPageReportTemplate="Wyświetlono {first} - {last} z {totalRecords}"
-    ></p-paginator>
-  </div>
+
+    <app-paginator
+      [pageIndex]="pageIndex"
+      [pageSize]="pageSize"
+      [totalRecords]="response.totalCount"
+      (pageChange)="onPageChange($event)"
+    ></app-paginator>
+
+  </ng-container>
+
+  <ng-template #emptyCollection>
+    <div class="empty-state" *ngIf="response.items.length === 0">
+      <i class="pi pi-users text-6xl mb-4 text-gray-400"></i>
+      <h2>Brak zwierząt</h2>
+      <p>Aktualnie w systemie nie ma zwierząt przypisanych do twojego konta.</p>
+    </div>
+  </ng-template>
 
   <div class="add-pet-container">
     <p-button

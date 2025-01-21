@@ -1,7 +1,12 @@
+:host ::ng-deep {
+  min-height: 100vh;
+  background: linear-gradient(135deg, #f5f7fa 0%, #ffffff 100%);
+}
+
 .container {
-  max-width: 1200px;
-  margin: 0 auto;
+  margin-top: 60px;
   padding: 2rem;
+  min-height: calc(100vh - 60px);
 }
 
 .header {
@@ -54,33 +59,4 @@
   align-items: center;
   justify-content: center;
   background: rgba(255, 255, 255, 0.9);
-}
-
-:host ::ng-deep .custom-paginator {
-  .p-paginator {
-    background: transparent;
-    border: none;
-    justify-content: center;
-  }
-
-  .p-paginator-page.p-highlight {
-    background: #4CAF50;
-    color: white;
-  }
-}
-
-@media (max-width: 768px) {
-  .header {
-    flex-direction: column;
-    gap: 1rem;
-    text-align: center;
-  }
-
-  .pets-grid {
-    grid-template-columns: 1fr;
-  }
-
-  .container {
-    padding: 1rem;
-  }
 }
