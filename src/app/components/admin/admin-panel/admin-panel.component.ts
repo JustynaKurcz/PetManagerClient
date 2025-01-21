@@ -1,27 +1,19 @@
 import {Component, inject, OnInit} from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { ButtonModule } from 'primeng/button';
-import { ConfirmDialogModule } from 'primeng/confirmdialog';
 import { ConfirmationService, MessageService } from 'primeng/api';
-import { ToastModule } from 'primeng/toast';
 import { AdminService } from "../../../services/admin/admin.service";
 import { UsersResponse } from "../../../models/admin/users-response";
-import {InputTextModule} from "primeng/inputtext";
 import {debounceTime, distinctUntilChanged, Subject} from "rxjs";
-import {PaginatorModule, PaginatorState} from "primeng/paginator";
 import {PaginatorComponent} from "../../shared/paginator/paginator.component";
+import {PrimengImports} from "../../../constants/primeng-imports";
 
 @Component({
   selector: 'app-admin-panel',
   standalone: true,
   imports: [
     CommonModule,
-    ButtonModule,
-    ConfirmDialogModule,
-    ToastModule,
-    InputTextModule,
-    PaginatorModule,
-    PaginatorComponent
+    PaginatorComponent,
+    ...PrimengImports
   ],
   providers: [ConfirmationService, MessageService],
   templateUrl: './admin-panel.component.html',

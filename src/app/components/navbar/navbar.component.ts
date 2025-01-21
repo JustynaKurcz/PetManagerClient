@@ -1,23 +1,16 @@
 import {ChangeDetectorRef, Component, HostListener, inject, OnInit} from '@angular/core';
-import {MenubarModule} from "primeng/menubar";
-import {MenuItem} from "primeng/api";
-import "primeicons/primeicons.css";
-import {MegaMenuModule} from "primeng/megamenu";
 import {UsersService} from "../../services/users/users.service";
-import {MenuModule} from "primeng/menu";
 import {NgForOf, NgIf} from "@angular/common";
-import {Button} from "primeng/button";
+import {PrimengImports} from "../../constants/primeng-imports";
+import {MenuItem} from "primeng/api";
 
 @Component({
   selector: 'app-navbar',
   standalone: true,
   imports: [
-    MenubarModule,
-    MegaMenuModule,
-    MenuModule,
     NgForOf,
-    Button,
     NgIf,
+    ...PrimengImports
   ],
   providers: [UsersService],
   templateUrl: './navbar.component.html',

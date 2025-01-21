@@ -6,7 +6,7 @@ import {NgIf} from "@angular/common";
 @Component({
   selector: 'app-form-input',
   standalone: true,
-  imports: [...MaterialImports, ReactiveFormsModule, NgIf],
+  imports: [ReactiveFormsModule, NgIf, ...MaterialImports],
   templateUrl: './form-input.component.html',
   styleUrl: './form-input.component.css'
 })

@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, EventEmitter, OnInit, Output} from '@angular/core';
 import {PrimengImports} from "../../../constants/primeng-imports";
 import {CommonModule} from "@angular/common";
 import {FormBuilder, FormGroup, ReactiveFormsModule, Validators} from "@angular/forms";
@@ -21,6 +21,7 @@ import {CreatePetDto} from "../../../models/pets/create-pet-dto";
   styleUrl: './pet-form.component.css'
 })
 export class PetFormComponent implements OnInit {
+  @Output() petAdded = new EventEmitter<void>();
   visible: boolean = false;
   petForm!: FormGroup;
   today: Date = new Date();
@@ -114,6 +115,7 @@ export class PetFormComponent implements OnInit {
     } else {
       this.showSuccessMessage('Pomyślnie dodano zwierzę');
       this.hideDialog();
+      this.petAdded.emit();
     }
   }
 
@@ -122,10 +124,12 @@ export class PetFormComponent implements OnInit {
       next: () => {
         this.showSuccessMessage('Pomyślnie dodano zwierzę wraz ze zdjęciem');
         this.hideDialog();
+        this.petAdded.emit();
       },
       error: () => {
         this.showWarningMessage('Dodano zwierzę, ale nie udało się dodać zdjęcia');
         this.hideDialog();
+        this.petAdded.emit();
       }
     });
   }

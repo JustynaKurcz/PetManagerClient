@@ -1,55 +1,42 @@
-import {Component, OnInit} from '@angular/core';
-import {ConfirmDialogModule} from "primeng/confirmdialog";
-import {DialogModule} from "primeng/dialog";
+import {Component, OnInit, ViewChild} from '@angular/core';
 import {FormBuilder, FormGroup, ReactiveFormsModule, Validators} from "@angular/forms";
-import {ConfirmationService, MessageService} from "primeng/api";
-import {ToastModule} from "primeng/toast";
+import {ConfirmationService} from "primeng/api";
 import {PrimengImports} from "../../constants/primeng-imports";
-import {NgIf} from "@angular/common";
 import {UsersService} from "../../services/users/users.service";
 import {CurrentUserDetailsDto} from "../../models/users/get-current-user-details/current-user-details-dto";
 import {BreadcrumbItemComponent} from "../shared/breadcrumb-item/breadcrumb-item.component";
+import {ToastService} from "../../services/toast/toast.service";
+import {EditProfileFormComponent} from "../edit-profile-form/edit-profile-form.component";
 
 @Component({
   selector: 'app-my-account',
   standalone: true,
   imports: [
-    ConfirmDialogModule,
-    DialogModule,
-    ToastModule,
     ReactiveFormsModule,
     ...PrimengImports,
-    NgIf,
-    BreadcrumbItemComponent
+    BreadcrumbItemComponent,
+    EditProfileFormComponent
   ],
-  providers: [ConfirmationService, MessageService, UsersService],
+  providers: [ToastService, ConfirmationService, UsersService],
   templateUrl: './my-account.component.html',
   styleUrl: './my-account.component.css'
 })
 export class MyAccountComponent implements OnInit {
-  userData: CurrentUserDetailsDto = {
-    userId: '',
-    firstName: '',
-    lastName: '',
-    email: '',
-    lastChangePasswordDate: '',
-    createdAt: '',
-    role: '',
-    petsCount: 0,
-  };
+  @ViewChild(EditProfileFormComponent) editProfileForm!: EditProfileFormComponent;
+  userData!: CurrentUserDetailsDto;
   editDialogVisible = false;
   editForm: FormGroup;
 
   breadcrumbItems = [
-    { label: 'Strona główna', link: '/', icon: 'pi pi-home' },
-    { label: 'Moje konto', link: '/moje-konto' }
+    {label: 'Strona główna', link: '/', icon: 'pi pi-home'},
+    {label: 'Moje konto', link: '/moje-konto'}
   ];
 
   constructor(
     private fb: FormBuilder,
-    private messageService: MessageService,
     private confirmationService: ConfirmationService,
-    private usersService: UsersService
+    private usersService: UsersService,
+    private toastService: ToastService
   ) {
     this.editForm = this.fb.group({
       firstName: ['', [Validators.required, Validators.minLength(2)]],
@@ -71,20 +58,16 @@ export class MyAccountComponent implements OnInit {
   loadUserData() {
     this.usersService.getDetailsOfTheLoggedUser().subscribe({
       next: (data) => {
-          this.userData = {
-            ...this.userData,
-            ...data,
-            firstName: data.firstName?.trim() || '',
-            lastName: data.lastName?.trim() || ''
-          };
+        this.userData = {
+          ...this.userData,
+          ...data,
+          firstName: data.firstName?.trim() || '',
+          lastName: data.lastName?.trim() || ''
+        };
       },
       error: (err) => {
         console.error('Error loading user data:', err);
-        this.messageService.add({
-          severity: 'error',
-          summary: 'Błąd',
-          detail: 'Nie udało się załadować danych użytkownika.'
-        });
+        this.toastService.showError('Nie udało się załadować danych użytkownika.');
       }
     });
   }
@@ -93,66 +76,46 @@ export class MyAccountComponent implements OnInit {
     return date ? new Date(date).toLocaleDateString() : '-';
   }
 
-  showEditDialog() {
-    if (this.userData) {
-      this.editForm.patchValue({
-        firstName: this.userData.firstName,
-        lastName: this.userData.lastName
-      });
-      this.editDialogVisible = true;
-    }
-  }
-
-  saveProfileChanges() {
-    if (this.editForm.valid && this.userData) {
-      const formValue = this.editForm.value;
-      this.usersService.changeUserInformation(formValue).subscribe({
-        next: () => {
-          this.userData = {
-            ...this.userData,
-            ...formValue
-          };
-          this.editDialogVisible = false;
-          this.messageService.add({
-            severity: 'success',
-            summary: 'Sukces',
-            detail: 'Dane profilu zostały zaktualizowane'
-          });
-        },
-        error: (err) => {
-          console.error('Error updating profile:', err);
-          this.messageService.add({
-            severity: 'error',
-            summary: 'Błąd',
-            detail: 'Nie udało się zaktualizować danych profilu.'
-          });
-        }
-      });
-    }
-  }
-
   confirmDeleteAccount() {
     this.confirmationService.confirm({
       message: 'Czy na pewno chcesz usunąć swoje konto? Ta operacja jest nieodwracalna.',
       accept: () => {
         this.usersService.deleteAccount().subscribe({
           next: () => {
-            this.messageService.add({
-              severity: 'success',
-              summary: 'Konto usunięte',
-              detail: 'Twoje konto zostało pomyślnie usunięte'
-            });
+            this.toastService.showSuccess('Twoje konto zostało pomyślnie usunięte');
             setTimeout(() => this.logout(), 1500);
           },
           error: (err) => {
             console.error('Error deleting account:', err);
-            this.messageService.add({
-              severity: 'error',
-              summary: 'Błąd',
-              detail: 'Nie udało się usunąć konta.'
-            });
+            this.toastService.showError('Nie udało się usunąć konta.');
           }
         });
+      }
+    });
+  }
+
+  showEditDialog() {
+    if (this.userData && this.editProfileForm) {
+      this.editProfileForm.setFormValues(
+        this.userData.firstName || '',
+        this.userData.lastName || ''
+      );
+      this.editDialogVisible = true;
+    }
+  }
+
+  saveProfileChanges(formData: {firstName: string, lastName: string}) {
+    this.usersService.changeUserInformation(formData).subscribe({
+      next: () => {
+        this.userData = {
+          ...this.userData,
+          ...formData
+        };
+        this.toastService.showSuccess('Dane profilu zostały zaktualizowane');
+      },
+      error: (err) => {
+        console.error('Error updating profile:', err);
+        this.toastService.showError('Nie udało się zaktualizować danych profilu.');
       }
     });
   }

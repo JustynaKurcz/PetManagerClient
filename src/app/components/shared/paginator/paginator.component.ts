@@ -1,13 +1,12 @@
 import {Component, EventEmitter, Input, Output} from '@angular/core';
-import {PaginatorModule, PaginatorState} from "primeng/paginator";
-import {NgIf} from "@angular/common";
+import {PaginatorState} from "primeng/paginator";
+import {PrimengImports} from "../../../constants/primeng-imports";
 
 @Component({
   selector: 'app-paginator',
   standalone: true,
   imports: [
-    PaginatorModule,
-    NgIf
+    ...PrimengImports
   ],
   templateUrl: './paginator.component.html',
   styleUrl: './paginator.component.css'
