@@ -1,3 +1,62 @@
-<footer>
-<p>Copyrights © Justyna Kurcz | {{ getCurrentYear() }}</p>
+<footer class="footer">
+  <div class="footer-content">
+    <div class="footer-section fade-in">
+      <h4 class="section-title">Dołącz do nas</h4>
+      <div class="social-links">
+        <a href="https://www.linkedin.com/in/justynakurcz" target="_blank" class="social-link" aria-label="LinkedIn">
+          <div class="social-icon-wrapper">
+            <i class="pi pi-linkedin"></i>
+            <span class="ripple"></span>
+          </div>
+          <span class="tooltip">LinkedIn</span>
+        </a>
+        <a href="mailto:justynakurcz@icloud.com" class="social-link" aria-label="Email">
+          <div class="social-icon-wrapper">
+            <i class="pi pi-at"></i>
+            <span class="ripple"></span>
+          </div>
+          <span class="tooltip">Email</span>
+        </a>
+      </div>
+    </div>
+
+    <div class="footer-section fade-in" style="animation-delay: 0.2s">
+      <h4 class="section-title">Kontakt</h4>
+      <ul class="footer-links">
+        <li>
+          <a href="/kontakt" class="animated-link">
+            <span class="link-text">Skontaktuj się z nami</span>
+            <span class="link-line"></span>
+          </a>
+        </li>
+      </ul>
+    </div>
+
+    <div class="footer-section fade-in" style="animation-delay: 0.4s">
+      <h4 class="section-title">Informacje</h4>
+      <ul class="footer-links">
+        <li>
+          <a [routerLink]="['/o-aplikacji']" class="animated-link">
+            <span class="link-text">Informacje o aplikacji</span>
+            <span class="link-line"></span>
+          </a>
+        </li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="coming-soon-section">
+    <div class="pulse-container">
+      <div class="pulse-ring"></div>
+      <div class="pulse-icon">
+        <i class="pi pi-bell"></i>
+      </div>
+    </div>
+    <h4>Śledź rozwój aplikacji!</h4>
+    <p>Już niedługo będziesz mógł jako pierwszy poznawać nowe funkcje i otrzymywać wskazówki dotyczące opieki nad zwierzętami.</p>
+  </div>
+
+  <div class="footer-bottom">
+    <span>&copy; {{ getCurrentYear() }} Menedżer zwierząt domowych. Wszelkie prawa zastrzeżone.</span>
+  </div>
 </footer>

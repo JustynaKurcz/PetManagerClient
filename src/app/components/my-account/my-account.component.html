@@ -107,66 +107,10 @@
     </div>
   </div>
 
-
-  <p-dialog
+  <app-edit-profile-form
     [(visible)]="editDialogVisible"
-    [modal]="true"
-    [draggable]="false"
-    [resizable]="false"
-    [style]="{width: '700px'}"
-    header="Edytuj dane profilu"
-    styleClass="p-fluid modern-dialog">
-
-    <form [formGroup]="editForm" class="form-container">
-      <div class="form-field">
-        <label for="firstName" class="field-label">
-          <i class="pi pi-user"></i>
-          Imię
-        </label>
-        <input
-          id="firstName"
-          type="text"
-          pInputText
-          formControlName="firstName"
-          placeholder="Wprowadź imię">
-        <small *ngIf="editForm.get('firstName')?.invalid && editForm.get('firstName')?.touched"
-               class="error-message">Wprowadź poprawne imię (minimum 2 znaki)</small>
-      </div>
-
-      <div class="form-field">
-        <label for="lastName" class="field-label">
-          <i class="pi pi-user"></i>
-          Nazwisko
-        </label>
-        <input
-          id="lastName"
-          type="text"
-          pInputText
-          formControlName="lastName"
-          placeholder="Wprowadź nazwisko">
-        <small *ngIf="editForm.get('lastName')?.invalid && editForm.get('lastName')?.touched"
-               class="error-message">Wprowadź poprawne nazwisko (minimum 2 znaki)</small>
-      </div>
-    </form>
-
-    <ng-template pTemplate="footer">
-      <div class="dialog-footer">
-        <p-button
-          label="Anuluj"
-          icon="pi pi-times"
-          (onClick)="editDialogVisible = false"
-          styleClass="p-button-text">
-        </p-button>
-        <p-button
-          label="Zapisz"
-          icon="pi pi-check"
-          (onClick)="saveProfileChanges()"
-          [disabled]="!editForm.valid || !editForm.dirty"
-          styleClass="submit-button">
-        </p-button>
-      </div>
-    </ng-template>
-  </p-dialog>
+    (save)="saveProfileChanges($event)">
+  </app-edit-profile-form>
 
   <p-confirmDialog
     header="Potwierdzenie usunięcia konta"

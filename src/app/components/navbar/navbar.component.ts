@@ -67,9 +67,9 @@ export class NavbarComponent implements OnInit {
         routerLink: ['/moje-zwierzaki']
       },
       {
-        label: 'O projekcie',
+        label: 'O aplikacji',
         icon: 'pi pi-info-circle',
-        routerLink: ['/o-projekcie']
+        routerLink: ['/o-aplikacji']
       },
       {
         label: 'Kontakt',

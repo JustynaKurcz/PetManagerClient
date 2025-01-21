@@ -17,7 +17,7 @@ export class AboutComponent {
     university: 'Akademia Tarnowska',
     faculty: 'Wydział Politechniczny',
     year: '2025',
-    supervisor: 'mgr inż. ',
+    supervisor: 'mgr inż. Tomasz Gądek',
     technologies: [
       { name: 'C#',  icon: 'fas fa-code' },
       { name: 'ASP.NET Core', icon: 'fas fa-server' },

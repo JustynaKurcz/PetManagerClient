@@ -41,7 +41,7 @@ export const routes: Routes = [
 
   },
   {
-    path: 'o-projekcie',
+    path: 'o-aplikacji',
     loadComponent: () => import('./components/about/about.component').then(m => m.AboutComponent)
   },
   {
