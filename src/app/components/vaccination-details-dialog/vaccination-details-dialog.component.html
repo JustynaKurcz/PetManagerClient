@@ -1,21 +1,54 @@
-<p-dialog [(visible)]="visible" [modal]="true" styleClass="modern-dialog" (onHide)="close()">
+<p-dialog [(visible)]="visible" [modal]="true" styleClass="modern-dialog vaccination-dialog" (onHide)="close()">
   <ng-template pTemplate="header">
-    <h2 class="dialog-title">{{ vaccination.vaccinationName || 'Szczegóły szczepienia' }}</h2>
-  </ng-template>
-  <div class="dialog-content" *ngIf="vaccination">
-    <div class="details-container">
-      <div class="detail-row">
-        <span class="detail-label">Data szczepienia</span>
-        <span class="detail-value">{{ vaccination.vaccinationDate | date: 'dd.MM.yyyy' }}</span>
-      </div>
-      <div class="detail-row">
-        <span class="detail-label">Data kolejnego szczepienia:</span>
-        <span class="detail-value">{{ vaccination.nextVaccinationDate | date: 'dd.MM.yyyy' }}</span>
-      </div>
-      <div class="detail-row">
-        <span class="detail-label">Powiadomienie wysłane:</span>
-        <span class="detail-value">{{ vaccination.isNotificationSent ? 'Tak' : 'Nie' }}</span>
-      </div>
+    <div class="dialog-header">
+      <i class="pi pi-syringe header-icon"></i>
+      <h2 class="dialog-title">{{ vaccination.vaccinationName || 'Szczegóły szczepienia' }}</h2>
     </div>
+  </ng-template>
+
+  <div class="dialog-content" *ngIf="vaccination">
+    <form [formGroup]="vaccinationForm" class="details-container">
+      <div class="detail-row">
+        <span class="detail-label"><i class="pi pi-calendar"></i>Data szczepienia</span>
+        <span class="detail-value date-value">{{ vaccination.vaccinationDate | date: 'dd.MM.yyyy' }}</span>
+      </div>
+
+      <div class="detail-row">
+        <span class="detail-label"><i class="pi pi-calendar-plus"></i>Data kolejnego szczepienia</span>
+        <div class="date-edit-wrapper">
+          <p-calendar
+            id="nextVaccinationDate"
+            formControlName="nextVaccinationDate"
+            [showIcon]="true"
+            dateFormat="dd.mm.yy"
+            [locale]="calendarLocale"
+            [maxDate]="maxDate"
+            [appendTo]="'body'"
+            [style]="{width: '100%'}"
+          >
+          </p-calendar>
+        </div>
+      </div>
+
+      <div class="detail-row notification-row">
+        <span class="detail-label"><i class="pi pi-bell"></i>Status powiadomienia</span>
+        <div class="notification-badge" [class.sent]="vaccination.isNotificationSent"
+             [class.pending]="!vaccination.isNotificationSent">
+          <i class="pi" [class.pi-check-circle]="vaccination.isNotificationSent"
+             [class.pi-clock]="!vaccination.isNotificationSent"></i>
+          <span>{{ vaccination.isNotificationSent ? 'Wysłano' : 'Oczekuje' }}</span>
+        </div>
+      </div>
+    </form>
   </div>
+
+  <ng-template pTemplate="footer">
+    <div class="dialog-footer">
+      <button pButton label="Anuluj" class="p-button-text" (click)="close()"></button>
+      <button pButton label="Zapisz"
+              (click)="saveChanges()"
+              [disabled]="!vaccinationForm.dirty || vaccinationForm.invalid">
+      </button>
+    </div>
+  </ng-template>
 </p-dialog>

@@ -19,6 +19,6 @@ export class PetItemComponent {
   constructor(private router: Router) {}
 
   navigateToPetDetails() {
-    this.router.navigate(['/pet/detail', this.pet.petId]);
+    this.router.navigate(['/moje-zwierzaki', this.pet.petId]);
   }
 }

@@ -10,7 +10,7 @@
 <div class="container">
   <div class="content-wrapper">
     <ng-container *ngIf="!isLoading">
-      <ng-container *ngIf="vaccinations.length > 0; else emptyCollection">
+      <ng-container *ngIf="vaccinations.length > 0">
         <p-table [value]="vaccinations" [paginator]="false" styleClass="modern-table">
           <ng-template pTemplate="header">
             <tr>
@@ -61,23 +61,12 @@
     <div *ngIf="isLoading" class="loader">
       <p-progressSpinner strokeWidth="4"></p-progressSpinner>
     </div>
-
-    <ng-template #emptyCollection>
-      <div class="empty-state">
-        <p>Brak wizyt</p>
-        <button class="add-button" (click)="showAppointmentForm = true">
-             <span class="button-content">
-               <i class="pi pi-plus"></i>
-               <span class="button-text">Dodaj wizytę</span>
-             </span>
-        </button>
-      </div>
-    </ng-template>
   </div>
 </div>
 
 <app-appointment-details-dialog
   [(visible)]="showDetailsDialog"
+  [healthRecordId]="healthRecordId"
   [appointment]="selectedAppointment">
 </app-appointment-details-dialog>
 

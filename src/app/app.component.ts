@@ -8,7 +8,7 @@ import {MessageService} from "primeng/api";
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [CommonModule, RouterOutlet, NavbarComponent, FooterComponent],
+  imports: [CommonModule,RouterOutlet, NavbarComponent, FooterComponent],
   providers: [MessageService],
   templateUrl: './app.component.html',
   styleUrl: './app.component.css'

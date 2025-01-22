@@ -1,0 +1,116 @@
+:host ::ng-deep .modern-dialog {
+  max-width: 800px;
+  width: 95%;
+  min-height: 500px;
+  border-radius: 12px;
+  box-shadow: 0 8px 32px rgba(0, 128, 0, 0.08);
+}
+
+:host ::ng-deep .modern-dialog .p-dialog-header {
+  background: linear-gradient(135deg, #4CAF50, #45a049);
+  padding: 1.75rem;
+  border-top-left-radius: 12px;
+  border-top-right-radius: 12px;
+  border: none;
+}
+
+:host ::ng-deep .modern-dialog .p-dialog-header .p-dialog-title {
+  color: white;
+}
+
+.dialog-title {
+  margin: 0;
+  font-size: 1.5rem;
+  font-weight: 500;
+  color: white;
+}
+
+.dialog-content {
+  padding: 2rem;
+  background: white;
+}
+
+.details-container {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.detail-row {
+  display: grid;
+  grid-template-columns: 200px 1fr;
+  align-items: start;
+  padding: 1.25rem;
+  background: #f9fbf9;
+  border-radius: 8px;
+  border: 1px solid #e8f5e9;
+  transition: all 0.2s ease;
+}
+
+.detail-row:hover {
+  background: #f1f8f1;
+  border-color: #c8e6c9;
+}
+
+.detail-label {
+  font-weight: 500;
+  color: #2e7d32;
+  font-size: 1rem;
+}
+
+.detail-value {
+  color: #1b5e20;
+  line-height: 1.6;
+  word-break: break-word;
+}
+
+.detail-row:nth-child(3) {
+  grid-template-columns: 1fr;
+  gap: 0.75rem;
+}
+
+.detail-row:nth-child(3) .detail-value {
+  padding: 1.25rem;
+  border-radius: 8px;
+  min-height: 120px;
+}
+
+.detail-row:last-child {
+  align-items: center;
+}
+
+.detail-row:last-child .detail-value {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  padding: 0.75rem 1.25rem;
+  border-radius: 25px;
+  font-weight: 500;
+  min-width: 120px;
+}
+
+.notification-status-sent {
+  background: linear-gradient(135deg, #4CAF50, #45a049);
+  color: white;
+  box-shadow: 0 2px 8px rgba(76, 175, 80, 0.2);
+  max-width: 30px;
+}
+
+.notification-status-pending {
+  background: linear-gradient(135deg, #ff9800, #f57c00);
+  color: white;
+  box-shadow: 0 2px 8px rgba(255, 152, 0, 0.2);
+  max-width: 30px;
+}
+
+
+.detail-row:has(.detail-value:empty)::after {
+  content: "Brak danych";
+  display:flex;
+  align-items: flex-start;
+  justify-content: flex-start;
+  color: #7cb342;
+  font-style: italic;
+  grid-column: 2;
+}

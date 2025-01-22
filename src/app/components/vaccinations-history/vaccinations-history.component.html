@@ -10,7 +10,7 @@
 <div class="container">
   <div class="content-wrapper">
     <ng-container *ngIf="!isLoading">
-      <ng-container *ngIf="vaccinations.length > 0; else emptyCollection">
+      <ng-container *ngIf="vaccinations.length > 0">
         <p-table [value]="vaccinations" styleClass="modern-table">
           <ng-template pTemplate="header">
             <tr>
@@ -64,18 +64,6 @@
       <p-progressSpinner strokeWidth="4"></p-progressSpinner>
     </div>
   </div>
-
-  <ng-template #emptyCollection>
-    <div class="empty-state">
-      <p>Brak szczepień</p>
-      <button class="add-button" (click)="showCreateDialog = true">
-           <span class="button-content">
-             <i class="pi pi-plus"></i>
-             <span class="button-text">Dodaj szczepienie</span>
-           </span>
-      </button>
-    </div>
-  </ng-template>
 </div>
 
 <app-vaccination-form
@@ -85,6 +73,7 @@
 
 <app-vaccination-details-dialog
   [(visible)]="showDetailsDialog"
+  [healthRecordId]="healthRecordId"
   [vaccination]="selectedVaccination">
 </app-vaccination-details-dialog>
 

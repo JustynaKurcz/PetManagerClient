@@ -1,0 +1,115 @@
+:host ::ng-deep .vaccination-dialog {
+  max-width: 800px;
+  width: 95%;
+  min-height: 400px;
+}
+
+:host ::ng-deep .modern-dialog {
+  max-width: 800px;
+  width: 95%;
+  min-height: 500px;
+  border-radius: 12px;
+  box-shadow: 0 8px 32px rgba(0, 128, 0, 0.08);
+}
+
+.header-icon {
+  font-size: 1.5rem;
+  color: white;
+}
+
+.detail-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1.25rem;
+  background: #f9fbf9;
+  border-radius: 12px;
+  border: 1px solid #e8f5e9;
+  margin-bottom: 1rem;
+}
+
+.detail-label {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  color: #2e7d32;
+}
+
+.detail-label i {
+  font-size: 1.2rem;
+  color: #4CAF50;
+}
+
+.date-value {
+  background: white;
+  padding: 0.5rem 1rem;
+  border-radius: 6px;
+  border: 1px solid #e8f5e9;
+  font-weight: 500;
+}
+
+.notification-row {
+  background: white;
+}
+
+.notification-badge {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.5rem 1rem;
+  border-radius: 20px;
+  font-weight: 500;
+  min-width: 120px;
+  justify-content: center;
+}
+
+.notification-badge.sent {
+  background: linear-gradient(135deg, #4CAF50, #45a049);
+  color: white;
+}
+
+.notification-badge.pending {
+  background: linear-gradient(135deg, #ff9800, #f57c00);
+  color: white;
+}
+
+.notification-badge i {
+  font-size: 1.1rem;
+}
+
+.date-edit-wrapper {
+  width: 100%;
+  max-width: 300px;
+}
+
+:host ::ng-deep {
+  .p-calendar {
+    width: 100%;
+
+    .p-inputtext {
+      width: 100%;
+      border-radius: 8px;
+    }
+  }
+
+  .p-datepicker {
+    min-width: 320px;
+
+    &.p-datepicker-touch-ui {
+      min-width: 320px;
+    }
+
+    table {
+      font-size: 14px;
+      margin: 0.5rem 0;
+    }
+
+    th {
+      padding: 0.5rem;
+    }
+
+    td {
+      padding: 0.5rem;
+    }
+  }
+}

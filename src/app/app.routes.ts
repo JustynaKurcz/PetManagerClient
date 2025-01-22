@@ -21,7 +21,7 @@ export const routes: Routes = [
     loadComponent: () => import('./components/auth/reset-password/reset-password.component').then(m => m.ResetPasswordComponent)
   },
   {
-    path: 'pet/detail/:petId',
+    path: 'moje-zwierzaki/:petId',
     loadComponent: () => import('./components/pet-details/pet-details.component').then(m => m.PetDetailsComponent),
     canActivate: [authGuard]
   },

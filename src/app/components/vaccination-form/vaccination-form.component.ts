@@ -56,7 +56,7 @@ export class VaccinationFormComponent {
     this.vaccinationForm = this.fb.group({
       vaccinationName: ['', [Validators.required, Validators.minLength(2)]],
       vaccinationDate: [null, Validators.required],
-      nextVaccinationDate: [null, Validators.required]
+      nextVaccinationDate: [null]
     });
   }
 

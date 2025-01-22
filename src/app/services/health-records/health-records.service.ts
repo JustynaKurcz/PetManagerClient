@@ -51,4 +51,12 @@ export class HealthRecordsService {
   deleteAppointment(healthRecordId: string, appointmentId: string) {
     return this.http.delete(`${API_ENDPOINTS.HEALTH_RECORDS.BASE}/${healthRecordId}/appointments/${appointmentId}`);
   }
+
+  updateAppointment(healthRecordId: string, appointmentId: string, updateData: any) {
+    return this.http.put(`${API_ENDPOINTS.HEALTH_RECORDS.BASE}/${healthRecordId}/appointments/${appointmentId}`, updateData);
+  }
+
+  updateVaccination(healthRecordId: string, vaccinationId: string, updateData: { nextVaccinationDate: string }) {
+    return this.http.put(`${API_ENDPOINTS.HEALTH_RECORDS.BASE}/${healthRecordId}/vaccinations/${vaccinationId}`, updateData);
+  }
 }
