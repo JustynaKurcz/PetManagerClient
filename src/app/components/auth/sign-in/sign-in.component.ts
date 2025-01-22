@@ -1,6 +1,6 @@
 import {Component, inject, OnInit} from '@angular/core';
 import {FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators} from '@angular/forms';
-import {Router} from '@angular/router';
+import {Router, RouterLink} from '@angular/router';
 import {MatSnackBar} from '@angular/material/snack-bar';
 import {UsersService} from '../../../services/users/users.service';
 import {SignInCommand} from '../../../models/users/sign-in/sign-in-command';
@@ -16,7 +16,8 @@ import {FormInputComponent} from "../shared/form-input/form-input.component";
     ReactiveFormsModule,
     FormsModule,
     BrandHeaderComponent,
-    FormInputComponent
+    FormInputComponent,
+    RouterLink
   ],
   providers: [UsersService],
   templateUrl: './sign-in.component.html',
@@ -71,13 +72,5 @@ export class SignInComponent implements OnInit {
         horizontalPosition: 'center',
       }
     );
-  }
-
-  onForgotPassword() {
-    this.router.navigate(['/resetuj-haslo']);
-  }
-
-  navigateToSignUp() {
-    this.router.navigate(['/zarejestruj-sie']);
   }
 }

@@ -1,14 +1,15 @@
 <div class="pet-card">
-  <div class="number-badge">{{index + 1}}</div>
-  <div class="image-container">
-    <img [src]="pet.photoUrl" [alt]="pet.name" class="pet-image"/>
+  <div class="pet-image">
+    <img *ngIf="pet.photoUrl" [src]="pet.photoUrl" [alt]="pet.name"/>
+    <div class="image-overlay">
+      <div class="number-badge">{{index + 1}}</div>
+    </div>
   </div>
-  <div class="content">
+  <div class="card-content">
     <h3 class="pet-name">{{pet.name}}</h3>
-    <p-button
-    label="Zobacz Więcej"
-    styleClass="p-button-primary view-more-btn"
-    (click)="navigateToPetDetails()"
-    ></p-button>
+    <button class="view-details-btn" (click)="navigateToPetDetails()">
+      <span>Zobacz Więcej</span>
+      <i class="pi pi-arrow-right"></i>
+    </button>
   </div>
 </div>

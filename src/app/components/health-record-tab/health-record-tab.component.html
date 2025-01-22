@@ -1,0 +1,15 @@
+<p-tabView>
+  <p-tabPanel header="Historia szczepień" leftIcon="pi pi-calendar">
+    <app-vaccinations-history
+      [healthRecordId]="healthRecordId"
+    >
+    </app-vaccinations-history>
+  </p-tabPanel>
+
+  <p-tabPanel header="Historia wizyt" leftIcon="pi pi-file">
+    <app-appointments-history
+      [healthRecordId]="healthRecordId"
+    >
+    </app-appointments-history>
+  </p-tabPanel>
+</p-tabView>

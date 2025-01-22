@@ -1,17 +1,13 @@
 import {Component, Input} from '@angular/core';
-import {MatCardModule} from "@angular/material/card";
 import {Router} from "@angular/router";
-import {Button} from "primeng/button";
 import {PetDto} from "../../models/pets/pet-dto";
-import {CardModule} from "primeng/card";
+import {NgIf} from "@angular/common";
 
 @Component({
   selector: 'app-pet-item',
   standalone: true,
   imports: [
-    MatCardModule,
-    Button,
-    CardModule
+    NgIf
   ],
   templateUrl: './pet-item.component.html',
   styleUrl: './pet-item.component.css'

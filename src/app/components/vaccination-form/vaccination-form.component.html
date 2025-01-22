@@ -1,0 +1,74 @@
+<p-dialog
+  [(visible)]="visible"
+  [modal]="true"
+  [draggable]="false"
+  [resizable]="false"
+  [style]="{width: '650px', height: '750px'}"
+  (onHide)="hideDialog()"
+  header="Dodaj Szczepienie"
+  styleClass="p-fluid">
+
+  <div *ngIf="isLoading" class="loading-container">
+    <p-progressSpinner></p-progressSpinner>
+  </div>
+
+  <form [formGroup]="vaccinationForm" (ngSubmit)="onSubmit()" *ngIf="!isLoading">
+    <div class="field">
+      <label for="vaccinationName">Nazwa szczepienia</label>
+      <input
+        id="vaccinationName"
+        type="text"
+        pInputText
+        formControlName="vaccinationName"
+        placeholder="Wprowadź nazwę szczepienia">
+      <small class="p-error" *ngIf="vaccinationForm.get('vaccinationName')?.invalid && vaccinationForm.get('vaccinationName')?.touched">
+        Nazwa szczepienia jest wymagana
+      </small>
+    </div>
+
+    <div class="field">
+      <label for="vaccinationDate">Data szczepienia</label>
+      <p-calendar
+        id="vaccinationDate"
+        formControlName="vaccinationDate"
+        [showIcon]="true"
+        [appendTo]="'body'"
+        [locale]="calendarLocale"
+        placeholder="Wybierz datę">
+      </p-calendar>
+    </div>
+
+    <div class="field">
+      <label for="nextVaccinationDate">Data kolejnego szczepienia</label>
+      <p-calendar
+        id="nextVaccinationDate"
+        formControlName="nextVaccinationDate"
+        [showIcon]="true"
+        [appendTo]="'body'"
+        [locale]="calendarLocale"
+        placeholder="Wybierz datę">
+      </p-calendar>
+    </div>
+  </form>
+
+  <ng-template pTemplate="footer">
+    <button
+      pButton
+      label="Anuluj"
+      icon="pi pi-times"
+      class="p-button-text"
+      (click)="hideDialog()">
+    </button>
+    <button
+      pButton
+      label="Zapisz"
+      icon="pi pi-check"
+      [disabled]="!vaccinationForm.valid || isLoading"
+      (click)="onSubmit()">
+      <p-progressSpinner *ngIf="isLoading"
+                         [style]="{width: '20px', height: '20px'}"
+                         styleClass="custom-spinner">
+      </p-progressSpinner>
+    </button>
+  </ng-template>
+</p-dialog>

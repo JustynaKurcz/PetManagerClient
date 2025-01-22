@@ -3,7 +3,7 @@ import {PrimengImports} from "../../../constants/primeng-imports";
 import {CommonModule} from "@angular/common";
 import {FormBuilder, FormGroup, ReactiveFormsModule, Validators} from "@angular/forms";
 import {PetsService} from "../../../services/pets/pets.service";
-import {MessageService} from "primeng/api";
+import {MessageService, PrimeNGConfig} from "primeng/api";
 import {ImageUploadComponent} from "../image-upload/image-upload.component";
 import {CreatePetDto} from "../../../models/pets/create-pet-dto";
 
@@ -29,12 +29,28 @@ export class PetFormComponent implements OnInit {
   species: { id: number, name: string }[] = [];
   isLoading: boolean = false;
 
+  readonly calendarLocale = {
+    firstDayOfWeek: 1,
+    dayNames: ["Niedziela", "Poniedziałek", "Wtorek", "Środa", "Czwartek", "Piątek", "Sobota"],
+    dayNamesShort: ["Niedz.", "Pon.", "Wt.", "Śr.", "Czw.", "Pt.", "Sob."],
+    dayNamesMin: ["Nd", "Pn", "Wt", "Śr", "Cz", "Pt", "Sb"],
+    monthNames: [ "Styczeń","Luty","Marzec","Kwiecień","Maj","Czerwiec",
+      "Lipiec","Sierpień","Wrzesień","Październik","Listopad","Grudzień" ],
+    monthNamesShort: [ "Sty", "Lut", "Mar", "Kwi", "Maj", "Cze",
+      "Lip", "Sie", "Wrz", "Paź", "Lis", "Gru" ],
+    today: 'Dzisiaj',
+    clear: 'Wyczyść',
+    dateFormat: 'dd.mm.yy',
+  };
+
   constructor(
     private fb: FormBuilder,
     private petsService: PetsService,
-    private messageService: MessageService
+    private messageService: MessageService,
+    private primeConfig: PrimeNGConfig
   ) {
     this.initializeForm();
+    this.primeConfig.setTranslation(this.calendarLocale);
   }
 
   ngOnInit() {

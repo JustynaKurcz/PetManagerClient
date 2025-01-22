@@ -1,0 +1,35 @@
+<div class="profile-header">
+  <div class="header-background">
+    <div class="overlay-gradient"></div>
+  </div>
+  <div class="content-wrapper">
+    <div class="profile-image-section">
+      <div class="image-container">
+        <app-pet-avatar
+          [petId]="pet.petId"
+          [photoUrl]="pet.photoUrl"
+          (photoUpdated)="photoUpdated.emit()">
+        </app-pet-avatar>
+      </div>
+    </div>
+    <div class="profile-info-section">
+      <div class="name-section">
+        <h1 class="pet-name">{{ pet.name }}</h1>
+      </div>
+      <div class="action-buttons">
+        <button class="edit-button" (click)="editPet.emit()">
+              <span class="button-content">
+                <i class="pi pi-pencil"></i>
+                <span class="button-text">Edytuj profil</span>
+              </span>
+        </button>
+        <button class="delete-button" (click)="deletePet.emit()">
+              <span class="button-content">
+                <i class="pi pi-trash"></i>
+                <span class="button-text">Usuń profil</span>
+              </span>
+        </button>
+      </div>
+    </div>
+  </div>
+</div>

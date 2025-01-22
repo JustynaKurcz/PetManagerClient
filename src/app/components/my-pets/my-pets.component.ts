@@ -1,20 +1,17 @@
 import {Component, OnInit, ViewChild} from '@angular/core';
 import {CommonModule} from "@angular/common";
 import {PetItemComponent} from "../pet-item/pet-item.component";
-import {PetDto} from "../../models/pets/pet-dto";
 import {PetsService} from "../../services/pets/pets.service";
-import {PaginatorModule} from 'primeng/paginator';
 import {MessageService} from "primeng/api";
 import {PrimengImports} from "../../constants/primeng-imports";
-import {ProgressSpinnerModule} from "primeng/progressspinner";
 import {PetFormComponent} from "../create-pet/pet-form/pet-form.component";
 import {PaginatorComponent} from "../shared/paginator/paginator.component";
-import {PetResponse} from "../../models/pets/pet-response";
+import {EmptyPetsComponent} from "../empty-pets/empty-pets.component";
 
 @Component({
   selector: 'app-my-pets',
   standalone: true,
-  imports: [CommonModule, PetItemComponent, PaginatorModule, ...PrimengImports, ProgressSpinnerModule, PetFormComponent, PaginatorComponent],
+  imports: [CommonModule, PetItemComponent, ...PrimengImports, PetFormComponent, PaginatorComponent, EmptyPetsComponent],
   providers: [PetsService, MessageService],
   templateUrl: './my-pets.component.html',
   styleUrls: ['./my-pets.component.css']
@@ -22,11 +19,9 @@ import {PetResponse} from "../../models/pets/pet-response";
 export class MyPetsComponent implements OnInit {
   @ViewChild(PetFormComponent) petFormDialog!: PetFormComponent;
 
-  response!:PetResponse
-  // pets: PetDto[] = [];
+  response: any
   pageIndex: number = 0;
   pageSize: number = 6;
-  // totalCount: number = 0;
   loading: boolean = true;
 
   constructor(

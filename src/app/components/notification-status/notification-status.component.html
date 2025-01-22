@@ -1,0 +1,6 @@
+<div class="notification-badge" [class.sent]="isNotificationSent"
+     [class.pending]="!isNotificationSent">
+  <i class="pi" [class.pi-bell]="isNotificationSent"
+     [class.pi-bell-slash]="!isNotificationSent"></i>
+  <span>{{ isNotificationSent ? 'Wysłane' : 'Oczekuje' }}</span>
+</div>

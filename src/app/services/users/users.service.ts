@@ -110,7 +110,11 @@ export class UsersService {
   }
 
   deleteAccount(): Observable<any> {
-    return this.http.delete(API_ENDPOINTS.USERS.BASE);
+    return this.http.delete(API_ENDPOINTS.USERS.BASE)
+      .pipe(
+        tap(() => this.signOut()),
+        catchError(() => throwError('Error'))
+      );
   }
 
   async signOut() {

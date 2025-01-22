@@ -1,8 +1,8 @@
 import {Component, inject, OnInit} from '@angular/core';
-import { CommonModule } from '@angular/common';
-import { ConfirmationService, MessageService } from 'primeng/api';
-import { AdminService } from "../../../services/admin/admin.service";
-import { UsersResponse } from "../../../models/admin/users-response";
+import {CommonModule} from '@angular/common';
+import {ConfirmationService, MessageService} from 'primeng/api';
+import {AdminService} from "../../../services/admin/admin.service";
+import {UsersResponse} from "../../../models/admin/users-response";
 import {debounceTime, distinctUntilChanged, Subject} from "rxjs";
 import {PaginatorComponent} from "../../shared/paginator/paginator.component";
 import {PrimengImports} from "../../../constants/primeng-imports";
@@ -24,7 +24,7 @@ export class AdminPanelComponent implements OnInit {
   private messageService = inject(MessageService);
   private confirmationService = inject(ConfirmationService);
 
-  response!: UsersResponse;
+  response: UsersResponse | undefined;
   pageIndex: number = 0;
   pageSize: number = 6;
   private searchSubject = new Subject<string>();
@@ -46,9 +46,9 @@ export class AdminPanelComponent implements OnInit {
     this.searchSubject.next(input.value);
   }
 
-  loadUsers(searchTerm?:string): void {
+  loadUsers(searchTerm?: string): void {
     this.adminService.browseUsers(this.pageIndex + 1, this.pageSize, searchTerm!).subscribe({
-      next: (response) => {
+      next: (response: UsersResponse) => {
         this.response = response;
       },
       error: (error) => {
@@ -86,7 +86,7 @@ export class AdminPanelComponent implements OnInit {
     });
   }
 
-  onPageChange(event: {pageIndex: number, pageSize: number}): void {
+  onPageChange(event: { pageIndex: number, pageSize: number }): void {
     this.pageIndex = event.pageIndex;
     this.pageSize = event.pageSize;
     this.loadUsers();

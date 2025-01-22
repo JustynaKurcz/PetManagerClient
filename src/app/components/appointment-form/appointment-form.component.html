@@ -1,0 +1,94 @@
+<p-dialog
+  [(visible)]="visible"
+  [closeOnEscape]="true"
+  [style]="{width: '50vw', minWidth: '400px'}"
+  header="Dodaj wizytę"
+  styleClass="p-fluid appointment-dialog"
+  (onHide)="onDialogHide()"
+>
+
+  <div *ngIf="isLoading" class="loading-container">
+    <p-progressSpinner></p-progressSpinner>
+  </div>
+
+  <form [formGroup]="appointmentForm" (ngSubmit)="onSubmit()" *ngIf="!isLoading">
+    <div class="form-grid">
+      <div class="field">
+        <label for="title">Tytuł wizyty</label>
+        <input
+          id="title"
+          type="text"
+          pInputText
+          formControlName="title"
+          [placeholder]="'Wprowadź tytuł'">
+        <small class="p-error" *ngIf="appointmentForm.get('title')?.invalid && appointmentForm.get('title')?.touched">
+          Tytuł jest wymagany
+        </small>
+      </div>
+
+      <div class="field">
+        <label for="appointmentDate">Data wizyty</label>
+        <p-calendar
+          id="appointmentDate"
+          formControlName="appointmentDate"
+          [showIcon]="true"
+          dateFormat="dd.mm.yy"
+          [locale]="calendarLocale"
+          placeholder="Wybierz datę"
+          [maxDate]="maxDate"
+          [style]="{width: '100%'}"
+          [inputStyle]="{width: '100%'}"
+          appendTo="body"
+
+        >
+        </p-calendar>
+        <small class="p-error" *ngIf="appointmentForm.get('appointmentDate')?.invalid && appointmentForm.get('appointmentDate')?.touched">
+          Data jest jest wymagana
+        </small>
+      </div>
+
+      <div class="field full-width">
+        <label for="diagnosis">Diagnoza</label>
+        <textarea
+          id="diagnosis"
+          pInputTextarea
+          [rows]="3"
+          formControlName="diagnosis"
+          [placeholder]="'Wprowadź diagnozę'">
+       </textarea>
+      </div>
+
+      <div class="field full-width">
+        <label for="notes">Notatki</label>
+        <textarea
+          id="notes"
+          pInputTextarea
+          [rows]="3"
+          formControlName="notes"
+          [placeholder]="'Dodatkowe uwagi (opcjonalne)'">
+       </textarea>
+      </div>
+    </div>
+  </form>
+
+  <ng-template pTemplate="footer">
+    <button
+      pButton
+      label="Anuluj"
+      icon="pi pi-times"
+      class="p-button-text"
+      (click)="hideDialog()">
+    </button>
+    <button
+      pButton
+      label="Zapisz"
+      icon="pi pi-check"
+      [disabled]="!appointmentForm.valid || isLoading"
+      (click)="onSubmit()">
+      <p-progressSpinner *ngIf="isLoading"
+                         [style]="{width: '20px', height: '20px'}"
+                         styleClass="custom-spinner">
+      </p-progressSpinner>
+    </button>
+  </ng-template>
+</p-dialog>

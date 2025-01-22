@@ -1,0 +1,24 @@
+<div class="info-section">
+  <div class="info-cards">
+    <app-info-card
+      icon="pi pi-calendar"
+      label="Data urodzenia"
+      [value]="pet.dateOfBirth | date:'dd.MM.yyyy'">
+    </app-info-card>
+    <app-info-card
+      icon="pi pi-user"
+      label="Płeć"
+      [value]="pet.gender">
+    </app-info-card>
+    <app-info-card
+      icon="pi pi-heart"
+      label="Gatunek"
+      [value]="pet.species">
+    </app-info-card>
+    <app-info-card
+      icon="pi pi-star"
+      label="Rasa"
+      [value]="pet.breed">
+    </app-info-card>
+  </div>
+</div>

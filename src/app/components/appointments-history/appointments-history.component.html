@@ -1,0 +1,88 @@
+<div class="panel-header">
+  <button class="add-button" (click)="showAppointmentForm = true">
+       <span class="button-content">
+         <i class="pi pi-plus"></i>
+         <span class="button-text">Dodaj wizytę</span>
+       </span>
+  </button>
+</div>
+
+<div class="container">
+  <div class="content-wrapper">
+    <ng-container *ngIf="!isLoading">
+      <ng-container *ngIf="vaccinations.length > 0; else emptyCollection">
+        <p-table [value]="vaccinations" [paginator]="false" styleClass="modern-table">
+          <ng-template pTemplate="header">
+            <tr>
+              <th>Tytuł wizyty</th>
+              <th>Data wizyty</th>
+              <th>Status powiadomienia</th>
+              <th>Akcje</th>
+            </tr>
+          </ng-template>
+          <ng-template pTemplate="body" let-appointment>
+            <tr>
+              <td>
+                <div class="table-cell-content">
+                  <i class="pi pi-bookmark"></i>
+                  <span class="link-text" (click)="showDetails(appointment.id)">
+                       {{ appointment.title }}
+                     </span>
+                </div>
+              </td>
+              <td>{{ appointment.appointmentDate | date:'dd.MM.yyyy' }}</td>
+              <td>
+                <app-notification-status [isNotificationSent]="appointment.isNotificationSent">
+                </app-notification-status>
+              </td>
+              <td>
+                <button class="table-action-button delete"
+                        (click)="confirmDelete(appointment.id)">
+                  <i class="pi pi-trash"></i>
+                </button>
+              </td>
+            </tr>
+          </ng-template>
+        </p-table>
+
+        <div class="controls-container">
+          <app-paginator
+            [pageIndex]="pageIndex"
+            [pageSize]="pageSize"
+            [totalRecords]="totalRecords"
+            [rowsPerPageOptions]="[6,9,12,15]"
+            (pageChange)="onPageChange($event)">
+          </app-paginator>
+
+        </div>
+      </ng-container>
+    </ng-container>
+
+    <div *ngIf="isLoading" class="loader">
+      <p-progressSpinner strokeWidth="4"></p-progressSpinner>
+    </div>
+
+    <ng-template #emptyCollection>
+      <div class="empty-state">
+        <p>Brak wizyt</p>
+        <button class="add-button" (click)="showAppointmentForm = true">
+             <span class="button-content">
+               <i class="pi pi-plus"></i>
+               <span class="button-text">Dodaj wizytę</span>
+             </span>
+        </button>
+      </div>
+    </ng-template>
+  </div>
+</div>
+
+<app-appointment-details-dialog
+  [(visible)]="showDetailsDialog"
+  [appointment]="selectedAppointment">
+</app-appointment-details-dialog>
+
+<app-appointment-form
+  [(visible)]="showAppointmentForm"
+  [healthRecordId]="healthRecordId">
+</app-appointment-form>
+

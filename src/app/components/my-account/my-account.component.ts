@@ -7,6 +7,7 @@ import {CurrentUserDetailsDto} from "../../models/users/get-current-user-details
 import {BreadcrumbItemComponent} from "../shared/breadcrumb-item/breadcrumb-item.component";
 import {ToastService} from "../../services/toast/toast.service";
 import {EditProfileFormComponent} from "../edit-profile-form/edit-profile-form.component";
+import {NgIf} from "@angular/common";
 
 @Component({
   selector: 'app-my-account',
@@ -15,7 +16,8 @@ import {EditProfileFormComponent} from "../edit-profile-form/edit-profile-form.c
     ReactiveFormsModule,
     ...PrimengImports,
     BreadcrumbItemComponent,
-    EditProfileFormComponent
+    EditProfileFormComponent,
+    NgIf
   ],
   providers: [ToastService, ConfirmationService, UsersService],
   templateUrl: './my-account.component.html',
@@ -23,9 +25,10 @@ import {EditProfileFormComponent} from "../edit-profile-form/edit-profile-form.c
 })
 export class MyAccountComponent implements OnInit {
   @ViewChild(EditProfileFormComponent) editProfileForm!: EditProfileFormComponent;
-  userData!: CurrentUserDetailsDto;
+  userData: CurrentUserDetailsDto | any;
   editDialogVisible = false;
   editForm: FormGroup;
+  isLoading = true;
 
   breadcrumbItems = [
     {label: 'Strona główna', link: '/', icon: 'pi pi-home'},
@@ -64,6 +67,7 @@ export class MyAccountComponent implements OnInit {
           firstName: data.firstName?.trim() || '',
           lastName: data.lastName?.trim() || ''
         };
+        this.isLoading = false;
       },
       error: (err) => {
         console.error('Error loading user data:', err);
@@ -104,7 +108,7 @@ export class MyAccountComponent implements OnInit {
     }
   }
 
-  saveProfileChanges(formData: {firstName: string, lastName: string}) {
+  saveProfileChanges(formData: { firstName: string, lastName: string }) {
     this.usersService.changeUserInformation(formData).subscribe({
       next: () => {
         this.userData = {

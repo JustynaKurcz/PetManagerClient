@@ -1,357 +1,113 @@
-.profile-header {
-  position: relative;
-  padding-top: 100px;
-  margin: 2rem 3rem 2rem 1rem;
+.main-container {
+  background-color: #f5f5f5;
+  min-height: calc(100vh - 100px);
+  padding: 0;
+  margin-top: 60px;
 }
 
-.gradient-background {
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  height: 150px;
-  background: linear-gradient(135deg, var(--primary-500), var(--primary-700));
-  border-radius: 16px 16px 0 0;
+.tabs-section {
+  max-width: 1200px;
+  margin: 0 auto 2rem;
+  padding: 2rem;
+  background: white;
+  border-radius: 16px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
 }
 
-.profile-header {
-  position: relative;
-}
-
-.actions-container {
-  position: absolute;
-  top: 20px;
-  right: 20px;
-  z-index: 2;
-}
-
-.profile-info {
-  position: relative;
-  z-index: 1;
-  margin-top: -60px;
-}
-
-.pet-type-breed-container {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 1.5rem;
-  margin-top: 1.5rem;
-}
-
-.pet-type-badge {
-  background: linear-gradient(135deg, #2563eb, #3b82f6);
-  color: white;
-  padding: 0.75rem 2rem;
-  border-radius: 25px;
-  font-weight: 600;
-  font-size: 1.1rem;
-  box-shadow: 0 4px 6px -1px rgba(59, 130, 246, 0.2);
-  transition: all 0.2s ease;
-  display: flex;
-  align-items: center;
-  gap: 0.75rem;
-}
-
-.pet-type-badge i {
-  font-size: 1.3rem;
-}
-
-.pet-type-badge:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 6px 8px -1px rgba(59, 130, 246, 0.3);
-}
-
-.breed-tag {
-  background: #eff6ff;
-  border: 2px solid #93c5fd;
-  color: #1e40af;
-  padding: 0.75rem 2rem;
-  border-radius: 25px;
-  font-weight: 600;
-  font-size: 1.1rem;
-  display: flex;
-  align-items: center;
-  gap: 0.75rem;
-  transition: all 0.2s ease;
-}
-
-.breed-tag i {
-  color: #2563eb;
-  font-size: 1.3rem;
-}
-
-.breed-tag:hover {
-  background: #dbeafe;
-  border-color: #60a5fa;
-  transform: translateY(-2px);
-}
-
-.profile-avatar {
-  border: 6px solid white;
-  box-shadow: 0 8px 24px rgba(149, 157, 165, 0.2);
-}
-
-.profile-name {
-  font-size: 2rem;
-  font-weight: 700;
-  margin: 1rem 0 0.5rem 0;
-}
-
-.info-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-  gap: 1.5rem;
-  padding: 1rem;
-}
-
-.info-item {
-  display: flex;
-  align-items: center;
-  padding: 1.25rem;
-  background: var(--surface-50);
-  border-radius: 12px;
-  transition: all 0.2s ease;
-  border: 1px solid var(--surface-200);
-
-  &:hover {
-    transform: translateY(-2px);
-    background: var(--surface-100);
-    border-color: var(--primary-200);
-  }
-
-  .info-icon {
-    font-size: 1.5rem;
-    color: var(--primary-500);
-    margin-right: 1rem;
-    background: var(--primary-50);
-    padding: 0.75rem;
-    border-radius: 10px;
-  }
-
-  .info-content {
+::ng-deep .p-tabview {
+  .p-tabview-nav-container {
+    width: 100%;
     display: flex;
-    flex-direction: column;
+    justify-content: center;
+    border-bottom: 1px solid #dee2e6;
   }
 
-  .info-label {
-    font-size: 0.875rem;
-    margin-bottom: 0.25rem;
-    text-transform: uppercase;
-    letter-spacing: 0.5px;
-  }
+  .p-tabview-nav {
+    display: flex;
+    justify-content: center;
+    border: none;
+    background: transparent;
+    float: none;
+    margin: 0 auto;
+    position: relative;
+    padding: 0;
+    width: auto;
 
-  .info-value {
-    font-size: 1.125rem;
-    font-weight: 600;
-  }
-}
+    li {
+      float: none;
+      margin: 0 1.5rem;
 
-@media screen and (max-width: 768px) {
-  .profile-header {
-    padding-top: 80px;
-  }
-
-  .gradient-background {
-    height: 120px;
-  }
-
-  .info-grid {
-    grid-template-columns: 1fr;
-    gap: 1rem;
-  }
-
-
-  :host ::ng-deep {
-    .custom-chip {
-      &.p-chip {
-        background: linear-gradient(135deg, #4f46e5, #6366f1);
-        color: white;
+      .p-tabview-nav-link {
+        background: transparent;
         border: none;
-        padding: 0.5rem 1.25rem;
+        color: #666;
+        padding: 1rem 0;
+        font-weight: 500;
+        position: relative;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 0.5rem;
+        min-width: auto;
+        white-space: nowrap;
 
-        .p-chip-icon {
-          color: white;
+        .p-tabview-left-icon {
+          order: -1;
+          margin: 0;
           margin-right: 0.5rem;
+        }
+
+        &:hover {
+          color: #4CAF50;
+          background: transparent;
+        }
+
+        &:focus {
+          box-shadow: none;
+        }
+
+        &::after {
+          content: '';
+          position: absolute;
+          bottom: -1px;
+          left: 0;
+          width: 100%;
+          height: 2px;
+          background-color: transparent;
+          transition: background-color 0.2s ease;
+        }
+      }
+
+      &.p-highlight .p-tabview-nav-link {
+        color: #4CAF50;
+
+        &::after {
+          background-color: #4CAF50;
         }
       }
     }
-
-    .main-container {
-      background: #f8fafc;
-      min-height: 100vh;
-      padding: 2rem;
-    }
-
-    .surface-card {
-      background: white;
-      border-radius: 16px;
-      transition: all 0.2s ease;
-      border: none;
-      box-shadow: rgba(17, 12, 46, 0.05) 0px 48px 100px 0px;
-      position: relative;
-      overflow: hidden;
-      margin-bottom: 2rem;
-
-      &:hover {
-        box-shadow: rgba(17, 12, 46, 0.08) 0px 48px 100px 0px;
-      }
-    }
-
-    .p-avatar {
-      border: 3px solid white;
-      box-shadow: rgba(149, 157, 165, 0.1) 0px 8px 24px;
-      transition: all 0.3s ease;
-
-      img {
-        object-fit: cover;
-      }
-
-      &:hover {
-        transform: scale(1.02);
-      }
-    }
-  }
-  :host ::ng-deep {
-    .p-datatable {
-      .p-datatable-header {
-        padding: 1rem;
-        background: var(--surface-50);
-      }
-
-      .p-datatable-thead > tr > th {
-        background: var(--surface-50);
-        padding: 1rem;
-        font-weight: 600;
-      }
-
-      .p-datatable-tbody > tr > td {
-        padding: 1rem;
-      }
-
-      .p-sortable-column:not(.p-highlight):hover {
-        background: var(--surface-100);
-      }
-    }
-
-    .p-tag {
-      min-width: 7rem;
-      justify-content: center;
-    }
   }
 
-  .card {
-    background: var(--surface-card);
-    padding: 1.5rem;
-    border-radius: 10px;
-    margin-bottom: 1rem;
-    box-shadow: 0 1px 3px 0 rgb(0 0 0 / 0.1), 0 1px 2px -1px rgb(0 0 0 / 0.1);
-  }
-
-  :host ::ng-deep {
-    .visits-table {
-      .p-datatable-thead > tr > th {
-        font-size: 1.25rem;
-      padding: 1.5rem 1rem;
-      font-weight: 600;
-      }
-
-      .p-datatable-tbody > tr > td {
-        font-size: 1.15rem;
-      padding: 1.5rem 1rem;
-      }
-
-      .pi {
-      font-size: 1.4rem;
-      }
-    }
+  .p-tabview-panels {
+    padding: 1.5rem 0 0 0;
+    background: transparent;
   }
 }
 
-.notification-status {
+.loading-container {
   display: flex;
+  justify-content: center;
   align-items: center;
-  gap: 0.5rem;
-  padding: 0.5rem 1rem;
-  border-radius: 20px;
-  font-weight: 500;
-  transition: all 0.2s ease;
+  min-height: 400px;
+  width: 100%;
 }
 
-.notification-status.sent {
-  background-color: #dcfce7;
-  color: #166534;
+:host ::ng-deep .p-progress-spinner {
+  width: 50px;
+  height: 50px;
 }
 
-.notification-status.sent i {
-  color: #22c55e;
-}
-
-.notification-status.pending {
-  background-color: #fef9c3;
-  color: #854d0e;
-}
-
-.notification-status.pending i {
-  color: #eab308;
-}
-
-.notification-status:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-}
-
-.notification-status i {
-  font-size: 1.2rem;
-}
-
-.cursor-pointer {
-  cursor: pointer;
-}
-
-.hover\:text-primary:hover {
-  color: var(--primary-color);
-}
-
-.appointment-details h3 {
-  color: var(--primary-color);
-}
-
-.appointment-details p {
-  line-height: 1.5;
-  color: var(--text-color);
-}
-
-.notification-status {
-  display: flex;
-  align-items: center;
-  gap: 0.5rem;
-  padding: 0.5rem;
-  border-radius: 0.25rem;
-  background-color: var(--surface-100);
-}
-
-.notification-status.sent {
-  color: var(--green-500);
-}
-
-.notification-status.pending {
-  color: var(--orange-500);
-}
-
-.vaccination-details h3 {
-  color: var(--primary-color);
-}
-
-.vaccination-details p {
-  line-height: 1.5;
-  color: var(--text-color);
-}
-
-.cursor-pointer {
-  cursor: pointer;
-}
-
-.hover\:text-primary:hover {
-  color: var(--primary-color);
+:host ::ng-deep .p-progress-spinner-circle {
+  stroke: #006837 !important;
+  stroke-width: 3;
 }

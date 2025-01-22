@@ -1,10 +1,10 @@
-  <div class="dashboard">
-    <header class="dashboard-header">
-      <h1>Panel Administratora</h1>
-      <p>Zarządzanie użytkownikami</p>
-    </header>
+<div class="dashboard">
+  <header class="dashboard-header">
+    <h1>Panel Administratora</h1>
+    <p>Zarządzanie użytkownikami</p>
+  </header>
 
-    <ng-container *ngIf="response!.items!.length > 0; else emptyCollection">
+  <ng-container *ngIf="response?.items!.length > 0; else emptyCollection">
     <div class="search-container">
       <span class="p-input-icon-left">
         <i class="pi pi-search"></i>
@@ -19,7 +19,7 @@
     </div>
 
     <div class="users-grid">
-      <div class="user-card" *ngFor="let user of response.items">
+      <div class="user-card" *ngFor="let user of response?.items">
         <div class="user-card-header">
           <div class="header-content">
             {{ user.firstName }} {{ user.lastName }}
@@ -51,31 +51,31 @@
       </div>
     </div>
 
-      <app-paginator
-        [pageIndex]="pageIndex"
-        [pageSize]="pageSize"
-        [totalRecords]="response.totalCount"
-        (pageChange)="onPageChange($event)"
-      ></app-paginator>
+    <app-paginator
+      [pageIndex]="pageIndex"
+      [pageSize]="pageSize"
+      [totalRecords]="response?.totalCount!"
+      (pageChange)="onPageChange($event)"
+    ></app-paginator>
 
-    </ng-container>
+  </ng-container>
 
-    <ng-template #emptyCollection>
-      <div class="empty-state" *ngIf="response?.items?.length === 0">
-        <i class="pi pi-users text-6xl mb-4 text-gray-400"></i>
-        <h2>Brak użytkowników</h2>
-        <p>Aktualnie w systemie nie ma zarejestrowanych użytkowników.</p>
-      </div>
-    </ng-template>
+  <ng-template #emptyCollection>
+    <div class="empty-state" *ngIf="response?.items?.length === 0">
+      <i class="pi pi-users text-6xl mb-4 text-gray-400"></i>
+      <h2>Brak użytkowników</h2>
+      <p>Aktualnie w systemie nie ma zarejestrowanych użytkowników.</p>
+    </div>
+  </ng-template>
 
-    <p-confirmDialog
-      header='Potwierdzenie usunięcia'
-      message='Czy na pewno chcesz usunąć tego użytkownika?'
-      icon="pi pi-exclamation-triangle"
-      acceptLabel="Tak"
-      rejectLabel="Nie"
-      [style]="{width: '450px'}"
-    ></p-confirmDialog>
+  <p-confirmDialog
+    header='Potwierdzenie usunięcia'
+    message='Czy na pewno chcesz usunąć tego użytkownika?'
+    icon="pi pi-exclamation-triangle"
+    acceptLabel="Tak"
+    rejectLabel="Nie"
+    [style]="{width: '450px'}"
+  ></p-confirmDialog>
 
-    <p-toast></p-toast>
-  </div>
+  <p-toast></p-toast>
+</div>

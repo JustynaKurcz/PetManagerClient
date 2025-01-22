@@ -2,110 +2,120 @@
 
   <app-breadcrumb-item [items]="breadcrumbItems"></app-breadcrumb-item>
 
-  <div class="profile-header">
-    <div class="header-content">
-      <div class="avatar-section">
-        <div class="avatar">{{ userInitials || 'P' }}</div>
-        <div class="user-info">
-          <h1>
-            {{ (userData.firstName?.trim() && userData.lastName?.trim())
-            ? 'Witaj, ' + userData.firstName + ' ' + userData.lastName + '!'
-            : 'Witaj w Pet Manager!' }}
-          </h1>
-          <p class="subtitle">Zarządzaj swoim profilem i ustawieniami konta</p>
-        </div>
-      </div>
-      <div class="header-actions">
-        <button pButton
-                label="Edytuj profil"
-                icon="pi pi-user-edit"
-                (click)="showEditDialog()"
-                class="p-button-outlined edit-profile-button">
-        </button>
-      </div>
-    </div>
-  </div>
-
-  <div class="section-card">
-    <h2>Dane konta</h2>
-    <div class="data-grid">
-      <div class="data-item">
-        <div class="data-icon">
-          <i class="pi pi-user"></i>
-        </div>
-        <div class="data-content">
-          <span class="data-label">Imię</span>
-          <span class="data-value">{{ userData.firstName?.trim() || '-' }}</span>
-        </div>
-      </div>
-      <div class="data-item">
-        <div class="data-icon">
-          <i class="pi pi-user"></i>
-        </div>
-        <div class="data-content">
-          <span class="data-label">Nazwisko</span>
-          <span class="data-value">{{ userData.lastName?.trim() || '-' }}</span>
-        </div>
-      </div>
-      <div class="data-item">
-        <div class="data-icon">
-          <i class="pi pi-envelope"></i>
-        </div>
-        <div class="data-content">
-          <span class="data-label">Email</span>
-          <span class="data-value">{{ userData.email }}</span>
-        </div>
-      </div>
-      <div class="data-item">
-        <div class="data-icon">
-          <i class="pi pi-calendar"></i>
-        </div>
-        <div class="data-content">
-          <span class="data-label">Data utworzenia konta</span>
-          <span class="data-value">{{ formatDate(userData.createdAt) }}</span>
-        </div>
-      </div>
-      <div class="data-item">
-        <div class="data-icon">
-          <i class="pi pi-lock"></i>
-        </div>
-        <div class="data-content">
-          <span class="data-label">Ostatnia zmiana hasła</span>
-          <span class="data-value">{{ formatDate(userData.lastChangePasswordDate) }}</span>
-        </div>
-      </div>
-      <div class="data-item">
-        <div class="data-icon">
-          <i class="pi pi-heart"></i>
-        </div>
-        <div class="data-content">
-          <span class="data-label">Liczba zwierząt</span>
-          <span class="data-value">{{ userData.petsCount }}</span>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <div class="section-card account-management">
-    <h2>Zarządzanie kontem</h2>
-    <div class="management-items">
-      <div class="management-item">
-        <div class="management-info">
-          <i class="pi pi-user-minus"></i>
-          <div>
-            <h3>Usunięcie konta</h3>
-            <p>Spowoduje to trwałe usunięcie wszystkich Twoich danych z systemu.</p>
+  <ng-container *ngIf="!isLoading; else loading">
+    <div class="profile-header">
+      <div class="header-content">
+        <div class="avatar-section">
+          <div class="avatar">{{ userInitials || 'P' }}</div>
+          <div class="user-info">
+            <h1>
+              {{ (userData?.firstName?.trim() && userData?.lastName?.trim())
+              ? 'Witaj, ' + userData.firstName + ' ' + userData.lastName + '!'
+              : 'Witaj w Pet Manager!' }}
+            </h1>
+            <p class="subtitle">Zarządzaj swoim profilem i ustawieniami konta</p>
           </div>
         </div>
-        <button pButton
-                label="Usuń konto"
-                icon="pi pi-trash"
-                class="p-button-outlined p-button-danger"
-                (click)="confirmDeleteAccount()">
-        </button>
+        <div class="header-actions">
+          <button pButton
+                  label="Edytuj profil"
+                  icon="pi pi-user-edit"
+                  (click)="showEditDialog()"
+                  class="p-button-outlined edit-profile-button">
+          </button>
+        </div>
       </div>
     </div>
-  </div>
+
+    <div class="section-card">
+      <h2>Dane konta</h2>
+      <div class="data-grid">
+        <div class="data-item">
+          <div class="data-icon">
+            <i class="pi pi-user"></i>
+          </div>
+          <div class="data-content">
+            <span class="data-label">Imię</span>
+            <span class="data-value">{{ userData.firstName?.trim() || '-' }}</span>
+          </div>
+        </div>
+        <div class="data-item">
+          <div class="data-icon">
+            <i class="pi pi-user"></i>
+          </div>
+          <div class="data-content">
+            <span class="data-label">Nazwisko</span>
+            <span class="data-value">{{ userData.lastName?.trim() || '-' }}</span>
+          </div>
+        </div>
+        <div class="data-item">
+          <div class="data-icon">
+            <i class="pi pi-envelope"></i>
+          </div>
+          <div class="data-content">
+            <span class="data-label">Email</span>
+            <span class="data-value">{{ userData.email }}</span>
+          </div>
+        </div>
+        <div class="data-item">
+          <div class="data-icon">
+            <i class="pi pi-calendar"></i>
+          </div>
+          <div class="data-content">
+            <span class="data-label">Data utworzenia konta</span>
+            <span class="data-value">{{ formatDate(userData.createdAt) }}</span>
+          </div>
+        </div>
+        <div class="data-item">
+          <div class="data-icon">
+            <i class="pi pi-lock"></i>
+          </div>
+          <div class="data-content">
+            <span class="data-label">Ostatnia zmiana hasła</span>
+            <span class="data-value">{{ formatDate(userData.lastChangePasswordDate) }}</span>
+          </div>
+        </div>
+        <div class="data-item">
+          <div class="data-icon">
+            <i class="pi pi-heart"></i>
+          </div>
+          <div class="data-content">
+            <span class="data-label">Liczba zwierząt</span>
+            <span class="data-value">{{ userData.petsCount }}</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="section-card account-management">
+      <h2>Zarządzanie kontem</h2>
+      <div class="management-items">
+        <div class="management-item">
+          <div class="management-info">
+            <i class="pi pi-user-minus"></i>
+            <div>
+              <h3>Usunięcie konta</h3>
+              <p>Spowoduje to trwałe usunięcie wszystkich Twoich danych z systemu.</p>
+            </div>
+          </div>
+          <button pButton
+                  label="Usuń konto"
+                  icon="pi pi-trash"
+                  class="p-button-outlined p-button-danger"
+                  (click)="confirmDeleteAccount()">
+          </button>
+        </div>
+      </div>
+    </div>
+
+  </ng-container>
+
+  <ng-template #loading>
+    <div class="loading-spinner">
+      <p-progressSpinner></p-progressSpinner>
+    </div>
+  </ng-template>
+
 
   <app-edit-profile-form
     [(visible)]="editDialogVisible"

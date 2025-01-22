@@ -1,0 +1,25 @@
+<p-dialog [(visible)]="visible" [modal]="true" styleClass="modern-dialog" (onHide)="close()">
+  <ng-template pTemplate="header">
+    <h2 class="dialog-title">{{ appointment?.title || 'Szczegóły wizyty' }}</h2>
+  </ng-template>
+  <div class="dialog-content" *ngIf="appointment">
+    <div class="details-container">
+      <div class="detail-row">
+        <span class="detail-label">Diagnoza</span>
+        <span class="detail-value">{{ appointment.diagnosis }}</span>
+      </div>
+      <div class="detail-row">
+        <span class="detail-label">Data wizyty:</span>
+        <span class="detail-value">{{ appointment.appointmentDate | date: 'dd.MM.yyyy' }}</span>
+      </div>
+      <div class="detail-row">
+        <span class="detail-label">Notatki:</span>
+        <span class="detail-value">{{ appointment.notes }}</span>
+      </div>
+      <div class="detail-row">
+        <span class="detail-label">Powiadomienie wysłane:</span>
+        <span class="detail-value">{{ appointment.isNotificationSent ? 'Tak' : 'Nie' }}</span>
+      </div>
+    </div>
+  </div>
+</p-dialog>

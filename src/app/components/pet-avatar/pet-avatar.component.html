@@ -1,0 +1,42 @@
+<div class="avatar-container"
+     (mouseenter)="showControls = true"
+     (mouseleave)="showControls = false">
+
+  <div class="avatar-wrapper">
+    <p-avatar
+      [image]="photoUrl || ''"
+      styleClass="large-avatar"
+      [style]="{'width': '300px', 'height': '300px'}"
+      shape="circle">
+    </p-avatar>
+
+    <div class="spinner-overlay" *ngIf="isUploading">
+      <p-progressSpinner
+        styleClass="custom-spinner"
+        [style]="{width: '50px', height: '50px'}">
+      </p-progressSpinner>
+    </div>
+  </div>
+
+  <div class="avatar-controls" [class.show-controls]="showControls && !isUploading">
+    <input
+      #fileInput
+      type="file"
+      (change)="onFileSelected($event)"
+      accept="image/*"
+      style="display: none"
+    />
+
+    <div class="controls-buttons">
+      <button
+        class="control-button upload"
+        (click)="fileInput.click()"
+        [disabled]="isUploading">
+        <i class="pi" [ngClass]="photoUrl ? 'pi-sync' : 'pi-upload'"></i>
+        <span>{{ photoUrl ? 'Zmień' : 'Dodaj' }}</span>
+      </button>
+    </div>
+  </div>
+</div>
+
+<p-toast></p-toast>
