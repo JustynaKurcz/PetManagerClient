@@ -7,6 +7,7 @@ import { HealthRecordsService } from '../../services/health-records/health-recor
 import { ToastService } from '../../services/toast/toast.service';
 import { PrimeNGConfig } from 'primeng/api';
 import {CalendarModule} from "primeng/calendar";
+import {InputTextModule} from "primeng/inputtext";
 
 @Component({
   selector: 'app-vaccination-details-dialog',
@@ -16,7 +17,8 @@ import {CalendarModule} from "primeng/calendar";
     DatePipe,
     NgIf,
     ReactiveFormsModule,
-    CalendarModule
+    CalendarModule,
+    InputTextModule
   ],
   templateUrl: './vaccination-details-dialog.component.html',
   styleUrl: './vaccination-details-dialog.component.css'

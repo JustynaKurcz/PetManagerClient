@@ -13,22 +13,28 @@
         <span class="detail-value date-value">{{ vaccination.vaccinationDate | date: 'dd.MM.yyyy' }}</span>
       </div>
 
-      <div class="detail-row">
-        <span class="detail-label"><i class="pi pi-calendar-plus"></i>Data kolejnego szczepienia</span>
-        <div class="date-edit-wrapper">
-          <p-calendar
-            id="nextVaccinationDate"
-            formControlName="nextVaccinationDate"
-            [showIcon]="true"
-            dateFormat="dd.mm.yy"
-            [locale]="calendarLocale"
-            [maxDate]="maxDate"
-            [appendTo]="'body'"
-            [style]="{width: '100%'}"
-          >
-          </p-calendar>
+      <ng-container *ngIf="vaccination.nextVaccinationDate; else calendarPicker">
+        <div class="detail-row">
+          <span class="detail-label"><i class="pi pi-calendar"></i>Data kolejnego szczepienia</span>
+          <span class="detail-value date-value">{{ vaccination.nextVaccinationDate | date: 'dd.MM.yyyy' }}</span>
         </div>
-      </div>
+      </ng-container>
+      <ng-template #calendarPicker>
+        <div class="detail-row">
+        <span class="detail-label"><i class="pi pi-calendar"></i>Data kolejnego szczepienia</span>
+        <p-calendar
+          id="nextVaccinationDate"
+          formControlName="nextVaccinationDate"
+          [showIcon]="true"
+          dateFormat="dd.mm.yy"
+          [locale]="calendarLocale"
+          [maxDate]="maxDate"
+          [appendTo]="'body'"
+          [style]="{width: '100%'}"
+        >
+        </p-calendar>
+        </div>
+      </ng-template>
 
       <div class="detail-row notification-row">
         <span class="detail-label"><i class="pi pi-bell"></i>Status powiadomienia</span>
